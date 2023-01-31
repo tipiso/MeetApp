@@ -1,0 +1,36 @@
+﻿<Properties StartupConfiguration="{8141308C-1D6C-48F6-9B1B-35A605529C2E}|https">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="API/Controllers/WeatherForecastController.cs">
+    <Files>
+      <File FileName="API/Controllers/WeatherForecastController.cs" Line="24" Column="74" />
+      <File FileName="API/Properties/launchSettings.json" />
+      <File FileName="API/API.csproj" Line="5" Column="22" />
+      <File FileName="API/Program.cs" />
+      <File FileName="API/appsettings.Development.json" />
+      <File FileName="API/Entities/AppUser.cs" Line="9" Column="27" />
+      <File FileName="API/WeatherForecast.cs" Line="11" Column="18" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="hotelAppBackend" expanded="True">
+            <Node name="API" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="WeatherForecastController.cs" selected="True" />
+              </Node>
+              <Node name="Entities" expanded="True" />
+              <Node name="appsettings.json" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.ItemProperties.API PreferredExecutionTarget="/Applications/Brave Browser.app" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+</Properties>
