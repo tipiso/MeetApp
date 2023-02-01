@@ -1,3 +1,8 @@
 ﻿/API/Dependencies
+/API/bin
+/API/obj
 
 *.vs
+
+API/hotelapp.db-wal
+API/hotelapp.db-shm
