@@ -1,31 +1,42 @@
 ﻿<Properties StartupConfiguration="{8141308C-1D6C-48F6-9B1B-35A605529C2E}|https">
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.API PreferredExecutionTarget="/Applications/Brave Browser.app" />
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MonoDevelop.Ide.Workbench ActiveDocument=".gitignore">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="API/Controllers/UsersController.cs">
     <Files>
-      <File FileName="API/Controllers/WeatherForecastController.cs" Line="28" Column="46" />
+      <File FileName="API/Data/Migrations/20230201134126_InitialCreate.Designer.cs" Line="1" Column="1" IsPinned="True" />
+      <File FileName=".gitignore" Line="8" Column="20" IsPinned="True" />
+      <File FileName="API/Data/Migrations/20230201134126_InitialCreate.cs" Line="8" Column="51" IsPinned="True" />
+      <File FileName="API/Controllers/WeatherForecastController.cs" />
       <File FileName="API/Properties/launchSettings.json" />
-      <File FileName="API/API.csproj" Line="12" Column="56" />
-      <File FileName="API/Program.cs" Line="11" Column="87" />
-      <File FileName="API/appsettings.Development.json" Line="9" Column="50" />
-      <File FileName="API/Entities/AppUser.cs" Line="8" Column="1" />
+      <File FileName="API/API.csproj" />
+      <File FileName="API/Program.cs" />
+      <File FileName="API/appsettings.Development.json" />
+      <File FileName="API/Entities/AppUser.cs" />
       <File FileName="API/WeatherForecast.cs" />
-      <File FileName="API/Data/DataContext.cs" Line="2" Column="20" />
-      <File FileName=".gitignore" Line="3" Column="2" />
+      <File FileName="API/Controllers/UsersController.cs" Line="32" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="hotelAppBackend" expanded="True">
             <Node name="Solution Items" expanded="True" />
+            <Node name="API" expanded="True">
+              <Node name="Controllers" expanded="True" />
+              <Node name="Data" expanded="True">
+                <Node name="Migrations" expanded="True">
+                  <Node name="20230201134126_InitialCreate.cs" expanded="True" />
+                </Node>
+              </Node>
+              <Node name="Entities" expanded="True" />
+            </Node>
           </Node>
         </State>
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.ItemProperties.API PreferredExecutionTarget="/Applications/Brave Browser.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
