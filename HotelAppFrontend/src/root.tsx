@@ -21,6 +21,9 @@ export default function Root() {
     path == location.pathname
       ? "border-sky-600"
       : "border-transparent hover:border-sky-600";
+
+  console.log(import.meta.env);
+
   return (
     <Html lang="en">
       <Head>
