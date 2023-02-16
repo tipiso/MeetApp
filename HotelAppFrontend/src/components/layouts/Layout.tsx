@@ -1,6 +1,6 @@
 import {ReactNode} from "react";
 import Head from "next/head";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navigation/Navbar";
 
 type LayoutProps = {
     children: ReactNode;
@@ -15,10 +15,8 @@ export default function Layout({ children }: LayoutProps) {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <header>
                 <Navbar />
-            </header>
-        <main>{children}</main>
+        <main className='container mx-auto'>{children}</main>
         <footer></footer>
         </div>
     );

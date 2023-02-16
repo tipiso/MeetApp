@@ -1,5 +1,5 @@
 import { Inter } from '@next/font/google'
-import styles from '@/styles/Home.module.css'
+import styles from '@/assets/styles/Home.module.css'
 import Layout from "@/components/layouts/Layout";
 import {ReactElement} from "react";
 
