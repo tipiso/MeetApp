@@ -7,7 +7,7 @@ export default function Navbar() {
     <header className="flex p-3">
       <nav>
         {routes.map((route) => (
-          <NavItem {...route} />
+          <NavItem key={route.href} {...route} />
         ))}
       </nav>
     </header>

@@ -1,17 +1,15 @@
-import {ReactElement} from "react";
-import Layout from "@/components/layouts/Layout";
+import { ReactElement } from 'react';
+import Layout from '@/components/layouts/Layout';
+import { useSession } from 'next-auth/react';
 
 const UsersPage = () => {
-
-    return <>Users</>
-}
+  const session = useSession();
+  console.log('FRONT SESSIOn', session);
+  return <>Users</>;
+};
 
 UsersPage.getLayout = function getLayout(page: ReactElement) {
-    return (
-        <Layout>
-            {page}
-        </Layout>
-    )
-}
+  return <Layout>{page}</Layout>;
+};
 
 export default UsersPage;
