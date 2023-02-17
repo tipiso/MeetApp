@@ -7,13 +7,21 @@ import BlankCenteredLayout from '@/components/layouts/BlankCenteredLayout';
 import Button, { BtnType } from '@/components/Button';
 import Label from '@/components/forms/Label';
 import Input from '@/components/forms/Input';
+import { routes } from '@/utils/routes';
+import { API_URL } from '@/utils/constants';
 
 export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [formError, setFormError] = useState<string | null>(null);
-  const handleSubmit = async (event: FormEvent) => {
-    event.preventDefault();
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault();
     setFormError(null);
-    const response = await signIn('credentials', { redirect: false });
+
+    const response = await signIn('credentials', {
+      username: e.target['username'].value,
+      password: e.target['password'].value,
+      callbackUrl: routes.home,
+    });
+    console.log(response);
     if (response?.status === 401) {
       setFormError('Invalid username or password');
     }

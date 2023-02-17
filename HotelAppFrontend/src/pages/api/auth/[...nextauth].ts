@@ -40,12 +40,10 @@ export const authOptions = {
   providers: [
     CredentialsProvider({
       name: 'Credentials',
-      credentials: {
-        username: { label: 'Username', type: 'text', placeholder: 'Username' },
-        password: { label: 'Password', type: 'password' },
-      },
+      credentials: {},
       async authorize(credentials, req) {
         const response = await axios.post(loginUrl, credentials);
+        console.log(credentials, req, 'AUTHORIZE');
         if (response.status === 200) {
           return response.data;
         } else return null;
