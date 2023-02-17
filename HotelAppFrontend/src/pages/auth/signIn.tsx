@@ -1,14 +1,25 @@
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { getCsrfToken } from 'next-auth/react';
-import { ReactElement } from 'react';
+import { FormEvent, ReactElement, useState } from 'react';
+import { signIn } from 'next-auth/react';
+
 import BlankCenteredLayout from '@/components/layouts/BlankCenteredLayout';
 import Button, { BtnType } from '@/components/Button';
 import Label from '@/components/forms/Label';
 import Input from '@/components/forms/Input';
 
 export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  const [formError, setFormError] = useState<string | null>(null);
+  const handleSubmit = async (event: FormEvent) => {
+    event.preventDefault();
+    setFormError(null);
+    const response = await signIn('credentials', { redirect: false });
+    if (response?.status === 401) {
+      setFormError('Invalid username or password');
+    }
+  };
   return (
-    <form className="d-flex flex-col p-4 w-96" method="post" action="/api/auth/callback/credentials">
+    <form onSubmit={handleSubmit} onChange={() => setFormError(null)} className="d-flex flex-col p-4 w-96">
       <h1 className="text-2xl mb-4">Login</h1>
       <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
@@ -21,6 +32,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
         <Label text="Password" htmlFor="password" />
         <Input placeholder="Password" name="password" type="password" />
       </div>
+      {formError && <div className="text-red-600">{formError}</div>}
       <div className="text-right">
         <Button type="submit" btnType={BtnType.Primary}>
           Sign in
