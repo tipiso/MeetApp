@@ -4,6 +4,7 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth';
 import axios from 'axios';
 
+import { TOKEN_LIFE } from '@/utils/constants';
 import { loginUrl } from '@/utils/url';
 
 const callbacks: {
@@ -33,8 +34,6 @@ callbacks.session = async function session({ session, token, user }) {
 
   return session;
 };
-
-const TOKEN_LIFE = 7 * 24 * 60 * 60;
 
 export const authOptions = {
   secret: 'arakis',
