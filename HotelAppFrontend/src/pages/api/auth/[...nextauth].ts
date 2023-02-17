@@ -4,6 +4,8 @@ import CredentialsProvider from 'next-auth/providers/credentials';
 import NextAuth from 'next-auth';
 import axios from 'axios';
 
+import { loginUrl } from '@/utils/url';
+
 const callbacks: {
   session: (session: any, token: any) => Promise<any>;
   jwt: (token: any, user: any) => Promise<any>;
@@ -44,7 +46,7 @@ export const authOptions = {
         password: { label: 'Password', type: 'password' },
       },
       async authorize(credentials, req) {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/account/login`, credentials);
+        const response = await axios.post(loginUrl, credentials);
         if (response.status === 200) {
           return response.data;
         } else return null;

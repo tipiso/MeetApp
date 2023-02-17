@@ -1,7 +1,17 @@
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+
+import { routes } from '@/utils/routes';
 
 export default function AuthWrap({ children }: { children?: any }) {
-  const { status } = useSession({ required: true });
+  const router = useRouter();
+  const { status } = useSession({
+    required: true,
+    onUnauthenticated() {
+      router.push(routes.signin);
+    },
+  });
+  console.log(status, 'AUTH WRAP');
   if (status === 'loading') {
     return <div>Loading...</div>;
   }

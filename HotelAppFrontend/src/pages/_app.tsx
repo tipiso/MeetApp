@@ -1,6 +1,6 @@
+import { ReactElement, ReactNode } from 'react';
 import type { AppProps } from 'next/app';
 import { NextPage } from 'next';
-import { ReactElement, ReactNode } from 'react';
 import { SessionProvider } from 'next-auth/react';
 import '@/assets/styles/globals.css';
 import '@/assets/styles/tw-output.css';
