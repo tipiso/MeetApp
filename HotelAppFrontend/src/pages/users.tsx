@@ -1,7 +1,7 @@
 import { ReactElement, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 
-import Layout from '@/components/layouts/Layout';
+import Layout from '@/components/Layouts/Layout';
 import axios from 'axios';
 import { usersUrl } from '@/utils/url';
 

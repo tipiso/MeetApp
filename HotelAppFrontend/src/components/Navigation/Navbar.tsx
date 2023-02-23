@@ -1,6 +1,7 @@
-import NavItem from '@/components/navigation/NavItem';
+import NavItem from '@/components/Navigation/NavItem';
 import Link from 'next/link';
 import { routes as appRoutes } from '@/utils/routes';
+import { signOut } from 'next-auth/react';
 
 const routes = [{ href: 'users', text: 'Users' }];
 
@@ -14,6 +15,7 @@ export default function Navbar() {
         {routes.map((route) => (
           <NavItem key={route.href} {...route} />
         ))}
+        <div onClick={() => signOut({ callbackUrl: appRoutes.signin })}>Log out</div>
       </nav>
     </header>
   );
