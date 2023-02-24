@@ -11,7 +11,7 @@ export default function Navbar() {
   return (
     <header className="navbar bg-base-100">
       <div className="flex-1">
-        <Link className="btn btn-ghost normal-case text-xl" href={appRoutes.home}>
+        <Link className="btn btn-ghost normal-case text-xl hover:bg-transparent" href={appRoutes.home}>
           Hotel App
         </Link>
       </div>
