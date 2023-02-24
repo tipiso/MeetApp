@@ -5,4 +5,4 @@ const registerUrl = `${API_URL}/account/register`;
 
 const usersUrl = `${API_URL}/users`;
 
-export { loginUrl, usersUrl };
+export { loginUrl, usersUrl, registerUrl };

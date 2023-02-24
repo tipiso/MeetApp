@@ -30,7 +30,7 @@ callbacks.jwt = async function jwt({ token, account, user }) {
 callbacks.session = async function session({ session, token, user }) {
   console.log('SESSION', token, user);
   session.accessToken = token.accessToken;
-  session.user.username = token.username;
+  session.user.name = token.username;
 
   return session;
 };

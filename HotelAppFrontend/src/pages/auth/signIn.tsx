@@ -13,6 +13,7 @@ import Input from '@/components/Forms/Input';
 import { routes } from '@/utils/routes';
 import Router from 'next/router';
 import Link from 'next/link';
+import { login } from '@/utils/auth';
 
 const defaultValues = {
   username: '',
@@ -28,18 +29,14 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
   const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
 
   const handleSubmit = async ({ username, password }: { username: string; password: string }) => {
-    const response = await signIn('credentials', {
+    await login({
       username,
       password,
-      callbackUrl: routes.home,
-      redirect: false,
+      onError: (error) => {
+        console.log(error);
+        if (error.status === 401) methods.setError('root', { message: 'Invalid username or password' });
+      },
     });
-
-    if (response?.ok) Router.push(routes.home);
-
-    if (response?.status === 401) {
-      methods.setError('root.serverError', { type: 'unauthorized' });
-    }
   };
 
   return (

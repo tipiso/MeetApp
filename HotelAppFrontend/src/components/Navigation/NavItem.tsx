@@ -7,8 +7,8 @@ type NavItemProps = {
 
 export default function NavItem({ href, text }: NavItemProps) {
   return (
-    <div className="mr-2">
+    <li>
       <Link href={href}>{text}</Link>
-    </div>
+    </li>
   );
 }
