@@ -11,7 +11,7 @@ export default function Navbar() {
       <Link href={appRoutes.home}>
         <div>Hotel App</div>
       </Link>
-      <nav className="d-flex justify-end">
+      <nav className="flex justify-end w-4/5">
         {routes.map((route) => (
           <NavItem key={route.href} {...route} />
         ))}
