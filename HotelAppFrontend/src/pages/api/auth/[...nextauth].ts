@@ -6,6 +6,7 @@ import axios from 'axios';
 
 import { TOKEN_LIFE } from '@/utils/constants';
 import { loginUrl } from '@/utils/url';
+import { api } from '@/utils/axios';
 
 const callbacks: {
   session: (session: any, token: any) => Promise<any>;
@@ -42,7 +43,7 @@ export const authOptions = {
       name: 'Credentials',
       credentials: {},
       async authorize(credentials, req) {
-        const response = await axios.post(loginUrl, credentials);
+        const response = await api.post(loginUrl, credentials);
         console.log(credentials, req, 'AUTHORIZE');
         if (response.status === 200) {
           return response.data;

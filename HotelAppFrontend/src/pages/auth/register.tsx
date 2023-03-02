@@ -13,6 +13,7 @@ import { signIn } from 'next-auth/react';
 import { routes } from '@/utils/routes';
 import Router from 'next/router';
 import { login } from '@/utils/auth';
+import { api } from '@/utils/axios';
 
 const defaultValues = {
   username: '',
@@ -36,7 +37,7 @@ export default function Register() {
   const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
 
   const handleSubmit = async (data: typeof defaultValues) => {
-    const response = await axios.post(registerUrl, data);
+    const response = await api.post(registerUrl, data);
 
     if (response.status === 200) {
       login({ username: data.username, password: data.password });

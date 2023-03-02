@@ -1,30 +1,14 @@
-import { ReactElement, useEffect, useState } from 'react';
-import { useSession } from 'next-auth/react';
+import { ReactElement } from 'react';
 
 import Layout from '@/components/Layouts/Layout';
-import axios from 'axios';
-import { usersUrl } from '@/utils/url';
+import { getUsers } from '@/features/users/hooks/useUsers';
 
 const UsersPage = () => {
-  const [users, setUsers] = useState([]);
-  const session = useSession();
-
-  const getUsers = async () => {
-    const { data } = await axios.get(usersUrl, {
-      headers: {
-        Authorization: `Bearer ${session.data?.accessToken}`,
-      },
-    });
-    setUsers(data);
-  };
-
-  useEffect(() => {
-    getUsers();
-  }, []);
+  const { data } = getUsers();
 
   return (
     <>
-      <ul>{users && users.length && users.map((user) => <li>{user.userName}</li>)}</ul>
+      <ul>{data && data.map((user: any) => <li>{user.userName}</li>)}</ul>
     </>
   );
 };

@@ -5,13 +5,14 @@ import { routes } from '@/utils/routes';
 
 export default function AuthWrap({ children }: { children?: any }) {
   const router = useRouter();
+
   const { status } = useSession({
     required: true,
     onUnauthenticated() {
       router.push(routes.signin);
     },
   });
-  console.log(status, 'AUTH WRAP');
+
   if (status === 'loading') {
     return <div>Loading...</div>;
   }

@@ -1,8 +1,11 @@
-import { API_URL } from '@/utils/constants';
+const queryKeys = {
+  users: 'users',
+  usersList: () => queryKeys.users,
+};
 
-const loginUrl = `${API_URL}/account/login`;
-const registerUrl = `${API_URL}/account/register`;
+const loginUrl = `/account/login`;
+const registerUrl = `/account/register`;
 
-const usersUrl = `${API_URL}/users`;
+const usersUrl = `/users`;
 
-export { loginUrl, usersUrl, registerUrl };
+export { queryKeys, loginUrl, usersUrl, registerUrl };
