@@ -1,3 +1,4 @@
+import { ReactElement } from 'react';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
@@ -5,15 +6,11 @@ import { FormProvider, useForm } from 'react-hook-form';
 import Label from '@/components/Forms/Label';
 import Input from '@/components/Forms/Input';
 import Button, { BtnType } from '@/components/Button';
-import { ReactElement } from 'react';
 import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
-import axios from 'axios';
 import { registerUrl } from '@/utils/url';
-import { signIn } from 'next-auth/react';
-import { routes } from '@/utils/routes';
-import Router from 'next/router';
 import { login } from '@/utils/auth';
 import { api } from '@/utils/axios';
+import { transformErrorsToStringArr } from '@/utils/helpers';
 
 const defaultValues = {
   username: '',
@@ -37,10 +34,23 @@ export default function Register() {
   const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
 
   const handleSubmit = async (data: typeof defaultValues) => {
-    const response = await api.post(registerUrl, data);
+    try {
+      const response = await api.post(registerUrl, data);
+      if (response.status === 200) {
+        login({ username: data.username, password: data.password });
+      }
+    } catch (e) {
+      const axiosError = e as any;
+      let formError;
 
-    if (response.status === 200) {
-      login({ username: data.username, password: data.password });
+      if (axiosError.response?.status === 400) {
+        if (axiosError.response && axiosError.response.data && typeof axiosError.response.data != 'string') {
+          formError = transformErrorsToStringArr(axiosError.response.data.errors);
+        } else {
+          formError = axiosError.response.data;
+        }
+        methods.setError('root', { message: formError as string });
+      }
     }
   };
 
@@ -63,6 +73,16 @@ export default function Register() {
           <Label text="Confirm Password" htmlFor="confirmPassword" />
           <Input placeholder="Confirm Password" name="confirmPassword" type="password" />
         </div>
+
+        {methods.formState.errors.root && Array.isArray(methods.formState.errors.root.message) ? (
+          methods.formState.errors.root.message.map((error) => (
+            <div key={error} className="text-red-600">
+              {error}
+            </div>
+          ))
+        ) : (
+          <div className="text-red-600">{methods.formState.errors.root?.message}</div>
+        )}
 
         <div className="text-right">
           <Button type="submit" btnType={BtnType.Primary}>

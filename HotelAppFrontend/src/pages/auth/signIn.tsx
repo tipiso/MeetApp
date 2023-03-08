@@ -33,7 +33,6 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
       username,
       password,
       onError: (error) => {
-        console.log(error);
         if (error.status === 401) methods.setError('root', { message: 'Invalid username or password' });
       },
     });

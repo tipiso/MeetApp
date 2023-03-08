@@ -9,10 +9,9 @@ const api = Axios.create({
 });
 
 api.interceptors.request.use(async (request) => {
-  const session: Session | null = await getSession();
+  const session = await getSession();
 
-  if (session && request.headers) {
-    // @ts-ignore
+  if (session && request.headers && 'accessToken' in session) {
     request.headers.Authorization = `Bearer ${session?.accessToken}`;
   }
   return request;
