@@ -2,13 +2,15 @@ import { ReactElement } from 'react';
 
 import Layout from '@/components/Layouts/Layout';
 import { getUsers } from '@/features/users/hooks/useUsers';
+import UserCard from '@/components/UserCard';
+import { User } from '@/types/users';
 
 const UsersPage = () => {
   const { data } = getUsers();
 
   return (
     <>
-      <ul>{data && data.map((user: any) => <li>{user.userName}</li>)}</ul>
+      <ul className="flex flex-wrap justify-center">{data && data.map((user: User) => <UserCard user={user} />)}</ul>
     </>
   );
 };

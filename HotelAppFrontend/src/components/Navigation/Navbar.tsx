@@ -1,9 +1,7 @@
 import NavItem from '@/components/Navigation/NavItem';
 import Link from 'next/link';
-import { routes as appRoutes } from '@/utils/routes';
+import { navRoutes, routes as appRoutes } from '@/routes';
 import { signOut, useSession } from 'next-auth/react';
-
-const routes = [{ href: 'users', text: 'Users' }];
 
 export default function Navbar() {
   const { data } = useSession();
@@ -17,7 +15,7 @@ export default function Navbar() {
       </div>
       <nav className="flex-none">
         <ul className="menu menu-horizontal px-1">
-          {routes.map((route) => (
+          {navRoutes.map((route) => (
             <NavItem key={route.href} {...route} />
           ))}
           <li tabIndex={0}>

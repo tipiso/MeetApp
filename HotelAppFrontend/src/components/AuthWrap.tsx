@@ -1,7 +1,7 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
-import { routes } from '@/utils/routes';
+import { routes } from '@/routes';
 
 export default function AuthWrap({ children }: { children?: any }) {
   const router = useRouter();

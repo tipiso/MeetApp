@@ -2,7 +2,6 @@ import Axios from 'axios';
 import { API_URL } from '@/utils/constants';
 import * as process from 'process';
 import { getSession } from 'next-auth/react';
-import { Session } from 'next-auth';
 
 const api = Axios.create({
   baseURL: `${API_URL}`,
