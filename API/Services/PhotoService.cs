@@ -33,7 +33,7 @@ namespace API.Services
                 var uploadParams = new ImageUploadParams
                 {
                     File = new FileDescription(file.FileName, stream),
-                    Transformation = new Transformation().Height(500).Width(500).Crop("Fill").Gravity("face"),
+                    Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face"),
                     Folder = "da-net7"
                 };
                 uploadResult = await _cloudinary.UploadAsync(uploadParams);
