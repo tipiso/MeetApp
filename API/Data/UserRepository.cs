@@ -59,6 +59,13 @@ namespace API.Data
             return user;
         }
 
+        public async Task<AppUser> GetUserByIdAsync(int userId)
+        {
+            var user = await _context.Users
+                .FirstOrDefaultAsync(user => user.Id == userId);
+            return user;
+        }
+
         public async Task<IEnumerable<AppUser>> GetUsersAsync()
         {
             return await _context.Users
