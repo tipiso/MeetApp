@@ -1,4 +1,5 @@
 
+using API.DTOs;
 using API.Entities;
 using API.Extensions;
 using API.Interfaces;
@@ -32,7 +33,25 @@ namespace API.Controllers
 
             if (userLike != null) return BadRequest("You already like this user");
 
-            return Ok(new UserLike { SourceUserId = sourceUserId, TargetUserId = likedUser.Id });
+            userLike = new UserLike
+            {
+                SourceUserId = sourceUserId,
+                TargetUserId = likedUser.Id
+            };
+
+            sourceUser.LikedUsers.Add(userLike);
+
+            if (await _userRepository.SaveAllAsync()) return Ok();
+
+            return BadRequest("Failed to like user");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<LikeDto>>> GetUserLikes(string predicate)
+        {
+            var users = await _likesRepository.GetUserLikes(predicate, User.GetUserId());
+
+            return Ok(users);
         }
     }
 }
