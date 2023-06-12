@@ -9,7 +9,7 @@
 
 		public int RecipientId { get; set; }
         public string RecipientUsername { get; set; }
-        public AppUser Recpient { get; set; }
+        public AppUser Recipient { get; set; }
 
 		public string Content { get; set; }
 		public DateTime? DateRead{ get; set; }
