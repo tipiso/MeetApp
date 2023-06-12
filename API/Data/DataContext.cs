@@ -34,7 +34,7 @@ namespace API.Data
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<Message>()
-                .HasOne(u => u.Recpient)
+                .HasOne(u => u.Recipient)
                 .WithMany(m => m.MessagesReceived)
                 .OnDelete(DeleteBehavior.Restrict);
 
