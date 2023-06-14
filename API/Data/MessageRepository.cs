@@ -3,16 +3,19 @@ using API.DTOs;
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using AutoMapper;
 
 namespace API.Data
 {
 	public class MessageRepository : IMessageRepository
 	{
         private readonly DataContext _context;
+        private readonly IMapper _mapper;
 
-        public MessageRepository(DataContext context)
+        public MessageRepository(DataContext context, IMapper mapper)
 		{
             _context = context;
+            _mapper = mapper;
         }
 
         public void AddMessage(Message message)
@@ -30,7 +33,7 @@ namespace API.Data
            return await _context.Messages.FindAsync(id);
         }
 
-        public Task<PagedList<MessageDto>> GetMessagesForUser()
+        public Task<PagedList<MessageDto>> GetMessagesForUser(MessageParams messageParams)
         {
             throw new NotImplementedException();
         }
