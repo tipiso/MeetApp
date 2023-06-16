@@ -85,6 +85,7 @@ namespace API.Controllers
 
             if (username == message.RecipientUsername) message.RecipientDelete = true;
             if (username == message.SenderUsername) message.SenderDeleted = true;
+
             if (message.SenderDeleted && message.RecipientDelete) _messageRepository.DeleteMessage(message);
 
             if (await _messageRepository.SaveAllAsync()) return Ok("Deleted succesfully");
