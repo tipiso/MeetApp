@@ -16,15 +16,15 @@ namespace API.Controllers
 	public class UsersController : BaseApiController
 	{
 		private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper;
+		private readonly IMapper _mapper;
 		private readonly IPhotoService _photoService;
 
-        public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
+		public UsersController(IUserRepository userRepository, IMapper mapper, IPhotoService photoService)
 		{
 			_userRepository = userRepository;
-            _mapper = mapper;
+			_mapper = mapper;
 			_photoService = photoService;
-        }
+		}
 
 		[HttpGet]
 		public async Task<ActionResult<PagedList<AppUser>>> GetUsers([FromQuery]UserParams userParams)
