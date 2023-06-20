@@ -5,6 +5,7 @@ using System.Text;
 using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using API.Data;
+using API.Enums;
 
 namespace API.Extensions
 {
@@ -32,6 +33,12 @@ namespace API.Extensions
                     };
                 }
             );
+
+            services.AddAuthorization(opt =>
+            {
+                opt.AddPolicy(Policies.RequireAdmin, policy => policy.RequireRole(Roles.Admin));
+                opt.AddPolicy(Policies.ModeratePhoto, policy => policy.RequireRole(Roles.Admin, Roles.Moderator));
+            });
 
             return services;
         }
