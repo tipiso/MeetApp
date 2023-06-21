@@ -1,7 +1,7 @@
 import { signIn } from 'next-auth/react';
 import Router from 'next/router';
 
-import { routes } from '@/utils/routes';
+import { routes } from '@/routes';
 
 type loginProps = {
   username: string;

@@ -7,6 +7,7 @@ import axios from 'axios';
 import { TOKEN_LIFE } from '@/utils/constants';
 import { loginUrl } from '@/utils/url';
 import { api } from '@/utils/axios';
+import {signalRHandlers} from "@/services/SignalR";
 
 const callbacks: {
   session: (session: any, token: any) => Promise<any>;
@@ -15,12 +16,12 @@ const callbacks: {
 } = {};
 
 callbacks.signIn = async function signIn({ user, ...rest }) {
-  console.log('signIn', user, rest);
+  const signalR = signalRHandlers();
+  signalR.createHubConnection(user);
   return true;
 };
 
 callbacks.jwt = async function jwt({ token, account, user }) {
-  console.log('JWT', token, user);
   if (user) {
     token = { accessToken: user.token, username: user.username };
   }
@@ -29,7 +30,6 @@ callbacks.jwt = async function jwt({ token, account, user }) {
 };
 
 callbacks.session = async function session({ session, token, user }) {
-  console.log('SESSION', token, user);
   session.accessToken = token.accessToken;
   session.user.name = token.username;
 
@@ -44,7 +44,6 @@ export const authOptions = {
       credentials: {},
       async authorize(credentials, req) {
         const response = await api.post(loginUrl, credentials);
-        console.log(credentials, req, 'AUTHORIZE');
         if (response.status === 200) {
           return response.data;
         } else return null;
@@ -62,6 +61,18 @@ export const authOptions = {
     signIn: '/auth/signin',
   },
   callbacks,
+  events: {
+     signOut(msg) {
+      console.log("EVENTS: SIGNOUT")
+      const signalR = signalRHandlers();
+      signalR.stopHubConnection(msg.user);
+    },
+    signIn(msg) {
+      console.log("EVENTS: SIGNIN")
+      const signalR = signalRHandlers();
+      signalR.createHubConnection(msg.user);
+    }
+  }
 };
 
 export default (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, authOptions);

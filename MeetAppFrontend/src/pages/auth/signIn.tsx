@@ -3,15 +3,13 @@ import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'nex
 import { getCsrfToken } from 'next-auth/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { signIn } from 'next-auth/react';
 import * as z from 'zod';
 
 import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
 import Button, { BtnType } from '@/components/Button';
 import Label from '@/components/Forms/Label';
 import Input from '@/components/Forms/Input';
-import { routes } from '@/utils/routes';
-import Router from 'next/router';
+import {routes} from "@/routes";
 import Link from 'next/link';
 import { login } from '@/utils/auth';
 
