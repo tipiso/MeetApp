@@ -9,7 +9,7 @@ import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
 import Button, { BtnType } from '@/components/Button';
 import Label from '@/components/Forms/Label';
 import Input from '@/components/Forms/Input';
-import {routes} from "@/routes";
+import { routes } from '@/routes';
 import Link from 'next/link';
 import { login } from '@/utils/auth';
 
