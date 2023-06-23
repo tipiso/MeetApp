@@ -4,6 +4,7 @@ import { getCsrfToken } from 'next-auth/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
+import { Form, FormMessage, FormSubmit } from '@radix-ui/react-form';
 
 import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
 import Button, { BtnType } from '@/components/Button';
@@ -26,7 +27,7 @@ const schema = z.object({
 export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
 
-  const handleSubmit = async ({ username, password }: { username: string; password: string }) => {
+  const handleSubmit = async ({ username, password }: z.infer<typeof schema>) => {
     await login({
       username,
       password,
@@ -38,18 +39,16 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col p-4 w-96">
+      <Form {...methods} onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col p-4 w-96">
         <h1 className="text-2xl mb-4">Login</h1>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
         <div className="relative mb-6">
-          <Label text="Username" htmlFor="username" />
-          <Input placeholder="Username" name="username" type="text" />
+          <Input placeholder="Username" name="username" type="text" label="Username" />
         </div>
 
         <div className="relative mb-3">
-          <Label text="Password" htmlFor="password" />
-          <Input placeholder="Password" name="password" type="password" />
+          <Input placeholder="Password" name="password" type="password" label="Username" />
         </div>
         <div className="mb-3">
           <Link className="text-blue-600 underline text-sm" href={routes.register}>
@@ -59,12 +58,14 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
         {methods.formState.errors.root && <div className="text-red-600">Invalid username or password</div>}
 
-        <div className="text-right">
-          <Button type="submit" btnType={BtnType.Primary}>
-            Sign in
-          </Button>
+        <div className="text-right w-full">
+          <FormSubmit asChild>
+            <Button type="submit" btnType={BtnType.Primary}>
+              Sign in
+            </Button>
+          </FormSubmit>
         </div>
-      </form>
+      </Form>
     </FormProvider>
   );
 }
