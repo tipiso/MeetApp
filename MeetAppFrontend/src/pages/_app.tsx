@@ -6,6 +6,7 @@ import { SessionProvider } from 'next-auth/react';
 import '@/assets/styles/tw-output.css';
 import '@/assets/styles/globals.css';
 import AuthWrap from '@/components/AuthWrap';
+import SignalRProvider from '@/utils/SignalRProvider';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -20,16 +21,18 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   const getLayout = Component.getLayout ?? ((page) => page);
 
   return (
-    <SessionProvider>
-      {getLayout(
-        Component.secured ? (
-          <AuthWrap>
+    <SessionProvider session={pageProps.session}>
+      <SignalRProvider>
+        {getLayout(
+          Component.secured ? (
+            <AuthWrap>
+              <Component {...pageProps} />
+            </AuthWrap>
+          ) : (
             <Component {...pageProps} />
-          </AuthWrap>
-        ) : (
-          <Component {...pageProps} />
-        ),
-      )}
+          ),
+        )}
+      </SignalRProvider>
     </SessionProvider>
   );
 }

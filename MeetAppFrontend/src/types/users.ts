@@ -1,5 +1,5 @@
 export type User = {
-  id: number
+  id: number;
   token: string;
   userName: string;
   age: number;
@@ -26,3 +26,13 @@ export interface Photo {
   url: string;
   isMain: boolean;
 }
+
+export type ApiUser = {
+  token: string;
+  username: string;
+};
+
+export type TokenObj = {
+  accessToken: string;
+  username: string;
+};

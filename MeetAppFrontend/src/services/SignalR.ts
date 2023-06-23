@@ -1,31 +1,29 @@
-import signalR, {HubConnection} from '@microsoft/signalr';
-import { User } from "@/types/users";
-import { HUB_URL } from "@/utils/constants";
+import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
+import { HUB_URL } from '@/utils/constants';
 
-const signalRHandlers = () => {
-    let hubConnection:HubConnection;
-    const createHubConnection = (user: User) => {
-        hubConnection = new signalR.HubConnectionBuilder()
-            .withUrl(HUB_URL + 'presence', {
-                accessTokenFactory: () => user.token
-            })
-            .withAutomaticReconnect()
-            .build();
+let hubConnection: HubConnection | undefined;
+const createHubConnection = (token: string) => {
+  hubConnection = new HubConnectionBuilder()
+    .withUrl(HUB_URL + 'presence', {
+      accessTokenFactory: () => token,
+    })
+    .withAutomaticReconnect()
+    .build();
 
-        hubConnection.start().catch(error => console.log("[SignalR] start error:", error));
-        hubConnection.on("UserIsOnline", username => {
-            console.log("USER IS ONLINE", username);
-        });
-        hubConnection.on("UserIsOffline", username => {
-            console.log("USER IS OFFLINE", username);
-        });
-    };
+  hubConnection.start().catch((error) => console.log('[SignalR] start error:', error));
+  hubConnection.on('UserIsOnline', (username) => {
+    console.log('USER IS ONLINE', username);
+  });
+  hubConnection.on('UserIsOffline', (username) => {
+    console.log('USER IS OFFLINE', username);
+  });
+  return hubConnection;
+};
 
-    const stopHubConnection = () => {
-        hubConnection.stop().catch(error => console.log("[SignalR] stop error:", error));
-    };
+const stopHubConnection = (hubConnection?: HubConnection) => {
+  if (hubConnection) {
+    hubConnection.stop().catch((error) => console.log('[SignalR] stop error:', error));
+  }
+};
 
-    return { stopHubConnection, createHubConnection };
-}
-
-export { signalRHandlers };
+export { stopHubConnection, createHubConnection, hubConnection };
