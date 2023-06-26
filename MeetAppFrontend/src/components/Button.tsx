@@ -15,22 +15,23 @@ type ButtonProps =
     } & ComponentProps<'button'>);
 
 export default function Button(props: ButtonProps) {
-  const { btnType, children } = props;
   const classes = cx('btn', {
-    'btn-primary': btnType === BtnType.Primary,
+    'btn-primary': props.btnType === BtnType.Primary,
     'pointer-events-auto rounded-md py-2 px-4 text-center font-medium shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50':
-      btnType === BtnType.Secondary,
+      props.btnType === BtnType.Secondary,
   });
 
   if ('href' in props) {
+    const { btnType, children, ...rest } = props;
     return (
-      <a {...props} className={classes}>
+      <a {...rest} className={classes}>
         {children}
       </a>
     );
   } else {
+    const { btnType, children, ...rest } = props;
     return (
-      <button {...props} className={classes}>
+      <button {...rest} className={classes}>
         {children}
       </button>
     );
