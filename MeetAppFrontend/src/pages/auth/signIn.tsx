@@ -4,11 +4,10 @@ import { getCsrfToken } from 'next-auth/react';
 import { useForm, FormProvider } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { Form, FormMessage, FormSubmit } from '@radix-ui/react-form';
+import { Form, FormSubmit } from '@radix-ui/react-form';
 
 import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
 import Button, { BtnType } from '@/components/Button';
-import Label from '@/components/Forms/Label';
 import Input from '@/components/Forms/Input';
 import { routes } from '@/routes';
 import Link from 'next/link';
