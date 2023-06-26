@@ -38,7 +38,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
   return (
     <FormProvider {...methods}>
-      <Form {...methods} onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col p-4 w-96">
+      <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col p-4 w-96">
         <h1 className="text-2xl mb-4">Login</h1>
         <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 

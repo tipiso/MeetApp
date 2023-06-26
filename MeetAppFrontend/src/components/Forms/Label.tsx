@@ -1,8 +1,8 @@
-import { LabelHTMLAttributes } from 'react';
+import { ComponentPropsWithRef } from 'react';
 import cx from 'classnames';
 import * as Form from '@radix-ui/react-form';
 
-type Props = { text: string } & LabelHTMLAttributes<HTMLLabelElement>;
+type Props = { text: string } & ComponentPropsWithRef<'label'>;
 export default function Label({ text, ...props }: Props) {
   return (
     <Form.Label

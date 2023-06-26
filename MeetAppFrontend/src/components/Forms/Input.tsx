@@ -20,6 +20,7 @@ export default function Input(props: Props) {
             <Form.Control asChild>
               <input
                 {...field}
+                autoComplete={props.type === 'password' ? 'current-password' : ''}
                 type={props.type}
                 className={cx(
                   props.className,

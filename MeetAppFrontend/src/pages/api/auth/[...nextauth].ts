@@ -32,7 +32,7 @@ callbacks.session = async function session({ session, token }) {
 };
 
 export const authOptions = {
-  secret: 'arakis',
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: 'Credentials',
