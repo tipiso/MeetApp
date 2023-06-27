@@ -10,7 +10,9 @@ const UsersPage = () => {
 
   return (
     <>
-      <ul className="flex flex-wrap justify-center">{data && data.map((user: User) => <UserCard user={user} />)}</ul>
+      <ul className="flex flex-wrap justify-center">
+        {data && data.map((user: User) => <UserCard key={user.id} user={user} />)}
+      </ul>
     </>
   );
 };
