@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useSignalR } from '@/services/SignalR';
+import { useSignalRPresence } from '@/services/useSignalRPresence';
+import { stopHubConnection } from '@/utils/signalR';
 
 type Props = {
   children: ReactNode;
@@ -8,9 +9,9 @@ type Props = {
 
 export const OnlineUsersContext = createContext<string[]>([]);
 
-export default function SignalRProvider({ children }: Props) {
+export default function SignalRPresenceProvider({ children }: Props) {
   const [onlineUsers, setOnlineUsers] = useState<string[]>([]);
-  const { createHubConnection, stopHubConnection, hubConnection } = useSignalR();
+  const { createHubConnection, hubConnection } = useSignalRPresence();
 
   const session = useSession();
 
