@@ -7,6 +7,7 @@ import '@/assets/styles/tw-output.css';
 import '@/assets/styles/globals.css';
 import AuthWrap from '@/components/AuthWrap';
 import SignalRPresenceProvider from '@/utils/SignalRPresenceProvider';
+import { Alert } from '@/components/Alert';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -32,6 +33,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
             <Component {...pageProps} />
           ),
         )}
+        <Alert />
       </SignalRPresenceProvider>
     </SessionProvider>
   );
