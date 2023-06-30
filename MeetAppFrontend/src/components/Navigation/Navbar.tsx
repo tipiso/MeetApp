@@ -18,8 +18,8 @@ export default function Navbar() {
           {navRoutes.map((route) => (
             <NavItem key={route.href} {...route} />
           ))}
-          <li tabIndex={0}>
-            <a>
+          <li className="dropdown" tabIndex={0}>
+            <label tabIndex={0}>
               {data?.user?.name}
               <svg
                 className="fill-current"
@@ -30,8 +30,8 @@ export default function Navbar() {
               >
                 <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
               </svg>
-            </a>
-            <ul className="p-2 bg-base-100">
+            </label>
+            <ul tabIndex={0} className="menu dropdown-content z-[1] p-2 shadow bg-base-100 rounded-box w-52 mt-4">
               <li onClick={() => signOut({ callbackUrl: appRoutes.signin })}>
                 <a>Log out</a>
               </li>
