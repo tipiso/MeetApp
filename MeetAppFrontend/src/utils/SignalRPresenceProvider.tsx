@@ -23,12 +23,6 @@ export default function SignalRPresenceProvider({ children }: Props) {
     if (session.status === 'unauthenticated' && hubConnection) {
       stopHubConnection(hubConnection);
     }
-
-    return () => {
-      if (hubConnection) {
-        stopHubConnection(hubConnection);
-      }
-    };
   }, [session.status]);
 
   useEffect(() => {

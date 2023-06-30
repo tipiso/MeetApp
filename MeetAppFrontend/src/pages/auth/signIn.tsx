@@ -7,11 +7,12 @@ import * as z from 'zod';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 
 import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
-import Button, { BtnType } from '@/components/Button';
+import Button from '@/components/Button';
 import Input from '@/components/Forms/Input';
 import { routes } from '@/routes';
 import Link from 'next/link';
 import { login } from '@/utils/auth';
+import { ColorTypeEnum } from '@/utils/constants';
 
 const defaultValues = {
   username: '',
@@ -59,7 +60,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
         <div className="text-right w-full">
           <FormSubmit asChild>
-            <Button type="submit" btnType={BtnType.Primary}>
+            <Button type="submit" btnType={ColorTypeEnum.PRIMARY}>
               Sign in
             </Button>
           </FormSubmit>
