@@ -1,22 +1,9 @@
-import { ReactElement, useEffect } from 'react';
+import { ReactElement } from 'react';
 import Layout from '@/components/Layouts/Layout';
-import { useRouter } from 'next/router';
-import { getUser } from '@/features/users/hooks';
-import { useSignalRChatRoom } from '@/services/useSignalRChatRoom';
-import { useSession } from 'next-auth/react';
+import useUserPage from '@/features/users/hooks/useUserPage';
 
 const UserPage = () => {
-  const { query } = useRouter();
-  const { data } = useSession();
-  const isUserDefined = 'username' in query;
-  const { data: user, isLoading } = getUser(isUserDefined ? (query.username as string) : '');
-  const { createHubConnection, hubConnection } = useSignalRChatRoom();
-
-  useEffect(() => {
-    if (!hubConnection && !!data && !!user) {
-      createHubConnection(data.accessToken, user.userName);
-    }
-  }, [hubConnection, user]);
+  const { isLoading, user } = useUserPage();
 
   if (isLoading || !user) return <div>Loading...</div>;
 

@@ -1,7 +1,6 @@
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { HUB_URL } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { User } from '@/types/users';
 import { stopHubConnection } from '@/utils/signalR';
 
 const useSignalRChatRoom = () => {
