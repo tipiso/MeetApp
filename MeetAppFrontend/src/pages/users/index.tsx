@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import Layout from '@/components/Layouts/Layout';
-import { getUsers } from '@/features/users/hooks/useUsers';
+import { getUsers } from '@/features/users/hooks';
 import UserCard from '@/components/UserCard';
 import { User } from '@/types/users';
 
