@@ -7,7 +7,6 @@ const usersQueryKeys = {
   usersList: () => usersQueryKeys.users + '/list',
 };
 const getUsersService = () => api.get<User[]>(usersUrl);
-
-const getUserService = (userName: string) => api.get<User>(userName);
+const getUserService = (username: string) => api.get<User>(`${usersQueryKeys.users}/${username}`);
 
 export { getUsersService, getUserService, usersQueryKeys };
