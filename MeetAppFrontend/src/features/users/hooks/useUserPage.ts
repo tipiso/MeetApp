@@ -10,6 +10,7 @@ const useUserPage = () => {
   const { data } = useSession();
   const isUserDefined = 'username' in query;
   const { data: user, isLoading } = getUser(isUserDefined ? (query.username as string) : '');
+  /**TODO: Will have to move whole chat connection to messages tab / component */
   const { createHubConnection, hubConnection } = useSignalRChatRoom();
 
   useEffect(() => {
