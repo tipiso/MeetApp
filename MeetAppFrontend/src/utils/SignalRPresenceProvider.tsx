@@ -27,6 +27,10 @@ export default function SignalRPresenceProvider({ children }: Props) {
 
   useEffect(() => {
     if (hubConnection) {
+      hubConnection.on('NewMessageReceived', ({ username, knownAs }) => {
+        console.log('USER SENT YOU A MSG', username);
+      });
+
       hubConnection.on('UserIsOnline', (username) => {
         console.log('USER IS ONLINE', username);
       });
