@@ -12,13 +12,14 @@ type ButtonProps =
     } & ComponentProps<'button'>);
 
 export default function Button(props: ButtonProps) {
-  const classes = cx('btn', {
+  const isAnchor = 'href' in props;
+  const classes = cx('btn', props.className, {
     'btn-primary': props.btnType === ColorTypeEnum.PRIMARY,
     'pointer-events-auto rounded-md py-2 px-4 text-center font-medium shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50':
       props.btnType === ColorTypeEnum.SECONDARY,
   });
 
-  if ('href' in props) {
+  if (isAnchor) {
     const { btnType, children, ...rest } = props;
     return (
       <a {...rest} className={classes}>
