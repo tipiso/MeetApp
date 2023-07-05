@@ -2,6 +2,12 @@
 module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    backgroundImage: {
+      grayBg: "url('../images/GrayBG.png')",
+      headerGirl: "url('../images/HappyGirl.png')",
+      pinkHeaderFigure: "url('../images/PinkHeaderFigure.png')",
+      blueHeaderFigure: "url('../images/BlueHeaderFigure.png')",
+    },
     colors: {
       gray50: '#F9F9F9',
       gray100: '#666666',
@@ -15,6 +21,6 @@ module.exports = {
   },
   plugins: [require('daisyui')],
   daisyui: {
-    themes: ['luxury'],
+    themes: [],
   },
 };
