@@ -18,6 +18,9 @@ module.exports = {
     fontFamily: {
       sans: ['Poppins', 'Arial', 'sans-serif'],
     },
+    screens: {
+      xl: '1440px',
+    },
   },
   plugins: [require('daisyui')],
   daisyui: {
