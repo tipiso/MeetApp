@@ -13,11 +13,13 @@ type ButtonProps =
 
 export default function Button(props: ButtonProps) {
   const isAnchor = 'href' in props;
-  const classes = cx('btn', props.className, {
-    'btn-primary': props.btnType === ColorTypeEnum.PRIMARY,
-    'pointer-events-auto rounded-md py-2 px-4 text-center font-medium shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50':
-      props.btnType === ColorTypeEnum.SECONDARY,
-  });
+  const classes = cx(
+    'pointer-events-auto rounded-md py-3 px-6 text-center font-medium shadow-sm ring-1 ring-slate-700/10 hover:bg-slate-50',
+    props.className,
+    {
+      'bg-blue': props.btnType === ColorTypeEnum.PRIMARY,
+    },
+  );
 
   if (isAnchor) {
     const { btnType, children, ...rest } = props;

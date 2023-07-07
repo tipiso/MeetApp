@@ -1,6 +1,7 @@
 import { ReactElement } from 'react';
 import Layout from '@/components/Layouts/Layout';
 import Button from '@/components/Button';
+import { ColorTypeEnum } from '@/utils/constants';
 
 export default function HomePage() {
   return (
@@ -12,12 +13,14 @@ export default function HomePage() {
           <p className="text-xl pt-[60px]">
             Meet people who share the same passions as you. Who knows? Maybe you'll create amazing insights together.
           </p>
-          <Button className="mt-10 self-start">Create account and check it!</Button>
+          <Button className="mt-10 self-start" btnType={ColorTypeEnum.PRIMARY}>
+            Create account and check it!
+          </Button>
         </div>
         <div className="relative w-1/2 h-[720px]">
           <div className="bg-headerGirl h-full w-full absolute top-0 bg-no-repeat"></div>
-          <div className="bg-blueHeaderFigure h-full absolute w-full top-0 -z-10 bg-no-repeat"></div>
-          <div className="bg-pinkHeaderFigure h-[280px] absolute"></div>
+          <div className="bg-blueHeaderFigure h-full absolute w-full top-[125px] -z-[9] bg-no-repeat"></div>
+          <div className="bg-pinkHeaderFigure w-full h-[280px]  absolute bg-no-repeat -z-10"></div>
         </div>
       </section>
     </div>
