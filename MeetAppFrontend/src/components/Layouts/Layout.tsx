@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps) {
       <main className="flex w-full xl:container flex-col min-h-screen">
         <Navbar />
 
-        <div className="mt-5">{children}</div>
+        <div className="flex mt-5 flex-auto">{children}</div>
 
         <footer className="flex justify-center items-center w-full h-16 bg-pink mt-auto">
           <span className="text-sm">All rights reserved</span>

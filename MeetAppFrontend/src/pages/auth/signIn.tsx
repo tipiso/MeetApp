@@ -13,6 +13,7 @@ import { routes } from '@/routes';
 import Link from 'next/link';
 import { login } from '@/utils/auth';
 import { ColorTypeEnum } from '@/utils/constants';
+import Layout from '@/components/Layouts/Layout';
 
 const defaultValues = {
   username: '',
@@ -38,40 +39,49 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
   };
 
   return (
-    <FormProvider {...methods}>
-      <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col p-4 w-96">
-        <h1 className="text-2xl mb-4">Login</h1>
-        <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
+    <div className="flex items-center pl-12">
+      <section className="flex flex-col justify-center">
+        <h1 className="text-3xl font-bold pb-[70px]">Log in</h1>
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col w-96">
+            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
-        <div className="relative mb-6">
-          <Input placeholder="Username" name="username" type="text" label="Username" />
-        </div>
+            <div className="relative mb-6">
+              <Input placeholder="Username" name="username" type="text" label="Username" />
+            </div>
 
-        <div className="relative mb-3">
-          <Input placeholder="Password" name="password" type="password" label="Username" />
-        </div>
-        <div className="mb-3">
-          <Link className="text-blue-600 underline text-sm" href={routes.register}>
-            Don't have an account? Register here.
-          </Link>
-        </div>
+            <div className="relative mb-3">
+              <Input placeholder="Password" name="password" type="password" label="Username" />
+            </div>
 
-        {methods.formState.errors.root && <div className="text-red-600">Invalid username or password</div>}
+            {methods.formState.errors.root && <div className="text-red-600">Invalid username or password</div>}
 
-        <div className="text-right w-full">
-          <FormSubmit asChild>
-            <Button type="submit" btnType={ColorTypeEnum.PRIMARY}>
-              Sign in
-            </Button>
-          </FormSubmit>
-        </div>
-      </Form>
-    </FormProvider>
+            <div className="text-center w-full pt-[50px]">
+              <FormSubmit asChild>
+                <Button className="w-1/2" type="submit" btnType={ColorTypeEnum.PRIMARY}>
+                  Sign in
+                </Button>
+              </FormSubmit>
+            </div>
+
+            <div className="flex flex-col w-full pt-[50px]">
+              <div className="divider after:bg-gray50 before:bg-gray50"></div>
+            </div>
+
+            <div className="mb-3">
+              <Link className="text-blue-600 text-xs font-light" href={routes.register}>
+                Don't have an account? <span className="underline">Sign up.</span>
+              </Link>
+            </div>
+          </Form>
+        </FormProvider>
+      </section>
+    </div>
   );
 }
 
 SignIn.getLayout = function getLayout(page: ReactElement) {
-  return <BlankCenteredLayout>{page}</BlankCenteredLayout>;
+  return <Layout>{page}</Layout>;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
