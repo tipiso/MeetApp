@@ -33,10 +33,12 @@ export default function SignalRPresenceProvider({ children }: Props) {
 
       hubConnection.on('UserIsOnline', (username) => {
         console.log('USER IS ONLINE', username);
+        setOnlineUsers([...onlineUsers, username]);
       });
 
       hubConnection.on('UserIsOffline', (username) => {
         console.log('USER IS OFFLINE', username);
+        setOnlineUsers(onlineUsers.filter((u) => u !== username));
       });
 
       hubConnection.on('GetOnlineUsers', (usernames) => {

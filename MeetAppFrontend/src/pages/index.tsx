@@ -5,10 +5,9 @@ import { ColorTypeEnum } from '@/utils/constants';
 
 export default function HomePage() {
   return (
-    <div className="relative pl-12">
-      <div className="w-full bg-no-repeat  h-[782px] max-w-[1440px] -z-10 absolute -top-[180px] left-0 bg-grayBg bg-cover" />
-      <section className="w-full flex">
-        <div className="w-1/2 flex flex-col justify-center">
+    <div className="flex relative pl-12">
+      <section className="w-full flex pt-28">
+        <div className="w-1/2 flex flex-col pt-20">
           <h1 className="text-3xl font-bold">Meet people in your area</h1>
           <p className="text-xl pt-[60px]">
             Meet people who share the same passions as you. Who knows? Maybe you'll create amazing insights together.
