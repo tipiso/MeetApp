@@ -3,6 +3,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { getUser } from '@/features/users/hooks/index';
 import { useSignalRChatRoom } from '@/services/useSignalRChatRoom';
+import { Group } from '@/types/signalR';
 
 const useUserPage = () => {
   const [messages, setMessages] = useState([]);
@@ -24,6 +25,14 @@ const useUserPage = () => {
       hubConnection.on('ReceiveMessageThread', (messages) => {
         setMessages(messages);
         console.log('USER WROTE A MESSAGE', messages);
+      });
+
+      hubConnection.on('UpdatedGroup', (group: Group) => {
+        console.log('Updated group', group);
+      });
+
+      hubConnection.on('NewMessage', (message) => {
+        console.log('New message', message);
       });
     }
   }, [hubConnection]);

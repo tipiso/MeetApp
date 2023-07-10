@@ -43,7 +43,7 @@ export default function Navbar() {
             </li>
           </ul>
         ) : (
-          <Link href={appRoutes.signin} className="font-bold">
+          <Link href={appRoutes.signin} className="font-bold text-sm">
             Log In
           </Link>
         )}

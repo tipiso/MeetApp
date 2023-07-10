@@ -40,7 +40,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
   return (
     <>
-      <section className="flex flex-col justify-center pl-5">
+      <section className="flex flex-col justify-center pl-12">
         <h1 className="text-3xl font-bold pb-[70px]">Log in</h1>
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col w-96">
@@ -76,11 +76,9 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
           </Form>
         </FormProvider>
       </section>
-      <section className="relative w-full flex-grow pl-4">
-        <div
-          style={{ backgroundPositionY: '90px' }}
-          className="bg-signUpImg bg-no-repeat  h-full max-w-[1440px] bg-cover"
-        ></div>
+
+      <section className="relative w-full flex-grow pl-4 overflow-hidden">
+        <div className="bg-signUpImg bg-no-repeat  h-full max-w-[1440px] bg-cover"></div>
       </section>
     </>
   );
