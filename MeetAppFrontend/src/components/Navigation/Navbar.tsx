@@ -9,7 +9,8 @@ export default function Navbar() {
   const { data } = useSession();
 
   return (
-    <header className="navbar bg-base-100 pt-12 px-12">
+    <header className="navbar bg-base-100 pt-12 px-12 relative">
+      <div className="w-full bg-no-repeat  h-[782px] max-w-[1440px] -z-10 absolute left-0 top-0 bg-grayBg bg-cover" />
       <div className="flex-1">
         <Link className="h-6 normal-case text-xl relative w-32 disabled:hover" href={appRoutes.home}>
           <Image fill src={Logo} alt="meetApp logo" />
@@ -42,7 +43,9 @@ export default function Navbar() {
             </li>
           </ul>
         ) : (
-          <Link href={appRoutes.signin}>Log In</Link>
+          <Link href={appRoutes.signin} className="font-bold">
+            Log In
+          </Link>
         )}
       </nav>
     </header>

@@ -7,6 +7,7 @@ module.exports = {
       headerGirl: "url('../images/HappyGirl.png')",
       pinkHeaderFigure: "url('../images/PinkHeaderFigure.png')",
       blueHeaderFigure: "url('../images/BlueHeaderFigure.png')",
+      signUpImg: "url('../images/SignUpImg.png')",
     },
     colors: {
       gray50: '#F9F9F9',
