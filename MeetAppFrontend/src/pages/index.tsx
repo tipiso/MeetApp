@@ -2,6 +2,7 @@ import { ReactElement } from 'react';
 import Layout from '@/components/Layouts/Layout';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
+import { routes } from '@/routes';
 
 export default function HomePage() {
   return (
@@ -12,7 +13,8 @@ export default function HomePage() {
           <p className="text-xl pt-[60px]">
             Meet people who share the same passions as you. Who knows? Maybe you'll create amazing insights together.
           </p>
-          <Button className="mt-10 self-start" btnType={ColorTypeEnum.PRIMARY}>
+
+          <Button href={routes.register} className="mt-10 self-start" btnType={ColorTypeEnum.PRIMARY}>
             Create account and check it!
           </Button>
         </div>

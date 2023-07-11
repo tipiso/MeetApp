@@ -2,15 +2,18 @@ import { ReactElement } from 'react';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
+import { Form, FormSubmit } from '@radix-ui/react-form';
 
-import Label from '@/components/Forms/Label';
 import Input from '@/components/Forms/Input';
-import Button, { BtnType } from '@/components/Button';
-import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
+import Button from '@/components/Button';
 import { registerUrl } from '@/utils/url';
 import { login } from '@/utils/auth';
 import { api } from '@/utils/axios';
 import { transformErrorsToStringArr } from '@/utils/helpers';
+import LoginLayout from '@/components/Layouts/LoginLayout';
+import { ColorTypeEnum } from '@/utils/constants';
+import Link from 'next/link';
+import { routes } from '@/routes';
 
 const defaultValues = {
   username: '',
@@ -55,45 +58,76 @@ export default function Register() {
   };
 
   return (
-    <FormProvider {...methods}>
-      <form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col p-4 w-96">
-        <h1 className="text-2xl mb-4">Register</h1>
-
-        <div className="relative mb-6">
-          <Label text="Username" htmlFor="username" />
-          <Input placeholder="Username" name="username" type="text" />
-        </div>
-
-        <div className="relative mb-6">
-          <Label text="Password" htmlFor="password" />
-          <Input placeholder="Password" name="password" type="password" />
-        </div>
-
-        <div className="relative mb-6">
-          <Label text="Confirm Password" htmlFor="confirmPassword" />
-          <Input placeholder="Confirm Password" name="confirmPassword" type="password" />
-        </div>
-
-        {methods.formState.errors.root && Array.isArray(methods.formState.errors.root.message) ? (
-          methods.formState.errors.root.message.map((error) => (
-            <div key={error} className="text-red-600">
-              {error}
+    <>
+      <section className="flex flex-col justify-center pl-12">
+        <h1 className="text-3xl font-bold pb-[70px]">Register</h1>
+        <FormProvider {...methods}>
+          <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col w-96">
+            <div className="relative mb-6">
+              <Input placeholder="Username" name="username" type="text" label="Username" />
             </div>
-          ))
-        ) : (
-          <div className="text-red-600">{methods.formState.errors.root?.message}</div>
-        )}
 
-        <div className="text-right">
-          <Button type="submit" btnType={BtnType.Primary}>
-            Register
-          </Button>
-        </div>
-      </form>
-    </FormProvider>
+            <div className="relative mb-6">
+              <Input placeholder="Phone number" name="phone" type="text" label="Phone number" />
+            </div>
+
+            <div className="relative mb-6">
+              <Input placeholder="Password" name="password" type="password" label="Password" />
+            </div>
+
+            <div className="relative mb-6">
+              <Input placeholder="Confirm Password" name="confirmPassword" type="password" label="Confirm Password" />
+            </div>
+
+            {methods.formState.errors.root && Array.isArray(methods.formState.errors.root.message) ? (
+              methods.formState.errors.root.message.map((error) => (
+                <div key={error} className="text-red-600">
+                  {error}
+                </div>
+              ))
+            ) : (
+              <div className="text-red-600">{methods.formState.errors.root?.message}</div>
+            )}
+
+            <div className="form-control mb-3">
+              <label className="label cursor-pointer">
+                <input type="checkbox" checked={true} className="checkbox mr-2" />
+                <span className="label-text text-xs font-light">
+                  I accept the Terms and Conditions and have read the Privacy Policy.{' '}
+                  <span className="underline">Read more</span>
+                </span>
+              </label>
+            </div>
+
+            <div className="text-center">
+              <FormSubmit asChild>
+                <Button className="w-1/2" type="submit" btnType={ColorTypeEnum.PRIMARY}>
+                  Register
+                </Button>
+              </FormSubmit>
+            </div>
+
+            <div className="flex flex-col w-full pt-[50px]">
+              <div className="divider after:h-[1px] after:bg-gray50 before:h-[1px] before:bg-gray50"></div>
+            </div>
+
+            <div className="mb-3">
+              <Link className="text-blue-600 text-xs font-light" href={routes.register}>
+                Already have an account?{' '}
+                <Link href={routes.signin} className="underline">
+                  Log in
+                </Link>
+              </Link>
+            </div>
+          </Form>
+        </FormProvider>
+      </section>
+
+      <section></section>
+    </>
   );
 }
 
 Register.getLayout = function getLayout(page: ReactElement) {
-  return <BlankCenteredLayout>{page}</BlankCenteredLayout>;
+  return <LoginLayout>{page}</LoginLayout>;
 };
