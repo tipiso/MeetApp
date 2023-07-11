@@ -6,14 +6,13 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 
-import BlankCenteredLayout from '@/components/Layouts/BlankCenteredLayout';
 import Button from '@/components/Button';
 import Input from '@/components/Forms/Input';
 import { routes } from '@/routes';
 import Link from 'next/link';
 import { login } from '@/utils/auth';
 import { ColorTypeEnum } from '@/utils/constants';
-import Layout from '@/components/Layouts/Layout';
+import LoginLayout from '@/components/Layouts/LoginLayout';
 
 const defaultValues = {
   username: '',
@@ -51,7 +50,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
             </div>
 
             <div className="relative mb-3">
-              <Input placeholder="Password" name="password" type="password" label="Username" />
+              <Input placeholder="Password" name="password" type="password" label="Password" />
             </div>
 
             {methods.formState.errors.root && <div className="text-red-600">Invalid username or password</div>}
@@ -77,15 +76,15 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
         </FormProvider>
       </section>
 
-      <section className="relative w-full flex-grow pl-4 overflow-hidden">
-        <div className="bg-signUpImg bg-no-repeat  h-full max-w-[1440px] bg-cover"></div>
+      <section className="relative w-full flex-grow pl-4">
+        <div className="bg-signUpImg bg-no-repeat  h-full max-w-[1440px] bg-cover relative -top-[245px]"></div>
       </section>
     </>
   );
 }
 
 SignIn.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return <LoginLayout>{page}</LoginLayout>;
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
