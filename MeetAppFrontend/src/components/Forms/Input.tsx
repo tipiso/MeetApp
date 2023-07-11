@@ -3,6 +3,7 @@ import cx from 'classnames';
 import * as Form from '@radix-ui/react-form';
 import { Controller, useFormContext } from 'react-hook-form';
 import Label from '@/components/Forms/Label';
+import clsx from 'clsx';
 
 type Props = { name: string; label?: string } & InputHTMLAttributes<HTMLInputElement>;
 export default function Input(props: Props) {
@@ -20,9 +21,15 @@ export default function Input(props: Props) {
             <Form.Control asChild>
               <input
                 {...field}
+                placeholder={props.placeholder}
                 autoComplete={props.type === 'password' ? 'current-password' : ''}
                 type={props.type}
-                className={cx(props.className, 'input w-full')}
+                className={cx(props.className, 'input w-full', {
+                  'border-t-0 border-l-0 border-r-0 rounded-none p-0 focus:outline-0 focus:border-b-secondary': [
+                    'text',
+                    'password',
+                  ].includes(props.type ?? 'text'),
+                })}
               />
             </Form.Control>
 
