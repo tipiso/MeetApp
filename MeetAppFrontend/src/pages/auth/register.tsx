@@ -112,12 +112,12 @@ export default function Register() {
             </div>
 
             <div className="mb-3">
-              <Link className="text-blue-600 text-xs font-light" href={routes.register}>
-                Already have an account?{' '}
+              <span className="text-blue-600 text-xs font-light">
+                Already have an account?
                 <Link href={routes.signin} className="underline">
                   Log in
                 </Link>
-              </Link>
+              </span>
             </div>
           </Form>
         </FormProvider>
