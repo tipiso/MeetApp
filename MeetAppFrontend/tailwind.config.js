@@ -8,6 +8,7 @@ module.exports = {
       pinkHeaderFigure: "url('../images/PinkHeaderFigure.png')",
       blueHeaderFigure: "url('../images/BlueHeaderFigure.png')",
       signUpImg: "url('../images/SignUpImg.png')",
+      registerImg: "url('../images/RegisterImg.png')",
     },
     colors: {
       gray50: '#F9F9F9',

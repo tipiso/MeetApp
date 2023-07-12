@@ -114,7 +114,7 @@ export default function Register() {
             <div className="mb-3">
               <span className="text-blue-600 text-xs font-light">
                 Already have an account?
-                <Link href={routes.signin} className="underline">
+                <Link href={routes.signin} className="ml-1 underline">
                   Log in
                 </Link>
               </span>
@@ -123,7 +123,9 @@ export default function Register() {
         </FormProvider>
       </section>
 
-      <section></section>
+      <section className="relative w-full flex-grow pl-4">
+        <div className="relative -top-[245px]  h-full max-w-[1440px] bg-registerImg bg-cover bg-no-repeat"></div>
+      </section>
     </>
   );
 }
