@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
-import { useSignalRPresence } from '@/services/useSignalRPresence';
-import { stopHubConnection } from '@/utils/signalR';
+import { useSignalRPresence } from '@/services/SignalR/useSignalRPresence';
+import { stopHubConnection } from '@/services/SignalR/signalR';
 
 type Props = {
   children: ReactNode;

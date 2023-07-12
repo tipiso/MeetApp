@@ -16,12 +16,12 @@ export default function Layout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full xl:container flex-col min-h-screen">
+      <main className="flex min-h-screen w-full flex-col xl:container">
         <Navbar />
 
-        <div className="flex mt-5 flex-auto">{children}</div>
+        <div className="mt-5 flex flex-auto">{children}</div>
 
-        <footer className="flex justify-center items-center w-full h-16 bg-pink mt-auto">
+        <footer className="mt-auto flex h-16 w-full items-center justify-center bg-pink">
           <span className="text-sm">All rights reserved</span>
         </footer>
       </main>

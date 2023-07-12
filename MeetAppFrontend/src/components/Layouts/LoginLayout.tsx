@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navigation/Navbar';
 import Link from 'next/link';
-import { routes as appRoutes } from '@/routes';
+import { routes as appRoutes } from '@/utils/routes';
 import Image from 'next/image';
 import Logo from '@/assets/images/Logo.svg';
 
@@ -20,19 +20,19 @@ export default function LoginLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex w-full xl:container flex-col min-h-screen">
-        <header className="navbar bg-base-100 pt-12 px-12 relative">
-          <div className="w-full bg-no-repeat  h-[782px] max-w-[1440px] -z-10 absolute left-0 top-0 bg-grayBg bg-cover" />
+      <main className="flex min-h-screen w-full flex-col xl:container">
+        <header className="navbar relative bg-base-100 px-12 pt-12">
+          <div className="absolute left-0  top-0 -z-10 h-[782px] w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
           <div className="flex-1">
-            <Link className="h-6 normal-case text-xl relative w-32 disabled:hover" href={appRoutes.home}>
+            <Link className="relative h-6 w-32 text-xl normal-case disabled:hover" href={appRoutes.home}>
               <Image fill src={Logo} alt="meetApp logo" />
             </Link>
           </div>
         </header>
 
-        <div className="flex mt-5 flex-auto">{children}</div>
+        <div className="mt-5 flex flex-auto">{children}</div>
 
-        <footer className="flex justify-center items-center w-full h-16 bg-pink mt-auto">
+        <footer className="mt-auto flex h-16 w-full items-center justify-center bg-pink">
           <span className="text-sm">All rights reserved</span>
         </footer>
       </main>

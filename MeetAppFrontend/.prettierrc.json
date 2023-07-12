@@ -5,5 +5,9 @@
   "singleQuote": true,
   "arrowParens": "always",
   "endOfLine": "lf",
-  "printWidth": 120
+  "printWidth": 120,
+  "plugins": [
+    "./node_modules/prettier-plugin-tailwindcss"
+  ],
+  "pluginSearchDirs": false
 }
