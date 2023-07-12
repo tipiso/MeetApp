@@ -7,7 +7,7 @@ export default function Label({ text, ...props }: Props) {
   return (
     <Form.Label
       {...props}
-      className={cx('block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300', props.className)}
+      className={cx('text-gray-900 dark:text-gray-300 mb-2 block text-sm font-medium', props.className)}
     >
       {text}
     </Form.Label>

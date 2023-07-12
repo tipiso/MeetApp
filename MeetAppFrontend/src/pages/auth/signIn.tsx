@@ -8,9 +8,9 @@ import { Form, FormSubmit } from '@radix-ui/react-form';
 
 import Button from '@/components/Button';
 import Input from '@/components/Forms/Input';
-import { routes } from '@/routes';
+import { routes } from '@/utils/routes';
 import Link from 'next/link';
-import { login } from '@/utils/auth';
+import { login } from '@/services/Auth/auth';
 import { ColorTypeEnum } from '@/utils/constants';
 import LoginLayout from '@/components/Layouts/LoginLayout';
 
@@ -40,9 +40,9 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
   return (
     <>
       <section className="flex flex-col justify-center pl-12">
-        <h1 className="text-3xl font-bold pb-[70px]">Log in</h1>
+        <h1 className="pb-[70px] text-3xl font-bold">Log in</h1>
         <FormProvider {...methods}>
-          <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex flex-col w-96">
+          <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex w-96 flex-col">
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
             <div className="relative mb-6">
@@ -55,7 +55,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
             {methods.formState.errors.root && <div className="text-red-600">Invalid username or password</div>}
 
-            <div className="text-center w-full pt-[50px]">
+            <div className="w-full pt-[50px] text-center">
               <FormSubmit asChild>
                 <Button className="w-1/2" type="submit" btnType={ColorTypeEnum.PRIMARY}>
                   Sign in
@@ -63,8 +63,8 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
               </FormSubmit>
             </div>
 
-            <div className="flex flex-col w-full pt-[50px]">
-              <div className="divider after:h-[1px] after:bg-gray50 before:h-[1px] before:bg-gray50"></div>
+            <div className="flex w-full flex-col pt-[50px]">
+              <div className="divider before:h-[1px] before:bg-gray50 after:h-[1px] after:bg-gray50"></div>
             </div>
 
             <div className="mb-3">
@@ -77,7 +77,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
       </section>
 
       <section className="relative w-full flex-grow pl-4">
-        <div className="bg-signUpImg bg-no-repeat  h-full max-w-[1440px] bg-cover relative -top-[245px]"></div>
+        <div className="relative -top-[245px]  h-full max-w-[1440px] bg-signUpImg bg-cover bg-no-repeat"></div>
       </section>
     </>
   );

@@ -25,7 +25,7 @@ export default function Input(props: Props) {
                 autoComplete={props.type === 'password' ? 'current-password' : ''}
                 type={props.type}
                 className={cx(props.className, 'input w-full', {
-                  'border-t-0 border-l-0 border-r-0 rounded-none p-0 focus:outline-0 focus:border-b-secondary': [
+                  'rounded-none border-t-0 border-l-0 border-r-0 p-0 focus:border-b-secondary focus:outline-0': [
                     'text',
                     'password',
                   ].includes(props.type ?? 'text'),

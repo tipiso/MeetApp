@@ -2,7 +2,7 @@ import { User } from '@/types/users';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
-import { OnlineUsersContext } from '@/utils/SignalRPresenceProvider';
+import { OnlineUsersContext } from '@/services/SignalR/SignalRPresenceProvider';
 import { userUrl } from '@/utils/url';
 
 type Props = {

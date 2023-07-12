@@ -1,15 +1,15 @@
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { HUB_URL } from '@/utils/constants';
 import { useEffect, useState } from 'react';
-import { stopHubConnection } from '@/utils/signalR';
+import { stopHubConnection } from '@/services/SignalR/signalR';
 
-const useSignalRPresence = () => {
+const useSignalRChatRoom = () => {
   const [hubConnection, setHubConnection] = useState<HubConnection>();
-  const createHubConnection = (token: string) => {
+  const createHubConnection = (userToken: string, otherUsername: string) => {
     setHubConnection(
       new HubConnectionBuilder()
-        .withUrl(HUB_URL + 'presence', {
-          accessTokenFactory: () => token,
+        .withUrl(HUB_URL + `message?user=${otherUsername}`, {
+          accessTokenFactory: () => userToken,
         })
         .withAutomaticReconnect()
         .build(),
@@ -31,4 +31,4 @@ const useSignalRPresence = () => {
   return { createHubConnection, hubConnection };
 };
 
-export { useSignalRPresence };
+export { useSignalRChatRoom };
