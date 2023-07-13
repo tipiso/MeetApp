@@ -6,14 +6,11 @@ import { Form, FormSubmit } from '@radix-ui/react-form';
 
 import Input from '@/components/Forms/Input';
 import Button from '@/components/Button';
-import { registerUrl } from '@/utils/url';
-import { login } from '@/services/Auth/auth';
-import { api } from '@/utils/axios';
-import { transformErrorsToStringArr } from '@/utils/helpers';
 import LoginLayout from '@/components/Layouts/LoginLayout';
 import { ColorTypeEnum } from '@/utils/constants';
 import Link from 'next/link';
 import { routes } from '@/utils/routes';
+import { register } from '@/services/Auth/register';
 
 const defaultValues = {
   username: '',
@@ -37,24 +34,8 @@ export default function Register() {
   const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
 
   const handleSubmit = async (data: typeof defaultValues) => {
-    try {
-      const response = await api.post(registerUrl, data);
-      if (response.status === 200) {
-        login({ username: data.username, password: data.password });
-      }
-    } catch (e) {
-      const axiosError = e as any;
-      let formError;
-
-      if (axiosError.response?.status === 400) {
-        if (axiosError.response && axiosError.response.data && typeof axiosError.response.data != 'string') {
-          formError = transformErrorsToStringArr(axiosError.response.data.errors);
-        } else {
-          formError = axiosError.response.data;
-        }
-        methods.setError('root', { message: formError as string });
-      }
-    }
+    const response = await register(data);
+    if (typeof response == 'string') methods.setError('root', { message: response });
   };
 
   return (

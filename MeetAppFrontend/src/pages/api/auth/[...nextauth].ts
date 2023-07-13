@@ -1,12 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import CredentialsProvider from 'next-auth/providers/credentials';
-import NextAuth, { Account, Session, SessionStrategy, CallbacksOptions } from 'next-auth';
+import NextAuth, { Account, Session, SessionStrategy, AuthOptions } from 'next-auth';
 
 import { TOKEN_LIFE } from '@/utils/constants';
 import { loginUrl } from '@/utils/url';
 import { api } from '@/utils/axios';
 import { Metadata } from 'next/dist/lib/metadata/types/metadata-interface';
-import { ApiUser, TokenObj } from '@/types/users';
+import { ApiUser, TokenObj } from '@/features/users/types';
 
 const callbacks: {
   session?: (params: { session: Session; token: TokenObj }) => Promise<Session>;
@@ -55,8 +55,8 @@ export const authOptions = {
   pages: {
     signIn: '/auth/signin',
   },
+
   callbacks,
 };
 
-// @ts-ignore
-export default (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, authOptions);
+export default (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, authOptions as AuthOptions);
