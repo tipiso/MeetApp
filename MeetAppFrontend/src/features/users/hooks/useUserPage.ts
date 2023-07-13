@@ -3,10 +3,11 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import { getUser } from '@/features/users/hooks/index';
 import { useSignalRChatRoom } from '@/services/SignalR/useSignalRChatRoom';
-import { Group } from '@/types/signalR';
+import { Group } from '@/services/SignalR/types';
+import { Message } from '@/features/messages/types';
 
 const useUserPage = () => {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const { query } = useRouter();
   const { data } = useSession();
   const isUserDefined = 'username' in query;
@@ -28,7 +29,16 @@ const useUserPage = () => {
       });
 
       hubConnection.on('UpdatedGroup', (group: Group) => {
-        console.log('Updated group', group);
+        if (group.connections.some((c) => c.username === user.userName)) {
+          setMessages(
+            messages.map((msg) => {
+              if (!msg.dateRead) {
+                msg.dateRead = new Date(Date.now());
+              }
+              return msg;
+            }),
+          );
+        }
       });
 
       hubConnection.on('NewMessage', (message) => {
@@ -36,7 +46,7 @@ const useUserPage = () => {
       });
     }
   }, [hubConnection]);
-  console.log('STATE <MESSAGE', messages);
+
   return { user, isLoading };
 };
 
