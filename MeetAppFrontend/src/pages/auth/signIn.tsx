@@ -10,7 +10,7 @@ import Button from '@/components/Button';
 import Input from '@/components/Forms/Input';
 import { routes } from '@/utils/routes';
 import Link from 'next/link';
-import { login } from '@/services/Auth/auth';
+import { login } from '@/services/Auth/login';
 import { ColorTypeEnum } from '@/utils/constants';
 import LoginLayout from '@/components/Layouts/LoginLayout';
 
