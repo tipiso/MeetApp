@@ -4,8 +4,6 @@ using API.Entities;
 using API.Extensions;
 using API.Helpers;
 using API.Interfaces;
-using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
@@ -13,12 +11,10 @@ namespace API.Data
     public class LikesRepository : ILikesRepository
     {
         private readonly DataContext _context;
-        private readonly IMapper _mapper;
 
-        public LikesRepository(DataContext context, IMapper mapper)
+        public LikesRepository(DataContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
         public async Task<UserLike> GetUserLike(int sourceUserId, int targetUserId)
