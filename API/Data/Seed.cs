@@ -1,10 +1,6 @@
-﻿using System;
-using System.Security.Cryptography;
-using System.Text;
-using System.Text.Json;
+﻿using System.Text.Json;
 using API.Entities;
 using API.Enums;
-using API.Helpers;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -41,6 +37,7 @@ namespace API.Data
 
 				await userManager.CreateAsync(user, "Pa$$w0rd");
 				await userManager.AddToRoleAsync(user, Roles.Member);
+				user.Photos.FirstOrDefault().IsApproved = true;
 			};
 
 			var admin = new AppUser
