@@ -19,12 +19,16 @@ namespace API.Data
             _context = context;
 		}
 
-        public async Task<MemberDto> GetMemberAsync(string username)
+        public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
         {
-            return await _context.Users
-                .Where(x => x.UserName == username)
-                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-                .SingleOrDefaultAsync();
+            var query = _context.Users
+             .Where(x => x.UserName == username)
+             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+             .AsQueryable();
+
+            if (isCurrentUser) query = query.IgnoreQueryFilters();
+
+            return await query.SingleOrDefaultAsync();
         }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -44,6 +48,7 @@ namespace API.Data
                 "created" => query.OrderByDescending(u => u.Created),
                 _ => query.OrderByDescending(u => u.LastActive)
             };
+
 
             return await PagedList<MemberDto>.CreateAsync(
                 query.AsNoTracking().ProjectTo<MemberDto>(_mapper.ConfigurationProvider),

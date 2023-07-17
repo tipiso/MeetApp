@@ -1,5 +1,6 @@
 ﻿using API.Entities;
 using API.Enums;
+using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -10,10 +11,12 @@ namespace API.Controllers
 	public class AdminController : BaseApiController
 	{
 		private readonly UserManager<AppUser> _userManager;
+        private readonly IUnitOfWork _uow;
 
-		public AdminController(UserManager<AppUser> userManager)
+        public AdminController(UserManager<AppUser> userManager, IUnitOfWork uow)
 		{
 			_userManager = userManager;
+			_uow = uow;
 		}
 
 		[Authorize(Policy = Policies.RequireAdmin)]
@@ -64,6 +67,43 @@ namespace API.Controllers
 		{
 			return Ok("Admins or moderators can see this");
 		}
+
+		[HttpGet("photos")]
+		public async Task<ActionResult> GetPhotosForApproval()
+		{
+			var unapprovedPhotos = await _uow.PhotosRepository.GetUnapprovedPhotos();
+			return Ok(unapprovedPhotos);
+		}
+
+		[HttpPut("photos/approve")]
+		public async Task<ActionResult> ApprovePhoto(int Id)
+		{
+			var photo = await _uow.PhotosRepository.GetPhotoById(Id);
+
+			if (photo == null) return BadRequest("Photo with given ID doesn't exist");
+
+			photo.IsApproved = true;
+			
+			if (!photo.AppUser.Photos.Any(p => p.IsMain)) photo.IsMain = true;
+
+			if (_uow.HasChanges()) await _uow.Complete();
+
+			return Ok(photo);
+		}
+
+		[HttpPut("photos/reject")]
+		public async Task<ActionResult> RejectPhoto(int Id)
+		{
+            var photo = await _uow.PhotosRepository.GetPhotoById(Id);
+
+            if (photo == null) return BadRequest("Photo with given ID doesn't exist");
+
+            photo.IsApproved = false;
+
+            if (_uow.HasChanges()) await _uow.Complete();
+
+            return Ok(photo);
+        }
 	}
 }
 
