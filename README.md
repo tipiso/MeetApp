@@ -9,4 +9,5 @@ Potential features to add:
 - Email verification;
 - Change password;
 - Chat groups to handle multiple clients subscribing messages to single room;
-- Redis to replace api code implementation of messages threads.
+- Redis to replace api code implementation of messages threads;
+- Notifications API when new message arrives.

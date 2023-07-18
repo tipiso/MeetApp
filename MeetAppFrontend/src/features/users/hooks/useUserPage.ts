@@ -25,7 +25,6 @@ const useUserPage = () => {
     if (hubConnection) {
       hubConnection.on('ReceiveMessageThread', (messages) => {
         setMessages(messages);
-        console.log('USER WROTE A MESSAGE', messages);
       });
 
       hubConnection.on('UpdatedGroup', (group: Group) => {
