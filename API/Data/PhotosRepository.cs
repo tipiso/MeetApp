@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,19 +14,26 @@ namespace API.Data
 			_context = dbContext;
 		}
 
-        public Task<Photo> GetPhotoById(int Id)
+        public async Task<Photo> GetPhotoById(int id)
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<Photo>> GetUnapprovedPhotos()
-        {
-            return await _context.Photos.Where(p => !p.IsApproved)
+            return await _context.Photos
                 .IgnoreQueryFilters()
-                .ToListAsync();
+                .SingleOrDefaultAsync(p => p.Id == id);
         }
 
-            public void RemovePhoto(Photo photo)
+        public async Task<IEnumerable<PhotoForApprovalDto>> GetUnapprovedPhotos()
+        {
+            return await _context.Photos
+                .Select(u => new PhotoForApprovalDto
+                {
+                    Id = u.Id,
+                    Username = u.AppUser.UserName,
+                    Url = u.Url,
+                    IsApproved = u.IsApproved
+                }).ToListAsync();
+        }
+
+        public void RemovePhoto(Photo photo)
         { 
             _context.Photos.Remove(photo);
         }

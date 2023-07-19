@@ -1,11 +1,12 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 
 namespace API.Interfaces
 {
 	public interface IPhotosRepository
 	{
-		Task<IEnumerable<Photo>> GetUnapprovedPhotos();
-		Task<Photo> GetPhotoById(int Id);
+		Task<IEnumerable<PhotoForApprovalDto>> GetUnapprovedPhotos();
+		Task<Photo> GetPhotoById(int id);
 		void RemovePhoto(Photo photo);
 	}
 }
