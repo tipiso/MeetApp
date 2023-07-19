@@ -63,6 +63,7 @@ namespace API.Data
 
             modelBuilder.Entity<Photo>()
                 .HasQueryFilter(p => p.IsApproved);
+
         }
     }
 }

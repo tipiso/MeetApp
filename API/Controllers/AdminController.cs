@@ -12,12 +12,14 @@ namespace API.Controllers
 	{
 		private readonly UserManager<AppUser> _userManager;
         private readonly IUnitOfWork _uow;
+        private readonly IPhotoService _photoService;
 
-        public AdminController(UserManager<AppUser> userManager, IUnitOfWork uow)
+        public AdminController(UserManager<AppUser> userManager, IUnitOfWork uow, IPhotoService photoService)
 		{
 			_userManager = userManager;
 			_uow = uow;
-		}
+            _photoService = photoService;
+        }
 
 		[Authorize(Policy = Policies.RequireAdmin)]
 		[HttpGet("users-with-roles")]
@@ -68,41 +70,57 @@ namespace API.Controllers
 			return Ok("Admins or moderators can see this");
 		}
 
-		[HttpGet("photos")]
+        [Authorize(Policy = Policies.ModeratePhoto)]
+        [HttpGet("photos")]
 		public async Task<ActionResult> GetPhotosForApproval()
 		{
 			var unapprovedPhotos = await _uow.PhotosRepository.GetUnapprovedPhotos();
 			return Ok(unapprovedPhotos);
 		}
 
-		[HttpPut("photos/approve")]
-		public async Task<ActionResult> ApprovePhoto(int Id)
+        [Authorize(Policy = Policies.ModeratePhoto)]
+        [HttpPut("photos/approve/{id}")]
+		public async Task<ActionResult> ApprovePhoto(int id)
 		{
-			var photo = await _uow.PhotosRepository.GetPhotoById(Id);
+			var photo = await _uow.PhotosRepository.GetPhotoById(id);
 
-			if (photo == null) return BadRequest("Photo with given ID doesn't exist");
+			if (photo == null) return NotFound("Photo with given ID doesn't exist");
 
 			photo.IsApproved = true;
-			
-			if (!photo.AppUser.Photos.Any(p => p.IsMain)) photo.IsMain = true;
+
+			var user = await _uow.UserRepository.GetUserByPhotoId(photo.Id);
+
+			if (!user.Photos.Any(p => p.IsMain)) photo.IsMain = true;
 
 			if (_uow.HasChanges()) await _uow.Complete();
 
 			return Ok(photo);
 		}
 
-		[HttpPut("photos/reject")]
-		public async Task<ActionResult> RejectPhoto(int Id)
+        [Authorize(Policy = Policies.ModeratePhoto)]
+        [HttpPost("photos/reject/{id}")]
+		public async Task<ActionResult> RejectPhoto(int id)
 		{
-            var photo = await _uow.PhotosRepository.GetPhotoById(Id);
+            var photo = await _uow.PhotosRepository.GetPhotoById(id);
 
             if (photo == null) return BadRequest("Photo with given ID doesn't exist");
 
-            photo.IsApproved = false;
+            if (photo.PublicId != null)
+            {
+                var result = await _photoService.DeletePhotoAsync(photo.PublicId);
+                if (result.Result == "ok")
+                {
+                    _uow.PhotosRepository.RemovePhoto(photo);
+                }
+            }
+            else
+            {
+                _uow.PhotosRepository.RemovePhoto(photo);
+            }
 
-            if (_uow.HasChanges()) await _uow.Complete();
+			await _uow.Complete();
 
-            return Ok(photo);
+			return Ok();
         }
 	}
 }
