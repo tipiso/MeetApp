@@ -25,16 +25,12 @@ export function Input(props: Props) {
                 placeholder={props.placeholder}
                 autoComplete={props.type === 'password' ? 'current-password' : ''}
                 type={props.type}
-                className={cx(
-                  props.className,
-                  'input w-full border-b-gray-200 bg-transparent text-sm focus:border-b-blue',
-                  {
-                    'rounded-none border-t-0 border-l-0 border-r-0 p-0 focus:border-b-secondary focus:outline-0': [
-                      'text',
-                      'password',
-                    ].includes(props.type ?? 'text'),
-                  },
-                )}
+                className={cx(props.className, 'input w-full border-b-gray-200 bg-transparent text-sm', {
+                  'rounded-none border-t-0 border-l-0 border-r-0 p-0 focus:border-b-secondary focus:outline-0': [
+                    'text',
+                    'password',
+                  ].includes(props.type ?? 'text'),
+                })}
               />
             </Form.Control>
 

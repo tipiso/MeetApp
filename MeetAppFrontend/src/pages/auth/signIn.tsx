@@ -7,7 +7,7 @@ import * as z from 'zod';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 
 import Button from '@/components/Button';
-import Input from '@/components/Forms/Input';
+import { Input } from '@/components/Forms/Input';
 import { routes } from '@/utils/routes';
 import Link from 'next/link';
 import { login } from '@/services/Auth/login';
