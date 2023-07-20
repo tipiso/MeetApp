@@ -4,18 +4,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 
-import Input from '@/components/Forms/Input';
+import { Input } from '@/components/Forms/Input';
 import Button from '@/components/Button';
 import LoginLayout from '@/components/Layouts/LoginLayout';
 import { ColorTypeEnum } from '@/utils/constants';
 import Link from 'next/link';
 import { routes } from '@/utils/routes';
 import { register } from '@/services/Auth/register';
+import { CheckboxInput } from '@/components/Forms/CheckboxInput';
 
 const defaultValues = {
   username: '',
   password: '',
   confirmPassword: '',
+  policy: false,
 };
 
 const schema = z
@@ -23,10 +25,14 @@ const schema = z
     username: z.string().min(1, { message: 'Username is required' }),
     password: z.string().min(1, { message: 'Password is required' }),
     confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
+    policy: z.boolean(),
   })
-  .superRefine(({ password, confirmPassword }, ctx) => {
+  .superRefine(({ password, confirmPassword, policy }, ctx) => {
     if (confirmPassword !== password) {
       ctx.addIssue({ code: 'custom', message: 'Passwords do not match', path: ['confirmPassword'] });
+    }
+    if (!policy) {
+      ctx.addIssue({ code: 'custom', message: 'Policy agreement is required', path: ['policy'] });
     }
   });
 
@@ -70,14 +76,17 @@ export default function Register() {
               <div className="text-red-600">{methods.formState.errors.root?.message}</div>
             )}
 
-            <div className="form-control mb-3">
-              <label className="label cursor-pointer">
-                <input type="checkbox" checked={true} className="checkbox mr-2" />
-                <span className="label-text text-xs font-light">
-                  I accept the Terms and Conditions and have read the Privacy Policy.{' '}
-                  <span className="underline">Read more</span>
-                </span>
-              </label>
+            <div className="relative mb-6">
+              <CheckboxInput
+                id="policy"
+                name="policy"
+                label={
+                  <>
+                    I accept the Terms and Conditions and have read the Privacy Policy.
+                    <span className="underline">Read more</span>
+                  </>
+                }
+              />
             </div>
 
             <div className="text-center">

@@ -21,7 +21,7 @@ export default function LoginLayout({ children }: LayoutProps) {
       </Head>
 
       <main className="flex min-h-screen w-full flex-col xl:container">
-        <header className="navbar relative bg-base-100 px-12 pt-12">
+        <header className="navbar relative bg-base-100 bg-transparent px-12 pt-12">
           <div className="absolute left-0  top-0 -z-10 h-[782px] w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
           <div className="flex-1">
             <Link className="relative h-6 w-32 text-xl normal-case disabled:hover" href={appRoutes.home}>
