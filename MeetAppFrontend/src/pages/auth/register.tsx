@@ -83,7 +83,7 @@ export default function Register() {
                 label={
                   <>
                     I accept the Terms and Conditions and have read the Privacy Policy.
-                    <span className="underline">Read more</span>
+                    <span className="ml-1 underline">Read more</span>
                   </>
                 }
               />
