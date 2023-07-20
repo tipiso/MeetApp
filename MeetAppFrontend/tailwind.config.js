@@ -10,12 +10,16 @@ module.exports = {
       signUpImg: "url('../images/SignUpImg.png')",
       registerImg: "url('../images/RegisterImg.png')",
     },
-    colors: {
-      gray50: '#F9F9F9',
-      gray100: '#666666',
-      gray150: '#333333',
-      pink: '#FFB6C1',
-      blue: '#ADD8E6',
+    extend: {
+      colors: {
+        gray50: '#F9F9F9',
+        gray100: '#666666',
+        gray150: '#333333',
+        gray200: '#DDDDDD',
+        pink: '#FFB6C1',
+        blue: '#ADD8E6',
+        red: '#E32313',
+      },
     },
     fontFamily: {
       sans: ['Poppins', 'Arial', 'sans-serif'],
@@ -25,7 +29,4 @@ module.exports = {
     },
   },
   plugins: [require('daisyui')],
-  daisyui: {
-    themes: [],
-  },
 };

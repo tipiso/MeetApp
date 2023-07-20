@@ -30,7 +30,7 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <SessionProvider session={pageProps.session}>
       <SignalRPresenceProvider>
-        <main className={poppins.className}>
+        <main className={poppins.className + 'bg-white'}>
           {getLayout(
             Component.secured ? (
               <AuthWrap>
