@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { routes as appRoutes } from '@/utils/routes';
 import Image from 'next/image';
 import Logo from '@/assets/images/Logo.svg';
+import { Footer } from '@/components/Footer';
 
 type LayoutProps = {
   children: ReactNode;
@@ -20,21 +21,12 @@ export default function LoginLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex min-h-screen w-full flex-col xl:container">
-        <header className="navbar relative bg-base-100 bg-transparent px-12 pt-12">
-          <div className="absolute left-0  top-0 -z-10 h-[782px] w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
-          <div className="flex-1">
-            <Link className="relative h-6 w-32 text-xl normal-case disabled:hover" href={appRoutes.home}>
-              <Image fill src={Logo} alt="meetApp logo" />
-            </Link>
-          </div>
-        </header>
+      <main className="relative flex min-h-screen w-full flex-col xl:container">
+        <Navbar hideRoutes />
+        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
+        <div className="∂mt-5 flex flex-auto">{children}</div>
 
-        <div className="mt-5 flex flex-auto">{children}</div>
-
-        <footer className="mt-auto flex h-16 w-full items-center justify-center bg-pink">
-          <span className="text-sm">All rights reserved</span>
-        </footer>
+        <Footer />
       </main>
     </div>
   );
