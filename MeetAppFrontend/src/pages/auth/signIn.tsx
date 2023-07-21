@@ -39,18 +39,18 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
   return (
     <>
-      <section className="flex flex-col justify-center pl-12">
-        <h1 className="pb-[70px] text-3xl font-bold">Log in</h1>
+      <section className="z-10 flex flex-col justify-center pl-10">
+        <h1 className="pb-6 text-4xl font-bold">Log in</h1>
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex w-96 flex-col">
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
 
             <div className="relative mb-6">
-              <Input placeholder="Username" name="username" type="text" label="Username" />
+              <Input required placeholder="Username" name="username" type="text" label="Username" />
             </div>
 
             <div className="relative mb-3">
-              <Input placeholder="Password" name="password" type="password" label="Password" />
+              <Input required placeholder="Password" name="password" type="password" label="Password" />
             </div>
 
             {methods.formState.errors.root && <div className="text-red-600">Invalid username or password</div>}
@@ -58,17 +58,17 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
             <div className="w-full pt-[50px] text-center">
               <FormSubmit asChild>
                 <Button className="w-1/2" type="submit" btnType={ColorTypeEnum.PRIMARY}>
-                  Sign in
+                  Log In
                 </Button>
               </FormSubmit>
             </div>
 
             <div className="flex w-full flex-col pt-[50px]">
-              <div className="divider before:h-[1px] before:bg-gray50 after:h-[1px] after:bg-gray50"></div>
+              <div className="before:bg-gray50 after:bg-gray50 divider before:h-[1px] after:h-[1px]"></div>
             </div>
 
             <div className="mb-3">
-              <Link className="text-blue-600 text-xs font-light" href={routes.register}>
+              <Link className="text-xs font-light" href={routes.register}>
                 Don't have an account? <span className="underline">Sign up.</span>
               </Link>
             </div>
@@ -76,8 +76,8 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
         </FormProvider>
       </section>
 
-      <section className="relative w-full flex-grow pl-4">
-        <div className="relative -top-[245px]  h-full max-w-[1440px] bg-signUpImg bg-cover bg-no-repeat"></div>
+      <section className="relative w-full flex-grow overflow-hidden pl-4">
+        <div className="absolute -top-[235px] h-full  w-full max-w-[1440px] bg-signUpImg bg-cover bg-no-repeat"></div>
       </section>
     </>
   );

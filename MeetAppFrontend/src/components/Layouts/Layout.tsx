@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navigation/Navbar';
+import { Footer } from '@/components/Footer';
 
 type LayoutProps = {
   children: ReactNode;
@@ -16,14 +17,12 @@ export default function Layout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex min-h-screen w-full flex-col xl:container">
+      <main className="relative flex min-h-screen w-full flex-col xl:container">
         <Navbar />
+        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
+        <div className="∂mt-5 flex flex-auto">{children}</div>
 
-        <div className="z-[1] mt-5 flex flex-auto">{children}</div>
-
-        <footer className="mt-auto flex h-16 w-full items-center justify-center bg-pink">
-          <span className="text-sm">All rights reserved</span>
-        </footer>
+        <Footer />
       </main>
     </div>
   );

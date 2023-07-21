@@ -16,30 +16,25 @@ export function Input(props: Props) {
       control={control}
       name={props.name}
       render={({ field, fieldState }) => (
-        <Form.FormField name={props.name}>
-          <div>
-            {props.label && <Label text={props.label} />}
-            <Form.Control asChild>
-              <input
-                {...field}
-                placeholder={props.placeholder}
-                autoComplete={props.type === 'password' ? 'current-password' : ''}
-                type={props.type}
-                className={cx(props.className, 'input w-full border-b-gray-200 bg-transparent text-sm', {
-                  'rounded-none border-t-0 border-l-0 border-r-0 p-0 focus:border-b-secondary focus:outline-0': [
-                    'text',
-                    'password',
-                  ].includes(props.type ?? 'text'),
-                })}
-              />
-            </Form.Control>
+        <Form.FormField name={props.name} className="form-control">
+          {props.label && <Label text={props.label} {...props} />}
+          <Form.Control asChild>
+            <input
+              {...field}
+              placeholder={props.placeholder}
+              autoComplete={props.type === 'password' ? 'current-password' : ''}
+              type={props.type}
+              className={cx(props.className, 'input-bordered input w-full border-base-300', {
+                ['input-error']: fieldState.error,
+              })}
+            />
+          </Form.Control>
 
-            {fieldState.error && (
-              <Form.Message asChild>
-                <ErrorMessage msg={fieldState.error.message as string} />
-              </Form.Message>
-            )}
-          </div>
+          {fieldState.error && (
+            <Form.Message asChild>
+              <ErrorMessage msg={fieldState.error.message as string} />
+            </Form.Message>
+          )}
         </Form.FormField>
       )}
     />
