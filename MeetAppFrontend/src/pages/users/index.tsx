@@ -2,7 +2,7 @@ import { ReactElement } from 'react';
 
 import Layout from '@/components/Layouts/Layout';
 import { getUsers } from '@/features/users/hooks';
-import UserCard from '@/components/UserCard';
+import UserCard from '@/features/users/components/UserCard';
 import { User } from '@/features/users/types';
 
 const UsersPage = () => {

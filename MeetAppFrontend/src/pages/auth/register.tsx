@@ -43,7 +43,7 @@ export default function Register() {
     const response = await register(data);
     if (typeof response == 'string') methods.setError('root', { message: response });
   };
-
+  console.log(methods.getValues());
   return (
     <>
       <section className="flex flex-col justify-center pl-12">
