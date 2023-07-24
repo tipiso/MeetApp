@@ -5,6 +5,7 @@ import { getUser } from '@/features/users/hooks/index';
 import { useSignalRChatRoom } from '@/services/SignalR/useSignalRChatRoom';
 import { Group } from '@/services/SignalR/types';
 import { Message } from '@/features/messages/types';
+import { isGivenUsernameCurrentUser } from '@/utils/helpers';
 
 const useUserPage = () => {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -15,6 +16,8 @@ const useUserPage = () => {
   /**TODO: Will have to move whole chat connection to messages tab / component */
   const { createHubConnection, hubConnection } = useSignalRChatRoom();
 
+  const canEdit = isGivenUsernameCurrentUser(query.username as string, data?.accessToken);
+
   useEffect(() => {
     if (!hubConnection && !!data && !!user) {
       createHubConnection(data.accessToken, user.userName);
@@ -22,7 +25,7 @@ const useUserPage = () => {
   }, [hubConnection, user]);
 
   useEffect(() => {
-    if (hubConnection) {
+    if (hubConnection && !!user) {
       hubConnection.on('ReceiveMessageThread', (messages) => {
         setMessages(messages);
       });
@@ -46,7 +49,7 @@ const useUserPage = () => {
     }
   }, [hubConnection]);
 
-  return { user, isLoading };
+  return { user, isLoading, canEdit };
 };
 
 export default useUserPage;

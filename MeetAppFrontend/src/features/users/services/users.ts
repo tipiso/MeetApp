@@ -1,6 +1,6 @@
 import { api } from '@/utils/axios';
 import { usersUrl } from '@/utils/url';
-import { User } from '@/types/users';
+import { User } from '@/features/users/types';
 
 const usersQueryKeys = {
   users: 'users',

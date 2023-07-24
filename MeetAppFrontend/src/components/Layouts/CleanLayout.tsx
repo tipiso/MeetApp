@@ -11,7 +11,7 @@ type LayoutProps = {
   children: ReactNode;
 };
 
-export default function LoginLayout({ children }: LayoutProps) {
+export default function CleanLayout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col items-center">
       <Head>
@@ -22,9 +22,9 @@ export default function LoginLayout({ children }: LayoutProps) {
       </Head>
 
       <main className="relative flex min-h-screen w-full flex-col xl:container">
-        <Navbar hideRoutes />
-        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
-        <div className="mt-5 flex flex-auto">{children}</div>
+        <Navbar />
+
+        <div className="flex flex-auto p-14">{children}</div>
 
         <Footer />
       </main>
