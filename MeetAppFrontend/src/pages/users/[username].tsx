@@ -9,6 +9,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Input } from '@/components/Forms/Input';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 import * as z from 'zod';
+import { TextAreaInput } from '@/components/Forms/TextAreaInput';
 
 const schema = z.object({
   username: z.string().min(1, { message: 'Username is required' }),
@@ -57,7 +58,13 @@ const UserPage = () => {
           </div>
 
           <div className="relative mb-6 w-full">
-            <Input required placeholder="Type here" name="introduction" type="text" label="Few words about you" />
+            <TextAreaInput
+              required
+              placeholder="Type here"
+              name="introduction"
+              type="text"
+              label="Few words about you"
+            />
           </div>
 
           <div className="mt-auto w-full text-right">
