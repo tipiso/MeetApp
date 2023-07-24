@@ -1,4 +1,4 @@
-import { User } from '@/types/users';
+import { User } from '@/features/users/types';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useContext } from 'react';
