@@ -43,7 +43,7 @@ export default function Register() {
     const response = await register(data);
     if (typeof response == 'string') methods.setError('root', { message: response });
   };
-  console.log(methods.getValues());
+
   return (
     <>
       <section className="flex flex-col justify-center pl-12">
@@ -98,11 +98,11 @@ export default function Register() {
             </div>
 
             <div className="flex w-full flex-col pt-[50px]">
-              <div className="divider before:h-[1px] before:bg-gray50 after:h-[1px] after:bg-gray50"></div>
+              <div className="before:bg-gray50 after:bg-gray50 divider before:h-[1px] after:h-[1px]"></div>
             </div>
 
             <div className="mb-3">
-              <span className="text-blue-600 text-xs font-light">
+              <span className="text-xs font-light">
                 Already have an account?
                 <Link href={routes.signin} className="ml-1 underline">
                   Log in
@@ -114,7 +114,7 @@ export default function Register() {
       </section>
 
       <section className="relative w-full flex-grow pl-4">
-        <div className="relative -top-[245px]  h-full max-w-[1440px] bg-registerImg bg-cover bg-no-repeat"></div>
+        <div className="relative h-full max-w-[1440px] bg-registerImg bg-cover bg-no-repeat"></div>
       </section>
     </>
   );
