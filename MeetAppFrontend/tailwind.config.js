@@ -5,9 +5,7 @@ module.exports = {
     backgroundImage: {
       grayBg: "url('../images/GrayBG.png')",
       headerGirl: "url('../images/HappyGirl.png')",
-      pinkHeaderFigure: "url('../images/PinkHeaderFigure.png')",
-      blueHeaderFigure: "url('../images/BlueHeaderFigure.png')",
-      signUpImg: "url('../images/SignUpImg.png')",
+      signInImg: "url('../images/SignInImg.png')",
       registerImg: "url('../images/RegisterImg.png')",
     },
     fontFamily: {

@@ -18,10 +18,8 @@ export default function HomePage() {
             Create account and check it!
           </Button>
         </div>
-        <div className="relative h-[720px] w-1/2">
+        <div className="relative flex w-1/2 flex-col">
           <div className="absolute top-0 h-full w-full bg-headerGirl bg-no-repeat"></div>
-          <div className="absolute top-[125px] -z-[9] h-full w-full bg-blueHeaderFigure bg-no-repeat"></div>
-          <div className="absolute -z-10 h-[280px]  w-full bg-pinkHeaderFigure bg-no-repeat"></div>
         </div>
       </section>
     </div>

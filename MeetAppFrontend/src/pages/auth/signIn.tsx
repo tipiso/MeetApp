@@ -77,7 +77,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
       </section>
 
       <section className="relative w-full flex-grow overflow-hidden pl-4">
-        <div className="absolute -top-[235px] h-full  w-full max-w-[1440px] bg-signUpImg bg-cover bg-no-repeat"></div>
+        <div className="absolute h-full  w-full max-w-[1440px] bg-signInImg bg-cover bg-no-repeat"></div>
       </section>
     </>
   );
