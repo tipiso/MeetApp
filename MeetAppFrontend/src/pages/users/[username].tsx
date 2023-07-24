@@ -25,7 +25,7 @@ const UserPage = () => {
   console.log(isLoading, user);
 
   const handleSubmit = async (data: typeof user) => {
-    // if (typeof response == 'string') methods.setError('root', { message: response });
+    console.log('submit', data);
   };
 
   if (isLoading || !user) return <div>Loading...</div>;
@@ -34,7 +34,7 @@ const UserPage = () => {
     <div className="flex w-full flex-col">
       <h1 className="text-4xl font-bold">Tell us about you!</h1>
       <div className="flex w-full items-center pt-16">
-        <Avatar name={user.userName} />
+        <Avatar name={user.userName} imgUrl={user.photoUrl} />
         <Button className="ml-6" btnType={ColorTypeEnum.PRIMARY}>
           Add your photo
         </Button>

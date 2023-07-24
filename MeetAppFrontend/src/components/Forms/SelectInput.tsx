@@ -2,9 +2,10 @@ import { Controller, useFormContext } from 'react-hook-form';
 import * as Form from '@radix-ui/react-form';
 import cx from 'classnames';
 import * as Select from '@radix-ui/react-select';
-import { forwardRef, InputHTMLAttributes, ReactNode } from 'react';
+import { forwardRef, InputHTMLAttributes, ReactNode, Ref } from 'react';
 import ErrorMessage from '@/components/Forms/ErrorMessage';
 import Label from '@/components/Forms/Label';
+import { SelectItemProps } from '@radix-ui/react-select';
 
 type Props = {
   name: string;
@@ -12,16 +13,15 @@ type Props = {
   label?: ReactNode;
 } & InputHTMLAttributes<HTMLInputElement>;
 
-const SelectItem = forwardRef<any, any>(({ children, className, ...props }, forwardedRef) => {
-  return (
-    <Select.Item className={cx('relative h-10 w-full py-2 px-4 text-xs', className)} {...props} ref={forwardedRef}>
-      <Select.ItemText>{children}</Select.ItemText>
-      {/*<Select.ItemIndicator className="SelectItemIndicator">*/}
-      {/*  <CheckIcon />*/}
-      {/*</Select.ItemIndicator>*/}
-    </Select.Item>
-  );
-});
+const SelectItem = forwardRef<HTMLDivElement | null, SelectItemProps>(
+  ({ children, className, ...props }, forwardedRef) => {
+    return (
+      <Select.Item className={cx('relative h-10 w-full py-2 px-4 text-xs', className)} {...props} ref={forwardedRef}>
+        <Select.ItemText>{children}</Select.ItemText>
+      </Select.Item>
+    );
+  },
+);
 
 export function SelectInput(props: Props) {
   const { control } = useFormContext();
@@ -40,7 +40,9 @@ export function SelectInput(props: Props) {
                 id={props.id || props.name}
                 className="text-normal select-bordered select w-full items-center text-base font-normal"
               >
-                {props.placeholder && <Select.Value placeholder={props.placeholder}></Select.Value>}
+                {props.placeholder && (
+                  <Select.Value placeholder={<span className="text-gray-400">{props.placeholder}</span>}></Select.Value>
+                )}
               </Select.Trigger>
 
               <Select.Portal>
@@ -51,7 +53,9 @@ export function SelectInput(props: Props) {
                   <Select.Viewport className="p-4">
                     <Select.Group>
                       {props.options.map((o) => (
-                        <SelectItem value={o.value}>{o.label}</SelectItem>
+                        <SelectItem key={o.value + o.label} value={o.value}>
+                          {o.label}
+                        </SelectItem>
                       ))}
                     </Select.Group>
                   </Select.Viewport>
