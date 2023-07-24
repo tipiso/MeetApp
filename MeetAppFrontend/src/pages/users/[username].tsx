@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import useUserPage from '@/features/users/hooks/useUserPage';
 import CleanLayout from '@/components/Layouts/CleanLayout';
 import Avatar from '@/features/users/components/Avatar';
@@ -27,6 +27,12 @@ const UserPage = () => {
   const handleSubmit = async (data: typeof user) => {
     console.log('submit', data);
   };
+
+  useEffect(() => {
+    if (!!user && !isLoading) {
+      methods.reset(user);
+    }
+  }, [user, isLoading]);
 
   if (isLoading || !user) return <div>Loading...</div>;
 
