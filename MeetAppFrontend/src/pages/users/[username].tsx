@@ -10,6 +10,7 @@ import { Input } from '@/components/Forms/Input';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 import * as z from 'zod';
 import { TextAreaInput } from '@/components/Forms/TextAreaInput';
+import { SelectInput } from '@/components/Forms/SelectInput';
 
 const schema = z.object({
   username: z.string().min(1, { message: 'Username is required' }),
@@ -49,11 +50,21 @@ const UserPage = () => {
             <Input required placeholder="Age" name="age" type="text" label="Age" />
           </div>
 
-          <div className="relative mb-6">
-            <Input required placeholder="Gender" name="gender" type="text" label="Gender" />
+          <div className="relative mb-6 w-2/12">
+            <SelectInput
+              required
+              placeholder="Gender"
+              name="gender"
+              type="text"
+              label="Gender"
+              options={[
+                { label: 'Male', value: 'male' },
+                { label: 'Female', value: 'female' },
+              ]}
+            />
           </div>
 
-          <div className="relative mb-6">
+          <div className="relative mb-6 w-2/12">
             <Input required placeholder="Select or add new" name="interests" type="text" label="Pick your hobby" />
           </div>
 
