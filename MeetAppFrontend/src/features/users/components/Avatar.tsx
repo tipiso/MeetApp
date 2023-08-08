@@ -1,5 +1,3 @@
-import Button from '@/components/Button';
-
 type Props = {
   imgUrl?: string;
   name: string;

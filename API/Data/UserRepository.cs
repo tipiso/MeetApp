@@ -38,6 +38,10 @@ namespace API.Data
             query = query.Where(u => u.UserName != userParams.CurrentUsername);
             query = query.Where(u => u.Gender == userParams.Gender);
 
+            if (!String.IsNullOrEmpty(userParams.SearchString)) {
+                query = query.Where(u => u.UserName.Contains(userParams.SearchString) || u.KnownAs.Contains(userParams.SearchString));
+            }
+
             var minDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MaxAge - 1));
             var maxDob = DateOnly.FromDateTime(DateTime.Today.AddYears(-userParams.MinAge));
 

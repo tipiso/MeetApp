@@ -8,6 +8,8 @@ const routes = {
   messages: '/messages',
 
   matches: '/matches',
+
+  search: '/search',
 };
 
 const navRoutes = [

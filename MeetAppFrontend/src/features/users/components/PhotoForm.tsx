@@ -2,7 +2,6 @@ import { FileInput } from '@/components/Forms/FileInput';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form } from '@radix-ui/react-form';
 import Avatar from '@/features/users/components/Avatar';
-import { useMemo } from 'react';
 
 type Props = {
   photo: string;
