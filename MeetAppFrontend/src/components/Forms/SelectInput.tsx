@@ -16,7 +16,14 @@ type Props = {
 const SelectItem = forwardRef<HTMLDivElement | null, SelectItemProps>(
   ({ children, className, ...props }, forwardedRef) => {
     return (
-      <Select.Item className={cx('relative h-10 w-full py-2 px-4 text-xs', className)} {...props} ref={forwardedRef}>
+      <Select.Item
+        className={cx(
+          'relative flex h-10 w-full items-center border-0 py-2 px-4 text-xs outline-0 hover:bg-gray-300',
+          className,
+        )}
+        {...props}
+        ref={forwardedRef}
+      >
         <Select.ItemText>{children}</Select.ItemText>
       </Select.Item>
     );
@@ -33,9 +40,15 @@ export function SelectInput(props: Props) {
       name={props.name}
       render={({ field, fieldState }) => (
         <Form.FormField className="form-control" name={props.name}>
-          {props.label && <Label text={props.label as string} {...props} />}
+          {props.label && <Label text={props.label} {...props} />}
           <Form.Control asChild>
-            <Select.Root {...field} value={field.value}>
+            <Select.Root
+              {...field}
+              value={field.value}
+              onValueChange={(val) => {
+                field.onChange(val);
+              }}
+            >
               <Select.Trigger
                 id={props.id || props.name}
                 className="text-normal select-bordered select w-full items-center text-base font-normal"
@@ -50,7 +63,7 @@ export function SelectInput(props: Props) {
                   position="popper"
                   className="shadow-black-500/50 w-52 overflow-hidden bg-white shadow-lg"
                 >
-                  <Select.Viewport className="p-4">
+                  <Select.Viewport>
                     <Select.Group>
                       {props.options.map((o) => (
                         <SelectItem key={o.value + o.label} value={o.value}>

@@ -11,3 +11,11 @@ export const isGivenUsernameCurrentUser = (username?: string, token?: string) =>
   }
   return false;
 };
+
+export const createUrlFromImg = (file?: string | File) => {
+  if (file && typeof file != 'string') {
+    return URL.createObjectURL(file);
+  } else {
+    return file;
+  }
+};
