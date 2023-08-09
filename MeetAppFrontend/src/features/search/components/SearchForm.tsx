@@ -1,5 +1,6 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form } from '@radix-ui/react-form';
+import { Input } from '@/components/Forms/Input';
 
 const defaultValues = {
   searchString: '',
@@ -16,8 +17,10 @@ const SearchForm = () => {
 
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-wrap gap-x-2.5 pt-6">
-        <div className="flex w-full items-center pt-16"></div>
+      <Form onSubmit={methods.handleSubmit(handleSubmit)} className="w-full px-10">
+        <div className="relative mb-6">
+          <Input required placeholder="Search for friends" name="searchString" type="text" />
+        </div>
       </Form>
     </FormProvider>
   );

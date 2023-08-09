@@ -1,16 +1,8 @@
 import { ReactElement } from 'react';
 import useUserPage from '@/features/users/hooks/useUserPage';
-import CleanLayout from '@/components/Layouts/CleanLayout';
+import UserPageLayout from '@/components/Layouts/UserPageLayout';
 import UserForm from '@/features/users/components/UserForm';
 import PhotoForm from '@/features/users/components/PhotoForm';
-
-const defaultValues = {
-  knownAs: '',
-  age: 0,
-  gender: '',
-  interests: '',
-  file: '',
-};
 
 const UserPage = () => {
   const { isLoading, user } = useUserPage();
@@ -28,7 +20,7 @@ const UserPage = () => {
 };
 
 UserPage.getLayout = function getLayout(page: ReactElement) {
-  return <CleanLayout>{page}</CleanLayout>;
+  return <UserPageLayout>{page}</UserPageLayout>;
 };
 
 UserPage.secured = true;

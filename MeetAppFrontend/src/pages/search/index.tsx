@@ -1,5 +1,5 @@
 import { ReactElement } from 'react';
-import Layout from '@/components/Layouts/Layout';
+import Layout from '@/components/Layouts/SearchLayout';
 import SearchForm from '@/features/search/components/SearchForm';
 
 const SearchPage = () => {

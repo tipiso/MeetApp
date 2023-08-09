@@ -1,17 +1,13 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navigation/Navbar';
-import Link from 'next/link';
-import { routes as appRoutes } from '@/utils/routes';
-import Image from 'next/image';
-import Logo from '@/assets/images/Logo.svg';
 import { Footer } from '@/components/Footer';
 
 type LayoutProps = {
   children: ReactNode;
 };
 
-export default function CleanLayout({ children }: LayoutProps) {
+export default function SearchLayout({ children }: LayoutProps) {
   return (
     <div className="flex flex-col items-center">
       <Head>
@@ -21,10 +17,13 @@ export default function CleanLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative flex min-h-screen w-full flex-col xl:container">
+      <main
+        style={{ backgroundColor: '#F3F4F6' }}
+        className="relative flex min-h-screen w-full flex-col bg-zinc-700 xl:container"
+      >
         <Navbar />
 
-        <div className="flex flex-auto p-14">{children}</div>
+        <div className="mt-5">{children}</div>
 
         <Footer />
       </main>
