@@ -1,18 +1,24 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
+import { useState } from 'react';
+import { useMatches } from '@/features/search/hooks';
 
 const defaultValues = {
   searchString: '',
 };
 
 const SearchForm = () => {
+  const [shouldFetch, setShouldFetch] = useState(false);
+
   const methods = useForm({
     defaultValues,
   });
 
+  const { data, isLoading } = useMatches(shouldFetch, methods.getValues().searchString);
+
   const handleSubmit = async (data: typeof defaultValues) => {
-    console.log('submit', data);
+    setShouldFetch(true);
   };
 
   return (

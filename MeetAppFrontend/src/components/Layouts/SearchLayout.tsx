@@ -17,10 +17,7 @@ export default function SearchLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main
-        style={{ backgroundColor: '#F3F4F6' }}
-        className="relative flex min-h-screen w-full flex-col bg-zinc-700 xl:container"
-      >
+      <main className="relative flex min-h-screen w-full flex-col bg-gray-100 xl:container">
         <Navbar />
 
         <div className="mt-5">{children}</div>
