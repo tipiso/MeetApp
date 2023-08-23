@@ -7,6 +7,10 @@ const usersQueryKeys = {
   usersList: () => usersQueryKeys.users + '/list',
 };
 const getUsersService = () => api.get<User[]>(usersUrl);
+
+const getFilteredUsersService = ({ searchString }: { searchString: string }) =>
+  api.get<User[]>(`${usersQueryKeys.users}?searchString=${searchString}`);
+
 const getUserService = (username: string) => api.get<User>(`${usersQueryKeys.users}/${username}`);
 
-export { getUsersService, getUserService, usersQueryKeys };
+export { getUsersService, getUserService, getFilteredUsersService, usersQueryKeys };

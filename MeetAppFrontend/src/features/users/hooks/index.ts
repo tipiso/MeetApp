@@ -7,7 +7,7 @@ function getUsers() {
   return { data: data?.data, ...rest };
 }
 
-function getUser(username: string) {
+function getUser(username: string | undefined) {
   const { data, ...rest } = useSWR(username, getUserService);
   return { data: data?.data, ...rest };
 }
