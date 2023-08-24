@@ -6,6 +6,7 @@ import Image from 'next/image';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import styles from './Carousel.module.css';
 
 type Props = {
   children: ReactNode;
@@ -27,6 +28,7 @@ export default function Carousel({ children, carouselData }: Props) {
 
   return (
     <Slider
+      className={styles.carousel}
       dots={false}
       slidesToScroll={1}
       slidesToShow={4}
@@ -35,7 +37,7 @@ export default function Carousel({ children, carouselData }: Props) {
       prevArrow={
         <div>
           <Image
-            className="absolute left-4 top-1/2 -translate-y-1/2 cursor-pointer"
+            className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
             src={CarouselArrowLeft}
             height={50}
             width={50}
@@ -45,7 +47,7 @@ export default function Carousel({ children, carouselData }: Props) {
       }
       nextArrow={
         <Image
-          className="absolute right-4 top-1/2 -translate-y-1/2 cursor-pointer"
+          className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
           src={CarouselArrowRight}
           height={50}
           width={50}

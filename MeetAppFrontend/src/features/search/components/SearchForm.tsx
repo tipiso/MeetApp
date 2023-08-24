@@ -3,7 +3,7 @@ import { Form } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
 import { useState } from 'react';
 import { useMatches } from '@/features/search/hooks';
-import Carousel from '@/components/Carousel';
+import Carousel from '@/components/Carousel/Carousel';
 
 const defaultValues = {
   searchString: '',
