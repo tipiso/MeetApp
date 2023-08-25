@@ -46,7 +46,7 @@ export default function Register() {
 
   return (
     <>
-      <section className="flex flex-col justify-center pl-12">
+      <section className="flex flex-col justify-center py-24 pl-12">
         <h1 className="pb-[70px] text-3xl font-bold">Register</h1>
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex w-96 flex-col">

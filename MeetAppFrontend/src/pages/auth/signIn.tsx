@@ -39,7 +39,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
   return (
     <>
-      <section className="z-10 flex flex-col justify-center pl-10">
+      <section className="z-10 flex flex-col justify-center py-20 pl-10">
         <h1 className="pb-6 text-4xl font-bold">Log in</h1>
         <FormProvider {...methods}>
           <Form onSubmit={methods.handleSubmit(handleSubmit)} className="d-flex w-96 flex-col">
