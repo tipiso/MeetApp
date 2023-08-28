@@ -13,11 +13,6 @@ type Props = {
   carouselData: any & { id: string }[];
 };
 
-const settings = {
-  slidesToShow: 4,
-  slidesToScroll: 1,
-};
-
 export default function Carousel({ children, carouselData }: Props) {
   const getMiddleItem = () => {
     if (carouselData) {
@@ -31,7 +26,7 @@ export default function Carousel({ children, carouselData }: Props) {
       className={styles.carousel}
       dots={false}
       slidesToScroll={1}
-      slidesToShow={4}
+      slidesToShow={5}
       initialSlide={getMiddleItem()}
       arrows={true}
       prevArrow={
@@ -54,16 +49,59 @@ export default function Carousel({ children, carouselData }: Props) {
           alt="arrow right icon"
         />
       }
+      responsive={[
+        {
+          breakpoint: 1536,
+          settings: {
+            slidesToShow: 5,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: true,
+          },
+        },
+        {
+          breakpoint: 1280,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: true,
+          },
+        },
+        {
+          breakpoint: 768,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: true,
+          },
+        },
+        {
+          breakpoint: 640,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: true,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            infinite: true,
+            arrows: true,
+          },
+        },
+      ]}
     >
       {children}
     </Slider>
   );
 }
 
-Carousel.CarouselItem = function Item({ children, id }: { children: ReactNode; id: string }) {
-  return (
-    <div id={id} className="carousel-item">
-      {children}
-    </div>
-  );
+Carousel.CarouselItem = function Item({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 };

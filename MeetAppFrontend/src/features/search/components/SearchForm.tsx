@@ -4,6 +4,8 @@ import { Input } from '@/components/Forms/Input';
 import { useState } from 'react';
 import { useMatches } from '@/features/search/hooks';
 import Carousel from '@/components/Carousel/Carousel';
+import Image from 'next/image';
+import CarouselSuggestionImg from '@/features/search/components/CarouselSuggestionImg';
 
 const defaultValues = {
   searchString: '',
@@ -36,8 +38,8 @@ const SearchForm = () => {
       {data && data.length && (
         <Carousel carouselData={data}>
           {data?.map((u) => (
-            <Carousel.CarouselItem id={`${u.id}`}>
-              <img className="w-full rounded-lg p-4" src={u.photoUrl} />
+            <Carousel.CarouselItem>
+              <CarouselSuggestionImg user={u} />
             </Carousel.CarouselItem>
           ))}
         </Carousel>
