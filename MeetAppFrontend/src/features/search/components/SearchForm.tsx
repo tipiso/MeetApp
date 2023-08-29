@@ -3,9 +3,11 @@ import { Form } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
 import { useState } from 'react';
 import { useMatches } from '@/features/search/hooks';
+import Loader, { LoaderSizes } from '@/components/Loader';
 import Carousel from '@/components/Carousel/Carousel';
-import Image from 'next/image';
 import CarouselSuggestionImg from '@/features/search/components/CarouselSuggestionImg';
+import Button from '@/components/Button';
+import { ColorTypeEnum } from '@/utils/constants';
 
 const defaultValues = {
   searchString: '',
@@ -18,10 +20,10 @@ const SearchForm = () => {
     defaultValues,
   });
 
-  const { data, isLoading } = useMatches(shouldFetch, methods.getValues().searchString);
+  const { data, isMutating, trigger } = useMatches(shouldFetch, methods.getValues().searchString);
 
   const handleSubmit = async (data: typeof defaultValues) => {
-    setShouldFetch(true);
+    await trigger(data.searchString);
   };
 
   return (
@@ -35,14 +37,24 @@ const SearchForm = () => {
 
         <h1 className="mb-4 text-2xl">Catch some suggestions from around Ortar!</h1>
       </div>
-      {data && data.length && (
-        <Carousel carouselData={data}>
-          {data?.map((u) => (
-            <Carousel.CarouselItem>
-              <CarouselSuggestionImg user={u} />
-            </Carousel.CarouselItem>
-          ))}
-        </Carousel>
+      {isMutating ? (
+        <Loader size={LoaderSizes.lg} />
+      ) : (
+        data &&
+        data.length && (
+          <>
+            <Carousel carouselData={data}>
+              {data?.map((u) => (
+                <Carousel.CarouselItem key={u.id}>
+                  <CarouselSuggestionImg user={u} />
+                </Carousel.CarouselItem>
+              ))}
+            </Carousel>
+            <div className="flex justify-center pt-4">
+              <Button btnType={ColorTypeEnum.SECONDARY}>Check more</Button>
+            </div>
+          </>
+        )
       )}
     </FormProvider>
   );

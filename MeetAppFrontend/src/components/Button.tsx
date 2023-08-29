@@ -15,6 +15,7 @@ export default function Button(props: ButtonProps) {
   const isAnchor = 'href' in props;
   const classes = cx('btn font-normal normal-case', props.className, {
     'btn-primary': props.btnType === ColorTypeEnum.PRIMARY,
+    'btn-secondary': props.btnType === ColorTypeEnum.SECONDARY,
   });
 
   if (isAnchor) {

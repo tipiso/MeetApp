@@ -8,7 +8,11 @@ type Props = {
 };
 
 const CarouselSuggestionImg = ({ user }: Props) => {
-  // bg-gradient-to-r from-black from-14% via-sky-500 via-30% to-emerald-500 to-90%
+  const prepareInfoString = (user: User) => {
+    const genderFirstLetter = user.gender.slice(0, 1).toUpperCase();
+    return `${genderFirstLetter + user.gender.slice(1)}, ${user.age}yo, ${user.city}`;
+  };
+
   return (
     <div className="relative rounded-lg px-4">
       <div className="rounded-lg bg-gradient-to-t from-black">
@@ -22,9 +26,7 @@ const CarouselSuggestionImg = ({ user }: Props) => {
       </div>
       <div className="absolute bottom-10 left-4 flex flex-col px-4 pb-4">
         <span className="text-lg font-bold text-white">{user.knownAs}</span>
-        <span className="text-base text-white">
-          {user.gender}, {user.age}yo, {user.city}
-        </span>
+        <span className="text-base text-white">{prepareInfoString(user)}</span>
       </div>
       <div className="absolute bottom-0 left-4 right-4">
         <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
