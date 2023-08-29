@@ -1,30 +1,32 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
-import { useState } from 'react';
 import { useMatches } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import Carousel from '@/components/Carousel/Carousel';
 import CarouselSuggestionImg from '@/features/search/components/CarouselSuggestionImg';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
+import { useEffect } from 'react';
 
 const defaultValues = {
   searchString: '',
 };
 
 const SearchForm = () => {
-  const [shouldFetch, setShouldFetch] = useState(false);
-
   const methods = useForm({
     defaultValues,
   });
 
-  const { data, isMutating, trigger } = useMatches(shouldFetch, methods.getValues().searchString);
+  const { data, isMutating, trigger } = useMatches();
 
   const handleSubmit = async (data: typeof defaultValues) => {
     await trigger(data.searchString);
   };
+
+  useEffect(() => {
+    trigger('');
+  }, []);
 
   return (
     <FormProvider {...methods}>
