@@ -10,12 +10,21 @@ const initialSetup = {
 enum PaginationActions {
   PREVIOUS_PAGE = 'PREVIOUS_PAGE',
   NEXT_PAGE = 'NEXT_PAGE',
+  GO_TO_PAGE = 'GO_TO_PAGE',
 }
 
-type Action = { type: PaginationActions.NEXT_PAGE } | { type: PaginationActions.PREVIOUS_PAGE };
+type Action =
+  | { type: PaginationActions.NEXT_PAGE }
+  | { type: PaginationActions.PREVIOUS_PAGE }
+  | { type: PaginationActions.GO_TO_PAGE; payload: number };
 
 function reducer(state: typeof initialSetup, action: Action): typeof initialSetup {
   switch (action.type) {
+    case PaginationActions.GO_TO_PAGE:
+      return {
+        ...state,
+        currentPage: action.payload,
+      };
     case PaginationActions.NEXT_PAGE:
       return {
         ...state,
@@ -35,6 +44,7 @@ export default function usePagination() {
 
   const goToPreviousPage = () => dispatch({ type: PaginationActions.PREVIOUS_PAGE });
   const goToNextPage = () => dispatch({ type: PaginationActions.NEXT_PAGE });
+  const goToPage = (page: number) => dispatch({ type: PaginationActions.GO_TO_PAGE, payload: page });
 
-  return { ...state, goToPreviousPage, goToNextPage };
+  return { ...state, goToPreviousPage, goToNextPage, goToPage };
 }

@@ -1,14 +1,17 @@
 type Props = {
-  totalCount: number;
+  pageSize: number;
+  totalPage: number;
+  totalSize: number;
+  currentPage: number;
 };
 
-export default function Pagination({ totalCount }: Props) {
+export default function Pagination({ pageSize, totalSize, totalPage, currentPage }: Props) {
+  const pages = Array.from({ length: totalPage }, (_, i) => i + 1);
   return (
     <div className="join">
-      <button className="btn-md join-item btn">1</button>
-      <button className="btn-active btn-md join-item btn">2</button>
-      <button className="btn-md join-item btn">3</button>
-      <button className="btn-md join-item btn">4</button>
+      {pages.map((p) => (
+        <button className={p == currentPage ? 'btn-active btn-md join-item btn' : 'btn-md join-item btn'}>{p}</button>
+      ))}
     </div>
   );
 }
