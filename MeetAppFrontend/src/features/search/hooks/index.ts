@@ -1,4 +1,3 @@
-import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 import { getFilteredUsersService, usersQueryKeys } from '@/services/Users/users';
 
@@ -7,7 +6,9 @@ function useMatches() {
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.usersList(), mutateFetcher);
 
-  return { data: data?.data, ...rest };
+  return { data: data?.data, ...rest, pagination: data?.headers.pagination };
 }
+
+function useLikedUsers() {}
 
 export { useMatches };

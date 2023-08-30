@@ -18,6 +18,12 @@ api.interceptors.request.use(async (request) => {
 
 api.interceptors.response.use(
   function (response) {
+    const paginationHeadersCheck = () => response.data && response.headers.pagination;
+
+    if (paginationHeadersCheck()) {
+      response.headers.pagination = JSON.parse(response.headers.pagination);
+    }
+
     return response;
   },
   function (error) {
