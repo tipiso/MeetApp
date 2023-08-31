@@ -1,5 +1,7 @@
+import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
-import { getFilteredUsersService, usersQueryKeys } from '@/services/Users/users';
+
+import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@/services/Users/users';
 
 function useMatches() {
   const mutateFetcher = (url: string, { arg }: { arg: string }) => getFilteredUsersService({ searchString: arg });
@@ -9,6 +11,12 @@ function useMatches() {
   return { data: data?.data, ...rest, pagination: data?.headers.pagination };
 }
 
-function useLikedUsers() {}
+function useLikedUsers() {
+  const fetcher = () => getLikedUsersService();
 
-export { useMatches };
+  const { data, ...rest } = useSWR(usersQueryKeys.likedUsers, fetcher);
+
+  return { data: data?.data, ...rest };
+}
+
+export { useMatches, useLikedUsers };

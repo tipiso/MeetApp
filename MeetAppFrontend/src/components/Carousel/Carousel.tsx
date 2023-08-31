@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode } from 'react';
 import Slider from 'react-slick';
 import CarouselArrowLeft from '@/assets/images/CarouselArrowLeft.svg';
 import CarouselArrowRight from '@/assets/images/CarouselArrowRight.svg';
@@ -27,18 +27,17 @@ export default function Carousel({ children, carouselData }: Props) {
       dots={false}
       slidesToScroll={1}
       slidesToShow={5}
+      centerMode={true}
       initialSlide={getMiddleItem()}
       arrows={true}
       prevArrow={
-        <div>
-          <Image
-            className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
-            src={CarouselArrowLeft}
-            height={50}
-            width={50}
-            alt="arrow left icon"
-          />
-        </div>
+        <Image
+          className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
+          src={CarouselArrowLeft}
+          height={50}
+          width={50}
+          alt="arrow left icon"
+        />
       }
       nextArrow={
         <Image
