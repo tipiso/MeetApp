@@ -4,8 +4,8 @@
 
 *.vs
 
-API/hotelapp.db-wal
-API/hotelapp.db-shm
+API/meetapp.db-wal
+API/meetapp.db-shm
 
 appsettings.*
 
