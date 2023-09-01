@@ -16,15 +16,24 @@ export default function SuggestionsList({ data, isLoading }: Props) {
 
   return (
     <>
-      <h1 className="mb-4 px-10 text-2xl">Catch some suggestions from around Ortar!</h1>
+      <h1 className="mb-4 px-10 text-2xl font-bold">Catch some suggestions from around Ortar!</h1>
       <Carousel carouselData={data}>
         {data?.map((u) => (
           <Carousel.CarouselItem key={u.id}>
-            <CarouselSuggestionImg user={u} />
+            <CarouselSuggestionImg
+              imgWidth={250}
+              imgHeight={230}
+              user={u}
+              imgAction={
+                <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
+                  Invite to friends
+                </Button>
+              }
+            />
           </Carousel.CarouselItem>
         ))}
       </Carousel>
-      <div className="flex justify-center pt-4">
+      <div className="flex justify-center pt-4 pb-8">
         <Button btnType={ColorTypeEnum.SECONDARY}>Check more</Button>
       </div>
     </>
