@@ -4,10 +4,13 @@ import UserCard from '@/features/search/components/UserCard';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import UserNameText from '@/features/users/components/UserNameText';
+import Pagination from '@/components/Pagination/Pagination';
+import usePagination from '@/components/Pagination/usePagination';
 
 const FriendsList = () => {
   const { data, isLoading } = useLikedUsers();
-  console.log(data, isLoading);
+  const pagination = usePagination();
+
   if (isLoading) return <Loader size={LoaderSizes.lg} />;
   if (!data) return <div className="px-10">You don't have any friends yet!</div>;
 
@@ -31,6 +34,7 @@ const FriendsList = () => {
           />
         ))}
       </div>
+      {data.length > 8 && <Pagination {...pagination} />}
     </section>
   );
 };
