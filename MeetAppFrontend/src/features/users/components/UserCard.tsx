@@ -8,6 +8,7 @@ import { userUrl } from '@/utils/url';
 type Props = {
   user: User;
 };
+/**TODO: REMOVE THIS AS SOON AS UNIVERSAL CARD IS PREPARED  */
 export default function UserCard({ user }: Props) {
   const onlineUsersContext = useContext(OnlineUsersContext);
   const isOnline = onlineUsersContext.includes(user.userName);

@@ -100,7 +100,3 @@ export default function Carousel({ children, carouselData }: Props) {
     </Slider>
   );
 }
-
-Carousel.CarouselItem = function Item({ children }: { children: ReactNode }) {
-  return <>{children}</>;
-};
