@@ -26,6 +26,7 @@ export default function SuggestionsList({ data, isLoading }: Props) {
       <Carousel carouselData={data}>
         {data?.map((u) => (
           <UserCard
+            key={u.id}
             className="px-4"
             imgWidth={250}
             imgHeight={230}

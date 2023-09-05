@@ -1,6 +1,7 @@
 import { api } from '@/utils/axios';
 import { likesUrl, usersUrl } from '@/utils/url';
 import { User } from '@/features/users/types';
+import { PaginationParams } from '@/components/Pagination/types';
 
 const usersQueryKeys = {
   users: 'users',
@@ -14,6 +15,7 @@ const getFilteredUsersService = ({ searchString }: { searchString: string }) =>
 
 const getUserService = (username: string) => api.get<User>(`${usersQueryKeys.users}/${username}`);
 
-const getLikedUsersService = () => api.get<User[]>(`${likesUrl}?predicate=liked`);
+const getLikedUsersService = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
+  api.get<User[]>(`${likesUrl}?predicate=liked&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
 export { getUsersService, getUserService, getFilteredUsersService, getLikedUsersService, usersQueryKeys };

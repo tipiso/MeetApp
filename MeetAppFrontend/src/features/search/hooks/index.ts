@@ -1,4 +1,3 @@
-import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@/services/Users/users';
@@ -12,11 +11,26 @@ function useMatches() {
 }
 
 function useLikedUsers() {
-  const fetcher = () => getLikedUsersService();
+  const fetcher = (url: string, { arg }: { arg: { pageNumber: number; pageSize: number } }) =>
+    getLikedUsersService(arg);
 
-  const { data, ...rest } = useSWR(usersQueryKeys.likedUsers, fetcher);
+  const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers, fetcher);
 
-  return { data: data?.data, ...rest };
+  const getPage = async (pageNumber: number) => {
+    await rest.trigger({ pageNumber, pageSize: 8 });
+  };
+
+  return {
+    data: data?.data,
+    ...rest,
+    getPage,
+    pagination: {
+      pageSize: 8,
+      totalPage: 2,
+      currentPage: 1,
+      totalSize: 12,
+    },
+  };
 }
 
 export { useMatches, useLikedUsers };

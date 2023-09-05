@@ -52,7 +52,7 @@ export default function Carousel({ children, carouselData }: Props) {
         {
           breakpoint: 1536,
           settings: {
-            slidesToShow: 5,
+            slidesToShow: 4,
             slidesToScroll: 1,
             infinite: true,
             arrows: true,
@@ -61,7 +61,7 @@ export default function Carousel({ children, carouselData }: Props) {
         {
           breakpoint: 1280,
           settings: {
-            slidesToShow: 4,
+            slidesToShow: 3,
             slidesToScroll: 1,
             infinite: true,
             arrows: true,

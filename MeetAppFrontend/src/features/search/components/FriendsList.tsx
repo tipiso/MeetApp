@@ -5,26 +5,31 @@ import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import UserNameText from '@/features/users/components/UserNameText';
 import Pagination from '@/components/Pagination/Pagination';
-import usePagination from '@/components/Pagination/usePagination';
+import { useEffect } from 'react';
 
 const FriendsList = () => {
-  const { data, isLoading } = useLikedUsers();
-  const pagination = usePagination();
+  const { data, isMutating, pagination, getPage } = useLikedUsers();
 
-  if (isLoading) return <Loader size={LoaderSizes.lg} />;
-  if (!data) return <div className="px-10">You don't have any friends yet!</div>;
+  useEffect(() => {
+    getPage(1);
+  }, []);
+
+  if (isMutating) return <Loader size={LoaderSizes.lg} />;
+  if (!data) return <div className="flex justify-center p-10">You don't have any friends yet!</div>;
 
   return (
     <section className="px-10">
       <h1 className="mb-4 text-2xl font-bold">
         Friend list <span>({data.length})</span>
       </h1>
-      <div className="relative flex gap-x-4">
+      <div className="relative grid grid-cols-4 gap-x-4 xl:grid-cols-6">
         {data.map((u) => (
           <UserCard
+            key={u.id}
+            className="pb-3"
             user={u}
-            imgWidth={180}
-            imgHeight={170}
+            imgWidth={250}
+            imgHeight={250}
             imgAction={
               <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
                 Chat
@@ -34,7 +39,7 @@ const FriendsList = () => {
           />
         ))}
       </div>
-      {data.length > 8 && <Pagination {...pagination} />}
+      {pagination.totalPage > 1 && <Pagination handlePageChange={getPage} {...pagination} />}
     </section>
   );
 };

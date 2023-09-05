@@ -7,13 +7,6 @@ const api = Axios.create({
   baseURL: `${API_URL}`,
 });
 
-export type PaginationHeaders = {
-  pageSize: number;
-  totalPage: number;
-  totalSize: number;
-  currentPage: number;
-};
-
 api.interceptors.request.use(async (request) => {
   const session = await getSession();
 
