@@ -10,6 +10,7 @@ const routes = {
   matches: '/matches',
 
   search: '/search',
+  advancedSearch: '/search/advanced',
 };
 
 const navRoutes = [

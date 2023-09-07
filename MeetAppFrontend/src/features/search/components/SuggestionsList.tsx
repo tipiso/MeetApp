@@ -45,9 +45,6 @@ export default function SuggestionsList({ data, isLoading }: Props) {
           />
         ))}
       </Carousel>
-      <div className="flex justify-center pt-4 pb-8">
-        <Button btnType={ColorTypeEnum.SECONDARY}>Check more</Button>
-      </div>
     </>
   );
 }

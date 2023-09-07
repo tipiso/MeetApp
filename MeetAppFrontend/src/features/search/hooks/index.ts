@@ -11,6 +11,7 @@ function useMatches() {
 }
 
 function useLikedUsers() {
+  const initialPagination = { pageSize: 8, totalPage: 1, currentPage: 1, totalSize: 12 };
   const fetcher = (url: string, { arg }: { arg: { pageNumber: number; pageSize: number } }) =>
     getLikedUsersService(arg);
 
@@ -24,12 +25,7 @@ function useLikedUsers() {
     data: data?.data,
     ...rest,
     getPage,
-    pagination: {
-      pageSize: 8,
-      totalPage: 2,
-      currentPage: 1,
-      totalSize: 12,
-    },
+    pagination: data?.headers.pagination ?? initialPagination,
   };
 }
 

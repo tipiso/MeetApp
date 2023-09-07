@@ -15,30 +15,35 @@ const FriendsList = () => {
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
-  if (!data) return <div className="flex justify-center p-10">You don't have any friends yet!</div>;
 
   return (
     <section className="px-10">
       <h1 className="mb-4 text-2xl font-bold">
-        Friend list <span>({data.length})</span>
+        Friend list <span>({data ? data.length : 0})</span>
       </h1>
-      <div className="relative grid grid-cols-4 gap-x-4 xl:grid-cols-6">
-        {data.map((u) => (
-          <UserCard
-            key={u.id}
-            className="pb-3"
-            user={u}
-            imgWidth={250}
-            imgHeight={250}
-            imgAction={
-              <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
-                Chat
-              </Button>
-            }
-            userInfo={<UserNameText name={u.knownAs} />}
-          />
-        ))}
-      </div>
+      {!data || !data.length ? (
+        <div className="flex justify-center p-10 text-2xl font-light">
+          <p className="max-w-sm text-center">You don't actually have any added friends</p>
+        </div>
+      ) : (
+        <div className="relative grid grid-cols-4 gap-x-4 xl:grid-cols-6">
+          {data.map((u) => (
+            <UserCard
+              key={u.id}
+              className="pb-3"
+              user={u}
+              imgWidth={250}
+              imgHeight={250}
+              imgAction={
+                <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
+                  Chat
+                </Button>
+              }
+              userInfo={<UserNameText name={u.knownAs} />}
+            />
+          ))}
+        </div>
+      )}
       {pagination.totalPage > 1 && <Pagination handlePageChange={getPage} {...pagination} />}
     </section>
   );
