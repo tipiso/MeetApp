@@ -30,8 +30,8 @@ const AdvancedSearchForm = () => {
           <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
             <SelectInput name="hobby" options={[]} label="Choose by type of hobby" placeholder="Select hobby" />
             <div className="flex w-full items-end justify-items-stretch">
-              <Input label="Age limits" name="ageFrom" /> <div className="h-10 flex-grow px-2 text-center">-</div>
-              <Input className="mt-9" name="ageTo" />
+              <Input label="Age limits" name="minAge" /> <div className="h-10 flex-grow px-2 text-center">-</div>
+              <Input className="mt-9" name="maxAge" />
             </div>
             <SelectInput
               required
