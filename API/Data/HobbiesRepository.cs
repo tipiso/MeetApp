@@ -1,27 +1,31 @@
 ﻿using API.Entities;
 using API.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
 	public class HobbiesRepository : IHobbiesRepository
 	{
-		public HobbiesRepository()
+        private readonly DataContext _context;
+
+        public HobbiesRepository(DataContext context)
 		{
+            _context = context;
 		}
 
         public void AddHobby(Hobby hobby)
         {
-            throw new NotImplementedException();
+            _context.Hobbies.AddAsync(hobby);
         }
 
         public void DeleteHobby(Hobby hobby)
         {
-            throw new NotImplementedException();
+            _context.Hobbies.Remove(hobby);
         }
 
-        public Task<IEnumerable<Hobby>> GetHobbies()
+        public async Task<IEnumerable<Hobby>> GetHobbies()
         {
-            throw new NotImplementedException();
+            return await _context.Hobbies.ToListAsync();
         }
     }
 }
