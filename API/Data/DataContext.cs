@@ -36,6 +36,11 @@ namespace API.Data
                 .HasForeignKey(r => r.RoleId)
                 .IsRequired();
 
+            modelBuilder.Entity<AppUser>()
+                .HasMany(u => u.Hobbies)
+                .WithMany(h => h.Users)
+                .UsingEntity<UserHobby>();
+
             modelBuilder.Entity<UserLike>()
                 .HasKey(k => new { k.SourceUserId, k.TargetUserId });
 

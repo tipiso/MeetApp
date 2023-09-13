@@ -16,6 +16,7 @@ namespace API.Entities
 		public string Country { get; set; }
 
 		public List<Hobby> Hobbies { get; set; }
+        public List<UserHobby> UserHobbies { get; set; }
 
 		public List<Photo> Photos { get; set; } = new();
 
