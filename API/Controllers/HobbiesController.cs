@@ -1,7 +1,9 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 using API.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+
 
 namespace API.Controllers
 {
@@ -22,18 +24,17 @@ namespace API.Controllers
 		}
 
         [HttpPut("{username}")]
-        public async Task<ActionResult<List<Hobby>>> UpdateUserHobbies(string username, int[] hobbies)
+        public async Task<ActionResult<List<Hobby>>> UpdateUserHobbies(string username,[FromBody] HobbiesUpdateDto hobbiesDto)
         {
-            if (hobbies.Length == 0) return BadRequest();
+            if (hobbiesDto.hobbies.Length == 0) return BadRequest();
 
             var user = await _uow.UserRepository.GetUserByUsernameAsync(username);
-
-            var unselectedHobbies = user.UserHobbies.Where(u => !hobbies.Contains(u.HobbyId));
-            var selectedHobbies = hobbies.Where(h => !user.UserHobbies.Select(u => u.HobbyId).Contains(h));
+            
+            var unselectedHobbies = user.UserHobbies.Where(u => !hobbiesDto.hobbies.Contains(u.HobbyId));
+            var selectedHobbies = hobbiesDto.hobbies.Where(h => !user.UserHobbies.Select(u => u.HobbyId).Contains(h));
 
             if (unselectedHobbies.Any())
             {
-                // Remove those which were removed
                 foreach (UserHobby hobby in unselectedHobbies)
                 {
                     user.UserHobbies.Remove(hobby);
@@ -48,7 +49,13 @@ namespace API.Controllers
                 }
             }
 
-            return Ok(await _uow.HobbiesRepository.GetHobbies());
+            if (_uow.HasChanges())
+            {
+                await _uow.Complete();
+                return Ok(new { selectedHobbies, unselectedHobbies });
+            }
+
+            return BadRequest("Failed to update hobbies");
         }
     }
 }
