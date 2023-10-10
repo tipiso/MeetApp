@@ -1,4 +1,4 @@
-import Axios from 'axios';
+import Axios, { AxiosResponse, AxiosResponseHeaders } from 'axios';
 import { API_URL } from '@/utils/constants';
 import * as process from 'process';
 import { getSession } from 'next-auth/react';
@@ -18,6 +18,12 @@ api.interceptors.request.use(async (request) => {
 
 api.interceptors.response.use(
   function (response) {
+    const paginationHeadersCheck = () => response.data && response.headers.pagination;
+
+    if (paginationHeadersCheck()) {
+      response.headers.pagination = JSON.parse(response.headers.pagination);
+    }
+
     return response;
   },
   function (error) {

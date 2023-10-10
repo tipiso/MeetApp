@@ -1,5 +1,4 @@
-﻿using System;
-using API.Entities;
+﻿using API.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -19,6 +18,7 @@ namespace API.Data
         public DbSet<Group> Groups { get; set; }
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Photo> Photos { get; set; }
+        public DbSet<Hobby> Hobbies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -35,6 +35,11 @@ namespace API.Data
                 .WithOne(u => u.Role)
                 .HasForeignKey(r => r.RoleId)
                 .IsRequired();
+
+            modelBuilder.Entity<AppUser>()
+                .HasMany(u => u.Hobbies)
+                .WithMany(h => h.Users)
+                .UsingEntity<UserHobby>();
 
             modelBuilder.Entity<UserLike>()
                 .HasKey(k => new { k.SourceUserId, k.TargetUserId });

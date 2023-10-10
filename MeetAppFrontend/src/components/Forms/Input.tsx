@@ -1,14 +1,15 @@
-import { InputHTMLAttributes } from 'react';
+import { InputHTMLAttributes, ReactNode } from 'react';
 import cx from 'classnames';
 import * as Form from '@radix-ui/react-form';
 import { Controller, useFormContext } from 'react-hook-form';
 import Label from '@/components/Forms/Label';
 import ErrorMessage from '@/components/Forms/ErrorMessage';
 
-type Props = { name: string; label?: string } & InputHTMLAttributes<HTMLInputElement>;
+type Props = { name: string; label?: string; icon?: ReactNode } & InputHTMLAttributes<HTMLInputElement>;
 
 export function Input(props: Props) {
   const { control } = useFormContext();
+  const withIcon = !!props.icon;
 
   return (
     <Controller
@@ -19,15 +20,18 @@ export function Input(props: Props) {
         <Form.FormField name={props.name} className="form-control">
           {props.label && <Label text={props.label} {...props} />}
           <Form.Control asChild>
-            <input
-              {...field}
-              placeholder={props.placeholder}
-              autoComplete={props.type === 'password' ? 'current-password' : ''}
-              type={props.type}
-              className={cx(props.className, 'input-bordered input w-full border-base-300', {
-                ['input-error']: fieldState.error,
-              })}
-            />
+            <>
+              <input
+                {...field}
+                placeholder={props.placeholder}
+                autoComplete={props.type === 'password' ? 'current-password' : ''}
+                type={props.type}
+                className={cx(props.className, 'input-bordered input w-full border-base-300', {
+                  ['input-error']: fieldState.error,
+                })}
+              />
+              {withIcon && <div className="absolute right-4 top-1/2 -translate-y-1/2">{props.icon}</div>}
+            </>
           </Form.Control>
 
           {fieldState.error && (

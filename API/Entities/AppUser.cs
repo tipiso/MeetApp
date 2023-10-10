@@ -1,5 +1,4 @@
-﻿using API.Extensions;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 
 namespace API.Entities
 {
@@ -15,6 +14,10 @@ namespace API.Entities
 		public string Interests { get; set; }
 		public string City { get; set; }
 		public string Country { get; set; }
+
+		public List<Hobby> Hobbies { get; set; }
+        public List<UserHobby> UserHobbies { get; set; } = new();
+
 		public List<Photo> Photos { get; set; } = new();
 
 		public List<UserLike> LikedByUsers { get; set; }

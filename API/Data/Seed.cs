@@ -8,13 +8,30 @@ namespace API.Data
 {
 	public class Seed
 	{
+		private class JsonHobby
+		{
+			public string hobby { get; set; }
+		}
+
+		public static async Task SeedHobbies(DataContext context)
+		{
+            if (await context.Hobbies.AnyAsync()) return;
+
+            var hobbiesData = await File.ReadAllTextAsync("Data/HobbiesData.json");
+			var jHobbies = JsonSerializer.Deserialize<List<JsonHobby>>(hobbiesData);
+
+			foreach (JsonHobby jHobby in jHobbies)
+			{
+                await context.Hobbies.AddAsync(new Hobby { Name = jHobby.hobby });
+				await context.SaveChangesAsync();
+			}
+		}
+
 		public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
 		{
 			if (await userManager.Users.AnyAsync()) return;
 
 			var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
-
-			var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
 			var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
 
@@ -24,6 +41,7 @@ namespace API.Data
                 new AppRole{ Name = Roles.Admin },
                 new AppRole{ Name = Roles.Moderator }
             };
+
 
 			foreach (var role in roles)
 			{

@@ -8,6 +8,9 @@ const routes = {
   messages: '/messages',
 
   matches: '/matches',
+
+  search: '/search',
+  advancedSearch: '/search/advanced',
 };
 
 const navRoutes = [

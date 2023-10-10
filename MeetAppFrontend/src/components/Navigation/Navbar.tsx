@@ -1,15 +1,19 @@
-import NavItem from '@/components/Navigation/NavItem';
 import Link from 'next/link';
-import { navRoutes, routes as appRoutes } from '@/utils/routes';
+import { routes, routes as appRoutes } from '@/utils/routes';
 import { signOut, useSession } from 'next-auth/react';
 import LogoLight from '@/assets/images/LogoLight.svg';
+import MessagesIcon from '@/assets/images/MessagesIcon.svg';
+import FriendsIcon from '@/assets/images/FriendsIcon.svg';
 import Image from 'next/image';
+import { getUser } from '@/features/users/hooks';
+import { NavIcon } from '@/components/Navigation/NavIcon';
 
 type Props = {
   hideRoutes?: boolean;
 };
 export default function Navbar({ hideRoutes }: Props) {
   const { data } = useSession();
+  const { data: user, isLoading } = getUser(data?.user.name);
 
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">
@@ -21,24 +25,19 @@ export default function Navbar({ hideRoutes }: Props) {
       {!hideRoutes && (
         <nav className="flex-none">
           {data?.user ? (
-            <ul className="menu menu-horizontal px-1">
-              {navRoutes.map((route) => (
-                <NavItem key={route.href} {...route} />
-              ))}
+            <ul className="menu menu-horizontal flex items-center px-1">
+              <NavIcon route={routes.matches} img={FriendsIcon} imgAlt="Friends icon" />
+              <NavIcon route={routes.messages} img={MessagesIcon} imgAlt="Messages icon" />
               <li className="dropdown" tabIndex={0}>
-                <label tabIndex={0}>
-                  {data?.user?.name}
-                  <svg
-                    className="fill-current"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M7.41,8.58L12,13.17L16.59,8.58L18,10L12,16L6,10L7.41,8.58Z" />
-                  </svg>
-                </label>
-                <ul tabIndex={0} className="w-50 dropdown-content menu rounded-box z-[1] mt-4 bg-base-100 p-2 shadow">
+                <div className="avatar p-0" tabIndex={0}>
+                  <div className="w-12 rounded-full">
+                    {user && <Image src={user.photoUrl} width={50} height={50} alt="User main photo minature" />}
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="w-50 dropdown-content menu rounded-box z-[1] mt-4 -translate-x-3 bg-base-100 p-2 shadow"
+                >
                   <li onClick={() => signOut({ callbackUrl: appRoutes.home })}>
                     <a>Log out</a>
                   </li>
