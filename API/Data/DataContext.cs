@@ -19,6 +19,7 @@ namespace API.Data
         public DbSet<Connection> Connections { get; set; }
         public DbSet<Photo> Photos { get; set; }
         public DbSet<Hobby> Hobbies { get; set; }
+        public DbSet<UserHobby> UserHobbies { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -39,6 +40,11 @@ namespace API.Data
             modelBuilder.Entity<AppUser>()
                 .HasMany(u => u.Hobbies)
                 .WithMany(h => h.Users)
+                .UsingEntity<UserHobby>();
+
+            modelBuilder.Entity<Hobby>()
+                .HasMany(u => u.Users)
+                .WithMany(h => h.Hobbies)
                 .UsingEntity<UserHobby>();
 
             modelBuilder.Entity<UserLike>()

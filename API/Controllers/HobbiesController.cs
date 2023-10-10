@@ -26,18 +26,21 @@ namespace API.Controllers
         [HttpPut("{username}")]
         public async Task<ActionResult<List<Hobby>>> UpdateUserHobbies(string username,[FromBody] HobbiesUpdateDto hobbiesDto)
         {
-            if (hobbiesDto.hobbies.Length == 0) return BadRequest();
-
             var user = await _uow.UserRepository.GetUserByUsernameAsync(username);
             
             var unselectedHobbies = user.UserHobbies.Where(u => !hobbiesDto.hobbies.Contains(u.HobbyId));
             var selectedHobbies = hobbiesDto.hobbies.Where(h => !user.UserHobbies.Select(u => u.HobbyId).Contains(h));
+            var responseDto = new 
+            { 
+                selectedHobbies = selectedHobbies.ToList(), 
+                unselectedHobbies = unselectedHobbies.Select(uh => uh.HobbyId).ToList() 
+            };
 
             if (unselectedHobbies.Any())
             {
                 foreach (UserHobby hobby in unselectedHobbies)
                 {
-                    user.UserHobbies.Remove(hobby);
+                    _uow.HobbiesRepository.DeleteUserHobby(hobby);
                 }
             }
 
@@ -52,7 +55,7 @@ namespace API.Controllers
             if (_uow.HasChanges())
             {
                 await _uow.Complete();
-                return Ok(new { selectedHobbies, unselectedHobbies });
+                return Ok(responseDto);
             }
 
             return BadRequest("Failed to update hobbies");

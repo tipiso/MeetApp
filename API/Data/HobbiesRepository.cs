@@ -23,6 +23,11 @@ namespace API.Data
             _context.Hobbies.Remove(hobby);
         }
 
+        public void DeleteUserHobby(UserHobby userHobby)
+        {
+            _context.UserHobbies.Remove(userHobby);
+        }
+
         public async Task<IEnumerable<Hobby>> GetHobbies()
         {
             return await _context.Hobbies.ToListAsync();
