@@ -9,12 +9,12 @@ export enum BadgeSizes {
 }
 
 type Props = {
-  content: ReactNode;
-  color: string;
+  children: ReactNode;
   size: BadgeSizes;
+  color?: string;
   outline?: boolean;
 };
 
-export default function Loader({ content, size, color, outline }: Props) {
-  return <span className={classNames('badge', size, { 'badge-outline': !!outline })}>{content}</span>;
+export default function Badge({ children, size, color, outline }: Props) {
+  return <span className={classNames('badge', size, color, { 'badge-outline': !!outline })}>{children}</span>;
 }

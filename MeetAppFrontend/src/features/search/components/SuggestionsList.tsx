@@ -5,6 +5,7 @@ import { ColorTypeEnum } from '@/utils/constants';
 import { User } from '@/features/users/types';
 import UserCard from '@/features/search/components/UserCard';
 import UserNameText from '@/features/users/components/UserNameText';
+import Badge, { BadgeSizes } from '@/components/Badge';
 
 type Props = {
   data?: User[];
@@ -39,6 +40,20 @@ export default function SuggestionsList({ data, isLoading }: Props) {
             userInfo={
               <>
                 <UserNameText name={u.knownAs} />
+                {u.hobbys.length
+                  ? u.hobbys.map((h) => {
+                      let tmpIdx = 0;
+                      const badgeClassColors = ['badge-primary', 'badge-secondary', 'badge-accent'];
+                      const colorsLength = badgeClassColors.length;
+                      const colorClass = badgeClassColors[tmpIdx];
+                      if (tmpIdx + 1 === colorsLength) tmpIdx = 0;
+                      return (
+                        <Badge key={h.id} size={BadgeSizes.SM} color={colorClass}>
+                          {h.name}
+                        </Badge>
+                      );
+                    })
+                  : null}
                 <span className="text-base text-white">{prepareInfoString(u)}</span>
               </>
             }

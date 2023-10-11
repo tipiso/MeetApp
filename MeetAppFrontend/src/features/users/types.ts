@@ -14,6 +14,7 @@ export type User = {
   city: string;
   country: string;
   photos: Photo[];
+  hobbys: Hobby[];
 };
 
 export enum Gender {
@@ -40,4 +41,4 @@ export type TokenObj = {
 export type Hobby = {
   id: number;
   name: string;
-}
+};
