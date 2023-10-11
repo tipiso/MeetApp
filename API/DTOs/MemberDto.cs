@@ -19,6 +19,7 @@ namespace API.DTOs
         public string City { get; set; }
         public string Country { get; set; }
         public List<PhotoDto> Photos { get; set; } = new();
+        public List<HobbyDto> Hobbys { get; set; } = new();
     }
 }
 

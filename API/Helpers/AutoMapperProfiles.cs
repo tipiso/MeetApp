@@ -10,9 +10,13 @@ namespace API.Helpers
 	{
 		public AutoMapperProfiles()
 		{
+			CreateMap<Hobby, HobbyDto>()
+				.ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+				.ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Name));
 			CreateMap<AppUser, MemberDto>()
 				.ForMember(dest => dest.PhotoUrl, opt => opt.MapFrom(src => src.Photos.FirstOrDefault(x => x.IsMain).Url))
-				.ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()));
+				.ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()))
+				.ForMember(dest => dest.Hobbys, opt => opt.MapFrom(src => src.Hobbies));
 			CreateMap<Photo, PhotoDto>();
 			CreateMap<MemberUpdateDto, AppUser>();
 			CreateMap<RegisterDto, AppUser>();

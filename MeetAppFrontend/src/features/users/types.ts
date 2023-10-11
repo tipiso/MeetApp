@@ -36,3 +36,8 @@ export type TokenObj = {
   accessToken: string;
   username: string;
 };
+
+export type Hobby = {
+  id: number;
+  name: string;
+}

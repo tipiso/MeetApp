@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import Slider from 'react-slick';
+import Slider, { CustomArrowProps } from 'react-slick';
 import CarouselArrowLeft from '@/assets/images/CarouselArrowLeft.svg';
 import CarouselArrowRight from '@/assets/images/CarouselArrowRight.svg';
 import Image from 'next/image';
@@ -12,6 +12,41 @@ type Props = {
   children: ReactNode;
   carouselData: any & { id: string }[];
 };
+
+const SlickArrowLeft = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
+  <button
+    {...props}
+    className={'slick-prev slick-arrow' + (slideCount && currentSlide === 0 ? ' slick-disabled' : '')}
+    aria-hidden="true"
+    aria-disabled={!!(currentSlide && currentSlide === 0)}
+    type="button"
+  >
+    <Image
+      className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
+      src={CarouselArrowLeft}
+      height={50}
+      width={50}
+      alt="arrow left icon"
+    />
+  </button>
+);
+const SlickArrowRight = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
+  <button
+    {...props}
+    className={'slick-next slick-arrow' + (slideCount && currentSlide === slideCount - 1 ? ' slick-disabled' : '')}
+    aria-hidden="true"
+    aria-disabled={!!(slideCount && currentSlide === slideCount - 1)}
+    type="button"
+  >
+    <Image
+      className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
+      src={CarouselArrowRight}
+      height={50}
+      width={50}
+      alt="arrow right icon"
+    />
+  </button>
+);
 
 export default function Carousel({ children, carouselData }: Props) {
   const getMiddleItem = () => {
@@ -30,24 +65,8 @@ export default function Carousel({ children, carouselData }: Props) {
       centerMode={true}
       initialSlide={getMiddleItem()}
       arrows={true}
-      prevArrow={
-        <Image
-          className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
-          src={CarouselArrowLeft}
-          height={50}
-          width={50}
-          alt="arrow left icon"
-        />
-      }
-      nextArrow={
-        <Image
-          className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
-          src={CarouselArrowRight}
-          height={50}
-          width={50}
-          alt="arrow right icon"
-        />
-      }
+      prevArrow={<SlickArrowLeft />}
+      nextArrow={<SlickArrowRight />}
       responsive={[
         {
           breakpoint: 1536,

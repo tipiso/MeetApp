@@ -1,6 +1,6 @@
 import useSWRMutation from 'swr/mutation';
 
-import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@/services/Users/users';
+import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@/services/users';
 
 function useMatches() {
   const mutateFetcher = (url: string, { arg }: { arg: string }) => getFilteredUsersService({ searchString: arg });

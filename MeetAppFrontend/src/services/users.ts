@@ -11,9 +11,9 @@ const usersQueryKeys = {
 const getUsersService = () => api.get<User[]>(usersUrl);
 
 const getFilteredUsersService = ({ searchString }: { searchString: string }) =>
-  api.get<User[]>(`${usersQueryKeys.users}?searchString=${searchString}`);
+  api.get<User[]>(`users?searchString=${searchString}`);
 
-const getUserService = (username: string) => api.get<User>(`${usersQueryKeys.users}/${username}`);
+const getUserService = (username: string) => api.get<User>(`users/${username}`);
 
 const getLikedUsersService = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
   api.get<User[]>(`${likesUrl}?predicate=liked&pageNumber=${pageNumber}&pageSize=${pageSize}`);

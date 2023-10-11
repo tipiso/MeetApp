@@ -1,6 +1,6 @@
 import useSWR from 'swr';
 
-import { getUsersService, getUserService, usersQueryKeys } from '@/services/Users/users';
+import { getUsersService, getUserService, usersQueryKeys } from '@/services/users';
 
 function getUsers() {
   const { data, ...rest } = useSWR(usersQueryKeys.usersList(), getUsersService);
