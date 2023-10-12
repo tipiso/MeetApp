@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { ReactNode } from 'react';
+import { ForwardedRef, forwardRef, ReactNode } from 'react';
 
 export enum BadgeSizes {
   XS = 'badge-xs',
@@ -13,8 +13,20 @@ type Props = {
   size: BadgeSizes;
   color?: string;
   outline?: boolean;
+  className?: string;
 };
 
-export default function Badge({ children, size, color, outline }: Props) {
-  return <span className={classNames('badge', size, color, { 'badge-outline': !!outline })}>{children}</span>;
-}
+export const defaultBadgeClassColors = ['badge-primary', 'badge-secondary', 'badge-accent'];
+
+const Badge = forwardRef(function Badge(
+  { children, size, color, outline, className }: Props,
+  ref: ForwardedRef<HTMLSpanElement | null>,
+) {
+  return (
+    <span ref={ref} className={classNames('badge', className, size, color, { 'badge-outline': !!outline })}>
+      {children}
+    </span>
+  );
+});
+
+export default Badge;
