@@ -26,7 +26,7 @@ const UserCard = ({ user, userInfo, imgWidth, imgHeight, imgAction, className }:
         />
         <div className="absolute top-0 h-full w-full rounded-lg bg-gradient-to-t from-black"></div>
 
-        {userInfo && <div className="absolute bottom-10 flex flex-col px-4 pb-4">{userInfo}</div>}
+        {userInfo && <div className="absolute bottom-10 flex w-full flex-col px-4 pb-4">{userInfo}</div>}
 
         {imgAction && <div className="absolute bottom-0 left-0 right-0">{imgAction}</div>}
       </div>

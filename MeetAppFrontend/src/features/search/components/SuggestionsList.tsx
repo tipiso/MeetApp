@@ -6,7 +6,7 @@ import { Hobby, User } from '@/features/users/types';
 import UserCard from '@/features/search/components/UserCard';
 import UserNameText from '@/features/users/components/UserNameText';
 import Badge, { BadgeSizes, defaultBadgeClassColors } from '@/components/Badge';
-import { useRef, useState } from 'react';
+import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 
 type Props = {
   data?: User[];
@@ -14,21 +14,43 @@ type Props = {
 };
 
 const HobbiesList = ({ hobbies }: { hobbies: Hobby[] }) => {
-  /** This is explicitly a regular variable, since it's important only on the first render */
+  /** This is explicitly a regular variable, since it's important only on the first render, doesnt have to be stable. */
+  let idx = 0;
   const [takenPlace, setTakenPlace] = useState<number>(0);
   const [displayAnotherTag, setDisplayAnotherTag] = useState(true);
+  const [parentWidth, setParentWidth] = useState<number>(0);
 
-  let idx = 0;
   const colorsLength = defaultBadgeClassColors.length;
-  const listRef = useRef<HTMLDivElement>();
+  const listRef = useRef<HTMLDivElement | null>(null);
 
+  useLayoutEffect(() => {
+    if (!!listRef.current) {
+      setParentWidth(listRef.current.clientWidth);
+    }
+  }, [hobbies.length]);
+
+  console.log(listRef);
   return (
-    <div
-      ref={(node) => {
-        if (node) listRef.current = node;
-      }}
-    >
+    <div className="min-h-[1px] min-w-full" ref={listRef}>
       {hobbies.map((h) => {
+        const checkWidthRef = useCallback(
+          (node: HTMLSpanElement | null) => {
+            console.log(node, parentWidth, 'REF1');
+            if (node) {
+              if (node.clientWidth + takenPlace <= parentWidth) {
+                setTakenPlace(takenPlace + node.clientWidth);
+              } else {
+                setDisplayAnotherTag(false);
+              }
+            }
+          },
+          [parentWidth],
+        );
+
+        if (!displayAnotherTag) {
+          return null;
+        }
+
         const currIndex = idx;
 
         if (idx === colorsLength - 1) {
@@ -36,18 +58,10 @@ const HobbiesList = ({ hobbies }: { hobbies: Hobby[] }) => {
         } else {
           idx++;
         }
-        console.log(takenPlace);
+
         return (
           <Badge
-            ref={(node) => {
-              console.log(node, listRef.current?.clientWidth, 'REF');
-              if (node) {
-                // @ts-ignore
-                if (node.clientWidth + takenPlace <= listRef.current?.clientWidth) {
-                  setTakenPlace(takenPlace + node.clientWidth);
-                }
-              }
-            }}
+            ref={checkWidthRef}
             className="mr-0.5"
             key={h.id}
             size={BadgeSizes.MD}
@@ -90,7 +104,7 @@ export default function SuggestionsList({ data, isLoading }: Props) {
               userInfo={
                 <>
                   <UserNameText name={u.knownAs} />
-                  {u.hobbys.length ? <HobbiesList hobbies={u.hobbys} /> : null}
+                  <HobbiesList hobbies={u.hobbys} />
                   <span className="text-base text-white">{prepareInfoString(u)}</span>
                 </>
               }
