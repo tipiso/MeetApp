@@ -49,7 +49,6 @@ const HobbyListItem = ({
 
 const HobbiesList = ({ hobbies }: { hobbies: Hobby[] }) => {
   const [takenPlace, setTakenPlace] = useState<{ id: number; width: number }[]>([]);
-  const [hiddenTags, setHiddenTags] = useState<number>(0);
   const [parentWidth, setParentWidth] = useState<number>(0);
 
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -60,7 +59,6 @@ const HobbiesList = ({ hobbies }: { hobbies: Hobby[] }) => {
       setParentWidth(listRef.current.clientWidth);
     }
   }, [hobbies.length]);
-  console.log('widthSum', widthSum);
 
   if (widthSum > parentWidth) {
     let tmpWidth = 0;
