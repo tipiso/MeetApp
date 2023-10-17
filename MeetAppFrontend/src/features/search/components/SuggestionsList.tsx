@@ -2,11 +2,9 @@ import Loader, { LoaderSizes } from '@/components/Loader';
 import Carousel from '@/components/Carousel/Carousel';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
-import { Hobby, User } from '@/features/users/types';
+import { User } from '@/features/users/types';
 import UserCard from '@/features/search/components/UserCard';
 import UserNameText from '@/features/users/components/UserNameText';
-import Badge, { BadgeSizes, defaultBadgeClassColors } from '@/components/Badge';
-import { useCallback, useLayoutEffect, useRef, useState } from 'react';
 import HobbiesList from '@/features/search/components/HobbiesList';
 
 type Props = {
@@ -43,7 +41,7 @@ export default function SuggestionsList({ data, isLoading }: Props) {
               userInfo={
                 <>
                   <UserNameText name={u.knownAs} />
-                  <HobbiesList hobbies={u.hobbys} />
+                  {!!u.hobbys.length && <HobbiesList hobbies={u.hobbys} />}
                   <span className="text-base text-white">{prepareInfoString(u)}</span>
                 </>
               }
