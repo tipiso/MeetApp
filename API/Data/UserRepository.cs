@@ -34,9 +34,11 @@ namespace API.Data
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
         {
             var query = _context.Users.AsQueryable();
+            var currentUser = await GetUserByUsernameAsync(userParams.CurrentUsername);
 
             query = query.Where(u => u.UserName != userParams.CurrentUsername);
             query = query.Where(u => u.Gender == userParams.Gender);
+            query = query.Where(u => !u.LikedByUsers.Select(l => l.SourceUserId).Contains(currentUser.Id));
 
             if (!String.IsNullOrEmpty(userParams.SearchString)) {
                 query = query.Where(u => u.UserName.Contains(userParams.SearchString) || u.KnownAs.Contains(userParams.SearchString));
