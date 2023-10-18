@@ -64,7 +64,6 @@ namespace API.Data
         {
             var user = await _context.Users
                 .Include(p => p.Photos)
-                .Include(u => u.UserHobbies)
                 .FirstOrDefaultAsync(user => user.UserName == username);
             return user;
         }
