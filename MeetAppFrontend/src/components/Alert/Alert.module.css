@@ -1,0 +1,23 @@
+.Toastify__toast {
+    @apply alert;
+    display: flex;
+}
+
+.Toastify__toast.warning {
+    @apply alert-warning;
+}
+
+.Toastify__toast.error {
+    @apply alert-error;
+}
+
+.Toastify__toast.success {
+    @apply alert-success;
+}
+
+.Toastify__toast.info {
+    @apply alert-info;
+}
+
+
+

@@ -6,6 +6,9 @@ import { User } from '@/features/users/types';
 import UserCard from '@/features/search/components/UserCard';
 import UserNameText from '@/features/users/components/UserNameText';
 import HobbiesList from '@/features/search/components/HobbiesList';
+import { useLikeUser } from '@/features/search/hooks';
+import { useState } from 'react';
+import { alert } from '@/components/Alert/Alert';
 
 type Props = {
   data?: User[];
@@ -13,8 +16,18 @@ type Props = {
 };
 
 export default function SuggestionsList({ data, isLoading }: Props) {
+  const [likedUsers, setLikedUsers] = useState<{ id: number; name: string }[]>([]);
+  const { isMutating, trigger } = useLikeUser();
+
   if (isLoading) return <Loader size={LoaderSizes.lg} />;
   if (!data) return <div>We have no suggestions for you yet.</div>;
+
+  const likeUser = async (user: { id: number; name: string }) => {
+    const res = await trigger(user.name);
+    if (res && res.status === 200) {
+      setLikedUsers([...likedUsers, user]);
+    }
+  };
 
   const prepareInfoString = (user: User) => {
     const genderFirstLetter = user.gender.slice(0, 1).toUpperCase();
@@ -34,7 +47,12 @@ export default function SuggestionsList({ data, isLoading }: Props) {
               imgHeight={230}
               user={u}
               imgAction={
-                <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
+                <Button
+                  disabled={isMutating}
+                  onClick={() => likeUser({ id: u.id, name: u.userName })}
+                  btnType={ColorTypeEnum.PRIMARY}
+                  className="mt-auto w-full rounded-t-none"
+                >
                   Invite to friends
                 </Button>
               }

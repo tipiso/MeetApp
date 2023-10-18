@@ -7,7 +7,7 @@ import '@/assets/styles/tw-output.css';
 import '@/assets/styles/globals.css';
 import AuthWrap from '@/services/Auth/AuthWrap';
 import SignalRPresenceProvider from '@/services/SignalR/SignalRPresenceProvider';
-import { Alert } from '@/components/Alert';
+import { Alert } from '@/components/Alert/Alert';
 import { Poppins } from '@next/font/google';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
