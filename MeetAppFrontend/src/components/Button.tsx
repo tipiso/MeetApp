@@ -1,6 +1,7 @@
 import { ComponentProps, ReactNode } from 'react';
 import cx from 'classnames';
 import { ColorTypeEnum } from '@/utils/constants';
+import Loader, { LoaderSizes } from '@/components/Loader';
 
 type ButtonProps =
   | ({ href: string; btnType?: ColorTypeEnum } & ComponentProps<'a'>)
@@ -8,6 +9,7 @@ type ButtonProps =
       children: ReactNode;
       onClick?: () => void;
       btnType?: ColorTypeEnum;
+      isLoading?: boolean;
       type?: string;
     } & ComponentProps<'button'>);
 
@@ -26,10 +28,10 @@ export default function Button(props: ButtonProps) {
       </a>
     );
   } else {
-    const { btnType, children, ...rest } = props;
+    const { btnType, isLoading, disabled, children, ...rest } = props;
     return (
-      <button {...rest} className={classes}>
-        {children}
+      <button {...rest} className={cx(classes, disabled && 'btn-disabled text-neutral')}>
+        {isLoading && <Loader fitToContainer size={LoaderSizes.sm} />} {children}
       </button>
     );
   }

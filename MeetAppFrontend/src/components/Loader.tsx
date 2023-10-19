@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import cx from 'classnames';
 
 export enum LoaderSizes {
   xs = 'loading-xs',
@@ -9,12 +9,13 @@ export enum LoaderSizes {
 
 type Props = {
   size: LoaderSizes;
+  fitToContainer?: boolean;
 };
 
-export default function Loader({ size }: Props) {
+export default function Loader({ size, fitToContainer }: Props) {
   return (
-    <div className="flex w-full justify-center py-10">
-      <span className={classNames('loading loading-spinner', size)}></span>
+    <div className={cx(!fitToContainer && 'flex w-full justify-center py-10')}>
+      <span className={cx('loading loading-spinner', size)}></span>
     </div>
   );
 }

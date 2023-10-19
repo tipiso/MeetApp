@@ -56,12 +56,15 @@ export default function Carousel({ children, carouselData }: Props) {
     return 0;
   };
 
+  const getSlidesToShow = (slidesToShow: number) =>
+    carouselData.length > slidesToShow ? slidesToShow : carouselData.length;
+  console.log(carouselData.length);
   return (
     <Slider
       className={styles.carousel}
       dots={false}
       slidesToScroll={1}
-      slidesToShow={5}
+      slidesToShow={getSlidesToShow(5)}
       centerMode={true}
       initialSlide={getMiddleItem()}
       arrows={true}
@@ -71,7 +74,7 @@ export default function Carousel({ children, carouselData }: Props) {
         {
           breakpoint: 1536,
           settings: {
-            slidesToShow: 4,
+            slidesToShow: getSlidesToShow(4),
             slidesToScroll: 1,
             infinite: true,
             arrows: true,
@@ -80,7 +83,7 @@ export default function Carousel({ children, carouselData }: Props) {
         {
           breakpoint: 1280,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: getSlidesToShow(3),
             slidesToScroll: 1,
             infinite: true,
             arrows: true,
@@ -89,7 +92,7 @@ export default function Carousel({ children, carouselData }: Props) {
         {
           breakpoint: 768,
           settings: {
-            slidesToShow: 3,
+            slidesToShow: getSlidesToShow(3),
             slidesToScroll: 1,
             infinite: true,
             arrows: true,
@@ -98,7 +101,7 @@ export default function Carousel({ children, carouselData }: Props) {
         {
           breakpoint: 640,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: getSlidesToShow(2),
             slidesToScroll: 1,
             infinite: true,
             arrows: true,
