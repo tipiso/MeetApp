@@ -20,7 +20,7 @@ export default function SearchLayout({ children }: LayoutProps) {
       <main className="relative flex min-h-screen w-full flex-col bg-gray-100 xl:container">
         <Navbar />
 
-        <div className="mt-5">{children}</div>
+        <div className="mt-5 pb-5">{children}</div>
 
         <Footer />
       </main>

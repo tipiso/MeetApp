@@ -1,11 +1,12 @@
 import { useLikedUsers } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
-import UserCard from '@/features/search/components/UserCard';
+import SuggestionCard from '@/features/search/components/SuggestionCard';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import UserNameText from '@/features/users/components/UserNameText';
 import Pagination from '@/components/Pagination/Pagination';
 import { useEffect } from 'react';
+import FriendCard from '@/features/search/components/FriendCard';
 
 const FriendsList = () => {
   const { data, isMutating, pagination, getPage } = useLikedUsers();
@@ -28,19 +29,7 @@ const FriendsList = () => {
       ) : (
         <div className="relative grid grid-cols-4 gap-x-4 xl:grid-cols-6">
           {data.map((u) => (
-            <UserCard
-              key={u.id}
-              className="pb-3"
-              user={u}
-              imgWidth={250}
-              imgHeight={250}
-              imgAction={
-                <Button btnType={ColorTypeEnum.PRIMARY} className="mt-auto w-full rounded-t-none">
-                  Chat
-                </Button>
-              }
-              userInfo={<UserNameText name={u.knownAs} />}
-            />
+            <FriendCard user={u} imgWidth={250} imgHeight={250} />
           ))}
         </div>
       )}
