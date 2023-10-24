@@ -58,7 +58,7 @@ export default function Carousel({ children, carouselData }: Props) {
 
   const getSlidesToShow = (slidesToShow: number) =>
     carouselData.length > slidesToShow ? slidesToShow : carouselData.length;
-  console.log(carouselData.length);
+
   return (
     <Slider
       className={styles.carousel}
