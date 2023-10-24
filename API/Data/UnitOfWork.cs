@@ -22,7 +22,7 @@ namespace API.Data
 
         public IPhotosRepository PhotosRepository => new PhotosRepository(_context);
 
-        public IHobbiesRepository HobbiesRepository => new HobbiesRepository(_context);
+        public IHobbiesRepository HobbiesRepository => new HobbiesRepository(_context, _mapper);
 
         public async Task<bool> Complete()
         {

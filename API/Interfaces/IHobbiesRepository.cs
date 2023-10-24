@@ -1,4 +1,5 @@
-﻿using API.Entities;
+﻿using API.DTOs;
+using API.Entities;
 
 namespace API.Interfaces
 {
@@ -7,7 +8,7 @@ namespace API.Interfaces
         void AddHobby(Hobby hobby);
         void DeleteHobby(Hobby hobby);
         void DeleteUserHobby(UserHobby userHobby);
-        Task<IEnumerable<Hobby>> GetHobbies();
+        Task<IEnumerable<HobbyDto>> GetHobbies();
     }
 }
 

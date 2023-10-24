@@ -6,6 +6,6 @@ const hobbiesQueryKeys = {
   hobbies: 'hobbies',
 };
 
-const getHobbiesService = () => api.get<Hobby[]>(hobbiesUrl);
+const getHobbies = () => api.get<Hobby[]>(hobbiesUrl);
 
-export { hobbiesQueryKeys, getHobbiesService };
+export { hobbiesQueryKeys, getHobbies };

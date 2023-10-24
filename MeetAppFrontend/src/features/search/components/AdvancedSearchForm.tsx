@@ -6,12 +6,18 @@ import SearchIcon from '@/assets/images/SearchIcon.svg';
 import Image from 'next/image';
 import useSearchForm from '@/features/search/hooks/useSearchForm';
 import { SelectInput } from '@/components/Forms/SelectInput';
+import Button from '@/components/Button';
+import { ColorTypeEnum } from '@/utils/constants';
+import { useGetHobbies } from '@/features/search/hooks';
+import Loader, { LoaderSizes } from '@/components/Loader';
 
 const AdvancedSearchForm = () => {
   const { trigger, methods, data, defaultValues, isMutating } = useSearchForm();
-
+  const { data: hobbies, isLoading } = useGetHobbies();
+  if (isLoading) return <Loader size={LoaderSizes.lg} />;
   const handleSubmit = async (data: typeof defaultValues) => {
-    await trigger(data.searchString);
+    console.log(data);
+    // await trigger(data.searchString);
   };
 
   return (
@@ -28,7 +34,12 @@ const AdvancedSearchForm = () => {
             />
           </div>
           <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
-            <SelectInput name="hobby" options={[]} label="Choose by type of hobby" placeholder="Select hobby" />
+            <SelectInput
+              name="hobby"
+              options={hobbies?.data.map((h) => ({ value: `${h.id}`, label: h.name })) ?? []}
+              label="Choose by type of hobby"
+              placeholder="Select hobby"
+            />
             <div className="flex w-full items-end justify-items-stretch">
               <Input label="Age limits" name="minAge" /> <div className="h-10 flex-grow px-2 text-center">-</div>
               <Input className="mt-9" name="maxAge" />
@@ -45,6 +56,9 @@ const AdvancedSearchForm = () => {
               ]}
             />
           </div>
+          <Button btnType={ColorTypeEnum.PRIMARY} type="submit">
+            Submit
+          </Button>
         </Form>
       </div>
     </FormProvider>
