@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-	public class UserRepository : IUserRepository
-	{
+    public class UserRepository : IUserRepository
+    {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
-		public UserRepository(DataContext context, IMapper mapper)
-		{
+        public UserRepository(DataContext context, IMapper mapper)
+        {
             _mapper = mapper;
             _context = context;
-		}
+        }
 
         public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
         {
@@ -40,7 +40,15 @@ namespace API.Data
             query = query.Where(u => u.Gender == userParams.Gender);
             query = query.Where(u => !u.LikedByUsers.Select(l => l.SourceUserId).Contains(currentUser.Id));
 
-            if (!String.IsNullOrEmpty(userParams.SearchString)) {
+            if (userParams.Hobbies != null && userParams.Hobbies.Length > 0)
+            {
+                query = query
+                .Where(u => u.UserHobbies
+                .Any(uh => userParams.Hobbies.Contains(uh.HobbyId)));
+            }
+        
+            if (!String.IsNullOrEmpty(userParams.SearchString))
+            {
                 query = query.Where(u => u.UserName.Contains(userParams.SearchString) || u.KnownAs.Contains(userParams.SearchString));
             }
 

@@ -24,6 +24,7 @@ const MultiSelect = (props: Props) => {
           {props.label && <Label text={props.label} {...props} />}
           <Select
             unstyled
+            isMulti
             classNames={{
               placeholder: () => 'text-gray-400',
               control: () =>
