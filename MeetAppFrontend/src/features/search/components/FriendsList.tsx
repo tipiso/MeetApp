@@ -29,7 +29,7 @@ const FriendsList = () => {
       ) : (
         <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 xl:grid-cols-6">
           {data.map((u) => (
-            <FriendCard user={u} imgWidth={250} imgHeight={250} />
+            <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
           ))}
         </div>
       )}

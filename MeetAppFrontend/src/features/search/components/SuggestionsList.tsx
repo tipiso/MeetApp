@@ -1,8 +1,8 @@
-import Loader, { LoaderSizes } from '@/components/Loader';
 import Carousel from '@/components/Carousel/Carousel';
+import Loader, { LoaderSizes } from '@/components/Loader';
 
-import { User } from '@/features/users/types';
 import SuggestionCard from '@/features/search/components/SuggestionCard';
+import { User } from '@/features/users/types';
 import { useSession } from 'next-auth/react';
 
 type Props = {

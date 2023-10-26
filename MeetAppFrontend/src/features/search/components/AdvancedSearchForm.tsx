@@ -10,11 +10,17 @@ import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import { useGetHobbies } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
+import { useMemo } from 'react';
+import MultiSelect from '@/components/Forms/MultiSelect';
 
 const AdvancedSearchForm = () => {
   const { trigger, methods, data, defaultValues, isMutating } = useSearchForm();
   const { data: hobbies, isLoading } = useGetHobbies();
+
+  const hobbiesMap = useMemo(() => hobbies?.data.map((h) => ({ value: `${h.id}`, label: h.name })), [hobbies]);
+
   if (isLoading) return <Loader size={LoaderSizes.lg} />;
+
   const handleSubmit = async (data: typeof defaultValues) => {
     console.log(data);
     // await trigger(data.searchString);
@@ -34,12 +40,8 @@ const AdvancedSearchForm = () => {
             />
           </div>
           <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
-            <SelectInput
-              name="hobby"
-              options={hobbies?.data.map((h) => ({ value: `${h.id}`, label: h.name })) ?? []}
-              label="Choose by type of hobby"
-              placeholder="Select hobby"
-            />
+            <MultiSelect label="Choose by type of hobby" name="hobby" options={hobbiesMap ?? []} />
+
             <div className="flex w-full items-end justify-items-stretch">
               <Input label="Age limits" name="minAge" /> <div className="h-10 flex-grow px-2 text-center">-</div>
               <Input className="mt-9" name="maxAge" />
@@ -56,9 +58,6 @@ const AdvancedSearchForm = () => {
               ]}
             />
           </div>
-          <Button btnType={ColorTypeEnum.PRIMARY} type="submit">
-            Submit
-          </Button>
         </Form>
       </div>
     </FormProvider>

@@ -1,16 +1,16 @@
+import { Form } from '@radix-ui/react-form';
 import { useEffect } from 'react';
 import { FormProvider } from 'react-hook-form';
-import { Form } from '@radix-ui/react-form';
 
-import { Input } from '@/components/Forms/Input';
-import SuggestionsList from '@/features/search/components/SuggestionsList';
-import FriendsList from '@/features/search/components/FriendsList';
 import SearchIcon from '@/assets/images/SearchIcon.svg';
-import Image from 'next/image';
-import useSearchForm from '@/features/search/hooks/useSearchForm';
 import Button from '@/components/Button';
+import { Input } from '@/components/Forms/Input';
+import FriendsList from '@/features/search/components/FriendsList';
+import SuggestionsList from '@/features/search/components/SuggestionsList';
+import useSearchForm from '@/features/search/hooks/useSearchForm';
 import { ColorTypeEnum } from '@/utils/constants';
 import { routes } from '@/utils/routes';
+import Image from 'next/image';
 
 const SearchForm = () => {
   const { trigger, methods, data, defaultValues, isMutating } = useSearchForm();

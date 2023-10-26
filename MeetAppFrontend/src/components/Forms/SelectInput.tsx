@@ -51,7 +51,7 @@ export function SelectInput(props: Props) {
             >
               <Select.Trigger
                 id={props.id || props.name}
-                className="text-normal select-bordered select w-full items-center text-base font-normal"
+                className="text-normal select-bordered select w-full items-center border-base-300 text-base font-normal"
               >
                 {props.placeholder && (
                   <Select.Value placeholder={<span className="text-gray-400">{props.placeholder}</span>}></Select.Value>
