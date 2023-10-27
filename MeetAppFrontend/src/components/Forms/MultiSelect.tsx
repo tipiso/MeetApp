@@ -12,7 +12,7 @@ type Props = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 const MultiSelect = (props: Props) => {
-  const { control } = useFormContext();
+  const { control, setValue } = useFormContext();
 
   return (
     <Controller
@@ -25,6 +25,11 @@ const MultiSelect = (props: Props) => {
           <Select
             unstyled
             isMulti
+            closeMenuOnSelect={false}
+            value={field.value}
+            onChange={(newValue, actionMeta) => {
+              setValue(props.name, newValue);
+            }}
             classNames={{
               placeholder: () => 'text-gray-400',
               control: () =>
