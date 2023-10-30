@@ -1,9 +1,5 @@
 import { useLikedUsers } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
-import SuggestionCard from '@/features/search/components/SuggestionCard';
-import Button from '@/components/Button';
-import { ColorTypeEnum } from '@/utils/constants';
-import UserNameText from '@/features/users/components/UserNameText';
 import Pagination from '@/components/Pagination/Pagination';
 import { useEffect } from 'react';
 import FriendCard from '@/features/search/components/FriendCard';

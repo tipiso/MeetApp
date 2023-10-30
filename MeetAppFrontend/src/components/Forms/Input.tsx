@@ -5,11 +5,17 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Label from '@/components/Forms/Label';
 import ErrorMessage from '@/components/Forms/ErrorMessage';
 
-type Props = { name: string; label?: string; icon?: ReactNode } & InputHTMLAttributes<HTMLInputElement>;
+type Props = {
+  name: string;
+  label?: string;
+  submitBtn?: ReactNode;
+  icon?: ReactNode;
+} & InputHTMLAttributes<HTMLInputElement>;
 
 export function Input(props: Props) {
   const { control } = useFormContext();
   const withIcon = !!props.icon;
+  const withBtn = !!props.submitBtn;
 
   return (
     <Controller
@@ -20,7 +26,11 @@ export function Input(props: Props) {
         <Form.FormField name={props.name} className="form-control">
           {props.label && <Label text={props.label} {...props} />}
           <Form.Control asChild>
-            <>
+            <div
+              className={cx({
+                ['join']: withBtn || withIcon,
+              })}
+            >
               <input
                 {...field}
                 placeholder={props.placeholder}
@@ -28,10 +38,12 @@ export function Input(props: Props) {
                 type={props.type}
                 className={cx(props.className, 'input-bordered input w-full border-base-300', {
                   ['input-error']: fieldState.error,
+                  ['join-item']: withIcon || withBtn,
                 })}
               />
-              {withIcon && <div className="absolute right-4 top-1/2 -translate-y-1/2">{props.icon}</div>}
-            </>
+              {withIcon && <div className="join-item right-4 top-1/2 -translate-y-1/2">{props.icon}</div>}
+              {withBtn && <div className="join-item">{props.submitBtn}</div>}
+            </div>
           </Form.Control>
 
           {fieldState.error && (

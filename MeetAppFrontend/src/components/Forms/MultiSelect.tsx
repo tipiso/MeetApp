@@ -4,10 +4,14 @@ import { InputHTMLAttributes, ReactNode } from 'react';
 import Label from '@/components/Forms/Label';
 import ErrorMessage from '@/components/Forms/ErrorMessage';
 import { Controller, useFormContext } from 'react-hook-form';
+import Badge, { BadgeSizes } from '@/components/Badge';
+import { CrossIcon } from '@/assets/images/icons';
+
+type Option = { label: string; value: string };
 
 type Props = {
   name: string;
-  options: { label: string; value: string }[];
+  options: Option[];
   label?: ReactNode;
 } & InputHTMLAttributes<HTMLInputElement>;
 
@@ -25,9 +29,10 @@ const MultiSelect = (props: Props) => {
           <Select
             unstyled
             isMulti
+            controlShouldRenderValue={false}
             closeMenuOnSelect={false}
             value={field.value}
-            onChange={(newValue, actionMeta) => {
+            onChange={(newValue, _) => {
               setValue(props.name, newValue);
             }}
             classNames={{
@@ -44,6 +49,27 @@ const MultiSelect = (props: Props) => {
               IndicatorsContainer: () => <></>,
             }}
           />
+
+          {field.value && (
+            <div className="pt-4">
+              {field.value.map((val: Option) => (
+                <Badge size={BadgeSizes.MD}>
+                  <button
+                    className="pr-2"
+                    onClick={() => {
+                      setValue(
+                        props.name,
+                        field.value.filter((newVal: Option) => newVal.value !== val.value),
+                      );
+                    }}
+                  >
+                    <CrossIcon className="neutral" />
+                  </button>
+                  {val.label}
+                </Badge>
+              ))}
+            </div>
+          )}
 
           {fieldState.error && (
             <Form.Message asChild>

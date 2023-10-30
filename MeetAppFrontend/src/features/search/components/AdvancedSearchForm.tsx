@@ -2,16 +2,15 @@ import { FormProvider } from 'react-hook-form';
 import { Form } from '@radix-ui/react-form';
 
 import { Input } from '@/components/Forms/Input';
-import SearchIcon from '@/assets/images/SearchIcon.svg';
-import Image from 'next/image';
+import { SearchIcon } from '@/assets/images/icons';
 import useSearchForm from '@/features/search/hooks/useSearchForm';
 import { SelectInput } from '@/components/Forms/SelectInput';
-import Button from '@/components/Button';
-import { ColorTypeEnum } from '@/utils/constants';
 import { useGetHobbies } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { useMemo } from 'react';
 import MultiSelect from '@/components/Forms/MultiSelect';
+import Button from '@/components/Button';
+import { ColorTypeEnum } from '@/utils/constants';
 
 const AdvancedSearchForm = () => {
   const { trigger, methods, data, defaultValues, isMutating } = useSearchForm();
@@ -36,23 +35,28 @@ const AdvancedSearchForm = () => {
               placeholder="Search by first name, last name, additional information"
               name="searchString"
               type="text"
-              icon={<Image src={SearchIcon} alt="search icon" />}
+              submitBtn={
+                <Button btnType={ColorTypeEnum.PRIMARY}>
+                  <SearchIcon />
+                </Button>
+              }
             />
           </div>
           <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
             <MultiSelect label="Choose by type of hobby" name="hobby" options={hobbiesMap ?? []} />
 
-            <div className="flex w-full items-end justify-items-stretch">
-              <Input label="Age limits" name="minAge" /> <div className="h-10 flex-grow px-2 text-center">-</div>
+            <div className="flex w-full justify-items-stretch">
+              <Input label="Age limits" name="minAge" />
+              <div className="mt-[46px] h-10 flex-grow px-2 text-center">-</div>
               <Input className="mt-9" name="maxAge" />
             </div>
             <SelectInput
-              required
               placeholder="All"
               name="gender"
               type="text"
               label="Gender"
               options={[
+                { label: 'All', value: '' },
                 { label: 'Male', value: 'male' },
                 { label: 'Female', value: 'female' },
               ]}
