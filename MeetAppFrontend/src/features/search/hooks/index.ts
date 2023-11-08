@@ -1,12 +1,13 @@
 import useSWRMutation from 'swr/mutation';
-
-import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@/services/users';
-import { likeUser } from '@/services/likes';
-import { getHobbies, hobbiesQueryKeys } from '@/services/hobbies';
 import useSWR from 'swr';
 
+import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@/services/Users/users';
+import { SearchFriendsDTO } from '@/services/Users/dtos';
+import { likeUser } from '@/services/likes';
+import { getHobbies, hobbiesQueryKeys } from '@/services/hobbies';
+
 function useMatches() {
-  const mutateFetcher = (url: string, { arg }: { arg: string }) => getFilteredUsersService({ searchString: arg });
+  const mutateFetcher = (url: string, { arg }: { arg: SearchFriendsDTO }) => getFilteredUsersService(arg);
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.usersList(), mutateFetcher);
 

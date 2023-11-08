@@ -8,7 +8,7 @@ import { SelectInput } from '@/components/Forms/SelectInput';
 import { useGetHobbies } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { useMemo } from 'react';
-import MultiSelect from '@/components/Forms/MultiSelect';
+import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 
@@ -20,9 +20,11 @@ const AdvancedSearchForm = () => {
 
   if (isLoading) return <Loader size={LoaderSizes.lg} />;
 
-  const handleSubmit = async (data: typeof defaultValues) => {
-    console.log(data);
-    // await trigger(data.searchString);
+  const handleSubmit = async ({ hobbies, ...rest }: typeof defaultValues) => {
+    await trigger({
+      ...rest,
+      hobbies: hobbies ? (hobbies as Option[]).map((h) => h.value) : [],
+    });
   };
 
   return (
@@ -43,7 +45,7 @@ const AdvancedSearchForm = () => {
             />
           </div>
           <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
-            <MultiSelect label="Choose by type of hobby" name="hobby" options={hobbiesMap ?? []} />
+            <MultiSelect label="Choose by type of hobby" name="hobbies" options={hobbiesMap ?? []} />
 
             <div className="flex w-full justify-items-stretch">
               <Input label="Age limits" name="minAge" />

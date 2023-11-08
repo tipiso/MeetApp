@@ -5,7 +5,7 @@ const defaultValues = {
   searchString: '',
   minAge: '',
   maxAge: '',
-  hobbies: '',
+  hobbies: [],
   gender: '',
 };
 

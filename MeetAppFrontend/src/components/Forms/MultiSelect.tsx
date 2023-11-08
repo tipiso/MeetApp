@@ -7,7 +7,7 @@ import { Controller, useFormContext } from 'react-hook-form';
 import Badge, { BadgeSizes } from '@/components/Badge';
 import { CrossIcon } from '@/assets/images/icons';
 
-type Option = { label: string; value: string };
+export type Option = { label: string; value: string };
 
 type Props = {
   name: string;
@@ -27,6 +27,7 @@ const MultiSelect = (props: Props) => {
         <Form.FormField className="form-control" name={props.name}>
           {props.label && <Label text={props.label} {...props} />}
           <Select
+            {...field}
             unstyled
             isMulti
             controlShouldRenderValue={false}
