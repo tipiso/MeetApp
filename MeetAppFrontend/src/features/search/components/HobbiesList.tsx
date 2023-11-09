@@ -2,8 +2,6 @@ import { Hobby } from '@/features/users/types';
 import { Dispatch, SetStateAction, useCallback, useLayoutEffect, useRef, useState } from 'react';
 import Badge, { BadgeSizes, defaultBadgeClassColors } from '@/components/Badge';
 
-/** This is explicitly a regular variable, since it's important only on the first render, doesnt have to be stable. */
-let idx = 0;
 const colorsLength = defaultBadgeClassColors.length;
 const HobbyListItem = ({
   hobby,
@@ -18,7 +16,8 @@ const HobbyListItem = ({
   takenPlace: { id: number; width: number }[];
   hobbiesLength: number;
 }) => {
-  const currIndex = idx;
+  /** This is explicitly a regular variable, since it's important only on the first render, doesnt have to be stable. */
+  let idx = 0;
   if (idx === colorsLength - 1) {
     idx = 0;
   } else {
@@ -35,13 +34,7 @@ const HobbyListItem = ({
   );
 
   return (
-    <Badge
-      ref={refCb}
-      className="mr-0.5"
-      key={hobby.id}
-      size={BadgeSizes.MD}
-      color={defaultBadgeClassColors[currIndex]}
-    >
+    <Badge ref={refCb} className="mr-0.5" key={hobby.id} size={BadgeSizes.MD} color={defaultBadgeClassColors[idx]}>
       {hobby.name}
     </Badge>
   );

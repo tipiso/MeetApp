@@ -5,19 +5,25 @@ import { getFilteredUsersService, getLikedUsersService, usersQueryKeys } from '@
 import { SearchFriendsDTO } from '@/services/Users/dtos';
 import { likeUser } from '@/services/likes';
 import { getHobbies, hobbiesQueryKeys } from '@/services/hobbies';
+import { PaginationDTO } from 'types/pagination';
 
 function useMatches() {
-  const mutateFetcher = (url: string, { arg }: { arg: SearchFriendsDTO }) => getFilteredUsersService(arg);
+  const initialPagination = { pageSize: 8, totalPage: 1, currentPage: 1, totalSize: 12 };
+  const mutateFetcher = (url: string, { arg }: { arg: SearchFriendsDTO & PaginationDTO }) =>
+    getFilteredUsersService(arg);
+
+  const getPage = async (pageNumber: number, formValues: SearchFriendsDTO) => {
+    await rest.trigger({ ...formValues, pageNumber, pageSize: 8 });
+  };
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.usersList(), mutateFetcher);
 
-  return { data: data?.data, ...rest, pagination: data?.headers.pagination };
+  return { data: data?.data, ...rest, getPage, pagination: data?.headers.pagination ?? initialPagination };
 }
 
 function useLikedUsers() {
   const initialPagination = { pageSize: 8, totalPage: 1, currentPage: 1, totalSize: 12 };
-  const fetcher = (url: string, { arg }: { arg: { pageNumber: number; pageSize: number } }) =>
-    getLikedUsersService(arg);
+  const fetcher = (url: string, { arg }: { arg: PaginationDTO }) => getLikedUsersService(arg);
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers, fetcher);
 

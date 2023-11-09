@@ -10,11 +10,12 @@ import Loader, { LoaderSizes } from '@/components/Loader';
 import { useMemo } from 'react';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
-import { ColorTypeEnum } from '@/utils/constants';
+import { ColorTypeEnum, initialPagination } from '@/utils/constants';
 import SuggestionCard from './SuggestionCard';
+import Pagination from '@/components/Pagination/Pagination';
 
 const AdvancedSearchForm = () => {
-  const { trigger, methods, data, defaultValues, isMutating } = useSearchForm();
+  const { trigger, methods, data, defaultValues, isMutating, pagination, getPage } = useSearchForm();
   const { data: hobbies, isLoading } = useGetHobbies();
   const wasFetched = Array.isArray(data);
 
@@ -25,6 +26,8 @@ const AdvancedSearchForm = () => {
   const handleSubmit = async ({ hobbies, ...rest }: typeof defaultValues) => {
     await trigger({
       ...rest,
+      pageNumber: initialPagination.currentPage,
+      pageSize: initialPagination.pageSize,
       hobbies: hobbies ? (hobbies as Option[]).map((h) => h.value) : [],
     });
   };
@@ -74,7 +77,7 @@ const AdvancedSearchForm = () => {
             {data && data.length ? (
               <>
                 <p className="text-2xl font-bold">Search results ({data.length})</p>
-                <div className="grid grid-cols-3 gap-x-6 pt-6">
+                <div className="grid grid-cols-3 gap-6 pt-6">
                   {data.map((u) => (
                     <SuggestionCard key={u.id} className="max-w-[400px]" imgWidth={250} imgHeight={230} user={u} />
                   ))}
@@ -82,6 +85,9 @@ const AdvancedSearchForm = () => {
               </>
             ) : (
               <p>No results</p>
+            )}
+            {pagination.totalPage > 1 && (
+              <Pagination handlePageChange={getPage} formValues={methods.getValues()} {...pagination} />
             )}
           </div>
         )}

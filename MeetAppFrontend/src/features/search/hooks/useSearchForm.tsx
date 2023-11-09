@@ -15,7 +15,7 @@ export default function useSearchForm() {
     defaultValues,
   });
 
-  const { data, isMutating, trigger } = useMatches();
+  const { data, isMutating, trigger, pagination, getPage } = useMatches();
 
-  return { methods, data, isMutating, trigger, defaultValues };
+  return { methods, data, isMutating, trigger, defaultValues, pagination, getPage };
 }

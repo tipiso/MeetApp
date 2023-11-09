@@ -11,4 +11,6 @@ enum ColorTypeEnum {
   WARNING = 'warning',
 }
 
-export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum };
+const initialPagination = { pageSize: 8, totalPage: 1, currentPage: 1, totalSize: 12 };
+
+export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum, initialPagination };
