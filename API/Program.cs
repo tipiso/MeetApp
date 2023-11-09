@@ -47,9 +47,10 @@ try
     await context.Database.MigrateAsync();
     /** To avoid ghost conversations which cause bugs in chat rooms, with dateRead being falsely submitted */
     await context.Database.ExecuteSqlRawAsync("DELETE FROM [Connections]");
-    await Seed.SeedUsers(userManager, roleManager);
     await Seed.SeedHobbies(context);
-} catch(Exception ex)
+    await Seed.SeedUsers(userManager, roleManager, context);
+}
+catch (Exception ex)
 {
     var logger = services.GetService<ILogger<Program>>();
     logger.LogError(ex, "An error occured during migration");

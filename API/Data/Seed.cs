@@ -27,7 +27,7 @@ namespace API.Data
 			}
 		}
 
-		public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+		public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, DataContext context)
 		{
 			if (await userManager.Users.AnyAsync()) return;
 
@@ -48,15 +48,23 @@ namespace API.Data
 				await roleManager.CreateAsync(role);
 			};
 
+			var rnd = new Random();
+			var hobbies = context.Hobbies.ToList();
+
 			/*TODO: Replace temporary passwords in the future, leave default for now for ease of testing. */
 			foreach (var user in users)
 			{
 				user.UserName = user.UserName.ToLower();
 
+				var randomHobby = hobbies[rnd.Next(hobbies.Count)];	
+				user.UserHobbies.Add(new UserHobby { HobbyId = randomHobby.Id, UserId = user.Id });
+
 				await userManager.CreateAsync(user, "Pa$$w0rd");
 				await userManager.AddToRoleAsync(user, Roles.Member);
 				user.Photos.FirstOrDefault().IsApproved = true;
 			};
+
+			await context.SaveChangesAsync();
 
 			var admin = new AppUser
 			{
