@@ -54,7 +54,7 @@ const MultiSelect = (props: Props) => {
           {field.value && (
             <div className="pt-4">
               {field.value.map((val: Option) => (
-                <Badge size={BadgeSizes.MD}>
+                <Badge key={val.value} size={BadgeSizes.MD}>
                   <button
                     className="pr-2"
                     onClick={() => {

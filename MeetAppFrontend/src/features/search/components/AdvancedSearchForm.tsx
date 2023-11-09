@@ -11,10 +11,12 @@ import { useMemo } from 'react';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
+import SuggestionCard from './SuggestionCard';
 
 const AdvancedSearchForm = () => {
   const { trigger, methods, data, defaultValues, isMutating } = useSearchForm();
   const { data: hobbies, isLoading } = useGetHobbies();
+  const wasFetched = Array.isArray(data);
 
   const hobbiesMap = useMemo(() => hobbies?.data.map((h) => ({ value: `${h.id}`, label: h.name })), [hobbies]);
 
@@ -26,47 +28,65 @@ const AdvancedSearchForm = () => {
       hobbies: hobbies ? (hobbies as Option[]).map((h) => h.value) : [],
     });
   };
-
+  console.log(data, isMutating, wasFetched);
   return (
-    <FormProvider {...methods}>
-      <div className="px-10">
-        <Form onSubmit={methods.handleSubmit(handleSubmit)} className="flex w-full flex-wrap pb-8">
-          <div className="relative w-full">
-            <Input
-              required
-              placeholder="Search by first name, last name, additional information"
-              name="searchString"
-              type="text"
-              submitBtn={
-                <Button btnType={ColorTypeEnum.PRIMARY}>
-                  <SearchIcon />
-                </Button>
-              }
-            />
-          </div>
-          <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
-            <MultiSelect label="Choose by type of hobby" name="hobbies" options={hobbiesMap ?? []} />
-
-            <div className="flex w-full justify-items-stretch">
-              <Input label="Age limits" name="minAge" />
-              <div className="mt-[46px] h-10 flex-grow px-2 text-center">-</div>
-              <Input className="mt-9" name="maxAge" />
+    <div className="px-10">
+      <FormProvider {...methods}>
+        <>
+          <Form onSubmit={methods.handleSubmit(handleSubmit)} className="flex w-full flex-wrap pb-8">
+            <div className="relative w-full">
+              <Input
+                required
+                placeholder="Search by first name, last name, additional information"
+                name="searchString"
+                type="text"
+                submitBtn={
+                  <Button btnType={ColorTypeEnum.PRIMARY}>
+                    <SearchIcon />
+                  </Button>
+                }
+              />
             </div>
-            <SelectInput
-              placeholder="All"
-              name="gender"
-              type="text"
-              label="Gender"
-              options={[
-                { label: 'All', value: '' },
-                { label: 'Male', value: 'male' },
-                { label: 'Female', value: 'female' },
-              ]}
-            />
+            <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
+              <MultiSelect label="Choose by type of hobby" name="hobbies" options={hobbiesMap ?? []} />
+
+              <div className="flex w-full justify-items-stretch">
+                <Input label="Age limits" name="minAge" />
+                <div className="mt-[46px] h-10 flex-grow px-2 text-center">-</div>
+                <Input className="mt-9" name="maxAge" />
+              </div>
+              <SelectInput
+                placeholder="All"
+                name="gender"
+                type="text"
+                label="Gender"
+                options={[
+                  { label: 'All', value: '' },
+                  { label: 'Male', value: 'male' },
+                  { label: 'Female', value: 'female' },
+                ]}
+              />
+            </div>
+          </Form>
+        </>
+        {wasFetched && (
+          <div>
+            {data && data.length ? (
+              <>
+                <p className="text-2xl font-bold">Search results ({data.length})</p>
+                <div className="grid grid-cols-3 gap-x-6 pt-6">
+                  {data.map((u) => (
+                    <SuggestionCard key={u.id} className="max-w-[400px]" imgWidth={250} imgHeight={230} user={u} />
+                  ))}
+                </div>
+              </>
+            ) : (
+              <p>No results</p>
+            )}
           </div>
-        </Form>
-      </div>
-    </FormProvider>
+        )}
+      </FormProvider>
+    </div>
   );
 };
 
