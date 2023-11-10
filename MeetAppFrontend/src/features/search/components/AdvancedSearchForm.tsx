@@ -8,9 +8,9 @@ import { SelectInput } from '@/components/Forms/SelectInput';
 import { useGetHobbies } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { useMemo } from 'react';
-import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
+import MultiSelect from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
-import { ColorTypeEnum, initialPagination } from '@/utils/constants';
+import { ColorTypeEnum, initialPagination, sexOptions } from '@/utils/constants';
 import SuggestionCard from './SuggestionCard';
 import Pagination from '@/components/Pagination/Pagination';
 
@@ -28,7 +28,7 @@ const AdvancedSearchForm = () => {
       ...rest,
       pageNumber: initialPagination.currentPage,
       pageSize: initialPagination.pageSize,
-      hobbies: hobbies ? (hobbies as Option[]).map((h) => h.value) : [],
+      hobbies: hobbies ? hobbies.map((h) => h.value) : [],
     });
   };
   console.log(data, isMutating, wasFetched);
@@ -58,17 +58,7 @@ const AdvancedSearchForm = () => {
                 <div className="mt-[46px] h-10 flex-grow px-2 text-center">-</div>
                 <Input className="mt-9" name="maxAge" />
               </div>
-              <SelectInput
-                placeholder="All"
-                name="gender"
-                type="text"
-                label="Gender"
-                options={[
-                  { label: 'All', value: '' },
-                  { label: 'Male', value: 'male' },
-                  { label: 'Female', value: 'female' },
-                ]}
-              />
+              <SelectInput placeholder="All" name="gender" type="text" label="Gender" options={sexOptions} />
             </div>
           </Form>
         </>
@@ -77,7 +67,7 @@ const AdvancedSearchForm = () => {
             {data && data.length ? (
               <>
                 <p className="text-2xl font-bold">Search results ({data.length})</p>
-                <div className="grid grid-cols-3 gap-6 pt-6">
+                <div className="grid-cols-3 grid gap-6 pt-6">
                   {data.map((u) => (
                     <SuggestionCard key={u.id} className="max-w-[400px]" imgWidth={250} imgHeight={230} user={u} />
                   ))}

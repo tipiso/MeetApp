@@ -11,6 +11,12 @@ enum ColorTypeEnum {
   WARNING = 'warning',
 }
 
-const initialPagination = { pageSize: 8, totalPage: 1, currentPage: 1, totalSize: 12 };
+const sexOptions = [
+  { label: 'All', value: '' },
+  { label: 'Male', value: 'male' },
+  { label: 'Female', value: 'female' },
+];
 
-export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum, initialPagination };
+const initialPagination = { pageSize: 6, totalPage: 1, currentPage: 1, totalSize: 12 };
+
+export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum, initialPagination, sexOptions };

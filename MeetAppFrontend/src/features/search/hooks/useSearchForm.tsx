@@ -1,11 +1,12 @@
 import { useForm } from 'react-hook-form';
 import { useMatches } from '@/features/search/hooks/index';
+import{ Option } from '@/components/Forms/MultiSelect';
 
 const defaultValues = {
   searchString: '',
   minAge: '',
   maxAge: '',
-  hobbies: [],
+  hobbies: [] as Option[],
   gender: '',
 };
 
