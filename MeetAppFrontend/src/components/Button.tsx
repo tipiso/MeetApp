@@ -2,9 +2,10 @@ import { ComponentProps, ReactNode } from 'react';
 import cx from 'classnames';
 import { ColorTypeEnum } from '@/utils/constants';
 import Loader, { LoaderSizes } from '@/components/Loader';
+import Link, { LinkProps } from 'next/link';
 
 type ButtonProps =
-  | ({ href: string; btnType?: ColorTypeEnum } & ComponentProps<'a'>)
+  | ({ href: string; btnType?: ColorTypeEnum; className?: string; children?: ReactNode } & LinkProps)
   | ({
       children: ReactNode;
       onClick?: () => void;
@@ -23,9 +24,9 @@ export default function Button(props: ButtonProps) {
   if (isAnchor) {
     const { btnType, children, ...rest } = props;
     return (
-      <a {...rest} className={classes}>
+      <Link {...rest} className={classes}>
         {children}
-      </a>
+      </Link>
     );
   } else {
     const { btnType, isLoading, disabled, children, ...rest } = props;

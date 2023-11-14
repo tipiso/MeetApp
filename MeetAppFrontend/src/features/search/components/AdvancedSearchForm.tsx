@@ -50,13 +50,17 @@ const AdvancedSearchForm = () => {
                 }
               />
             </div>
-            <div className="grid w-full grid-cols-3 gap-x-6 pt-2">
+            <div className="grid w-full grid-cols-1 gap-x-6 pt-2 md:grid-cols-3">
               <MultiSelect label="Choose by type of hobby" name="hobbies" options={hobbiesMap ?? []} />
 
-              <div className="flex w-full justify-items-stretch">
-                <Input label="Age limits" name="minAge" />
-                <div className="mt-[46px] h-10 flex-grow px-2 text-center">-</div>
-                <Input className="mt-9" name="maxAge" />
+              <div className="flex w-full">
+                <div className="flex-grow">
+                  <Input label="Age limits" name="minAge" />
+                </div>
+                <div className="mt-[46px] h-10 px-2 text-center">-</div>
+                <div className="flex-grow">
+                  <Input className="mt-9" name="maxAge" />
+                </div>
               </div>
               <SelectInput placeholder="All" name="gender" type="text" label="Gender" options={sexOptions} />
             </div>
@@ -67,9 +71,9 @@ const AdvancedSearchForm = () => {
             {data && data.length ? (
               <>
                 <p className="text-2xl font-bold">Search results ({data.length})</p>
-                <div className="grid-cols-3 grid gap-6 pt-6">
+                <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-2 lg:grid-cols-3">
                   {data.map((u) => (
-                    <SuggestionCard key={u.id} className="max-w-[400px]" imgWidth={250} imgHeight={230} user={u} />
+                    <SuggestionCard key={u.id} imgWidth={250} imgHeight={230} user={u} />
                   ))}
                 </div>
               </>

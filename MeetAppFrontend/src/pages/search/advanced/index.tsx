@@ -16,4 +16,5 @@ AdvancedSearchPage.getLayout = function getLayout(page: ReactElement) {
 };
 
 AdvancedSearchPage.secured = true;
+
 export default AdvancedSearchPage;

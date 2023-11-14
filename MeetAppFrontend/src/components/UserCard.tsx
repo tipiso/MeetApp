@@ -14,7 +14,7 @@ type Props = {
 const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className }: Props) => {
   return (
     <div className={cn('relative rounded-lg', className)}>
-      <div className="relative  rounded-lg">
+      <div className="relative h-full rounded-lg">
         <Image
           height={imgHeight}
           width={imgWidth}
