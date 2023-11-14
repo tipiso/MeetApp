@@ -7,7 +7,7 @@ import Button from '@/components/Button';
 import { Input } from '@/components/Forms/Input';
 import FriendsList from '@/features/search/components/FriendsList';
 import SuggestionsList from '@/features/search/components/SuggestionsList';
-import useSearchForm from '@/features/search/hooks/useSearchForm';
+import { useSearchForm } from '@/features/search/hooks/useSearchForm';
 import { ColorTypeEnum } from '@/utils/constants';
 import { routes } from '@/utils/routes';
 import Image from 'next/image';

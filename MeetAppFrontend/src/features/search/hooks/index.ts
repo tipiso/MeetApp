@@ -8,6 +8,21 @@ import { getHobbies, hobbiesQueryKeys } from '@/services/hobbies';
 import { PaginationDTO } from 'types/pagination';
 import { initialPagination } from '@/utils/constants';
 
+function useBaseMatches() {
+  const mutateFetcher = (url: string, { arg }: { arg: string }) =>
+    getFilteredUsersService({
+      minAge: '',
+      maxAge: '',
+      gender: '',
+      hobbies: [],
+      searchString: arg,
+    });
+
+  const { data, ...rest } = useSWRMutation(usersQueryKeys.usersList(), mutateFetcher);
+
+  return { data: data?.data, ...rest, pagination: data?.headers.pagination ?? initialPagination };
+}
+
 function useMatches() {
   const mutateFetcher = (url: string, { arg }: { arg: SearchFriendsDTO & PaginationDTO }) =>
     getFilteredUsersService(arg);
@@ -58,4 +73,4 @@ function useGetHobbies() {
   };
 }
 
-export { useMatches, useLikedUsers, useLikeUser, useGetHobbies };
+export { useMatches, useLikedUsers, useLikeUser, useGetHobbies, useBaseMatches };

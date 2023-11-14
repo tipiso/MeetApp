@@ -13,9 +13,10 @@ import Button from '@/components/Button';
 import { ColorTypeEnum, initialPagination, sexOptions } from '@/utils/constants';
 import SuggestionCard from './SuggestionCard';
 import Pagination from '@/components/Pagination/Pagination';
+import { useAdvancedSearchForm } from '@/features/search/hooks/useSearchForm';
 
 const AdvancedSearchForm = () => {
-  const { trigger, methods, data, defaultValues, isMutating, pagination, getPage } = useSearchForm();
+  const { trigger, methods, data, defaultValues, isMutating, pagination, getPage } = useAdvancedSearchForm();
   const { data: hobbies, isLoading } = useGetHobbies();
   const wasFetched = Array.isArray(data);
 
