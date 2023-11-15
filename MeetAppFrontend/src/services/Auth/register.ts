@@ -5,9 +5,13 @@ import { transformErrorsToStringArr } from '@/utils/helpers';
 
 type RegisterPayload = {
   username: string;
+  city: string;
+  gender: string;
   password: string;
   confirmPassword: string;
+  dateOfBirth: string;
 };
+
 const register = async (data: RegisterPayload) => {
   try {
     const response = await api.post(registerUrl, data);

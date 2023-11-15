@@ -7,15 +7,21 @@ import { Form, FormSubmit } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
 import Button from '@/components/Button';
 import LoginLayout from '@/components/Layouts/LoginLayout';
-import { ColorTypeEnum } from '@/utils/constants';
+import { ColorTypeEnum, genderOptions } from '@/utils/constants';
 import Link from 'next/link';
 import { routes } from '@/utils/routes';
 import { register } from '@/services/Auth/register';
 import { CheckboxInput } from '@/components/Forms/CheckboxInput';
+import DatePickerInput from '@/components/Forms/DatePicker';
+import { getISOfromJSDate } from '@/utils/parsers';
+import { SelectInput } from '@/components/Forms/SelectInput';
 
 const defaultValues = {
   username: '',
   password: '',
+  city: '',
+  gender: '',
+  dateOfBirth: null,
   confirmPassword: '',
   policy: false,
 };
@@ -24,6 +30,9 @@ const schema = z
   .object({
     username: z.string().min(1, { message: 'Username is required' }),
     password: z.string().min(1, { message: 'Password is required' }),
+    gender: z.string().min(1, { message: 'Gender is required' }),
+    city: z.string().min(1, { message: 'City is required' }),
+    dateOfBirth: z.date(),
     confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
     policy: z.boolean(),
   })
@@ -40,7 +49,7 @@ export default function Register() {
   const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
 
   const handleSubmit = async (data: typeof defaultValues) => {
-    const response = await register(data);
+    const response = await register({ ...data, dateOfBirth: getISOfromJSDate(data.dateOfBirth!) });
     if (typeof response == 'string') methods.setError('root', { message: response });
   };
 
@@ -55,7 +64,15 @@ export default function Register() {
             </div>
 
             <div className="relative mb-6">
-              <Input placeholder="Phone number" name="phone" type="text" label="Phone number" />
+              <DatePickerInput placeholder="Phone number" name="dateOfBirth" label="Date of birth" />
+            </div>
+
+            <div className="relative mb-6">
+              <SelectInput placeholder="Gender" name="gender" label="Gender" options={genderOptions} />
+            </div>
+
+            <div className="relative mb-6">
+              <Input placeholder="City" name="city" type="text" label="City" />
             </div>
 
             <div className="relative mb-6">

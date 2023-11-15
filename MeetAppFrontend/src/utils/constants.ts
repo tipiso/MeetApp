@@ -11,12 +11,17 @@ enum ColorTypeEnum {
   WARNING = 'warning',
 }
 
-const sexOptions = [
+const genderFilterOptions = [
   { label: 'All', value: '' },
+  { label: 'Male', value: 'male' },
+  { label: 'Female', value: 'female' },
+];
+
+const genderOptions = [
   { label: 'Male', value: 'male' },
   { label: 'Female', value: 'female' },
 ];
 
 const initialPagination = { pageSize: 6, totalPage: 1, currentPage: 1, totalSize: 12 };
 
-export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum, initialPagination, sexOptions };
+export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum, initialPagination, genderFilterOptions, genderOptions };

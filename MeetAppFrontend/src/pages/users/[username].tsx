@@ -13,8 +13,8 @@ const UserPage = () => {
     <div className="flex w-full flex-col">
       <h1 className="text-4xl font-bold">Tell us about you!</h1>
 
-      <PhotoForm photo={user.photoUrl} userName={user.userName} />
-      <UserForm age={user.age} gender={user.gender} knownAs={user.knownAs} interests={user.interests} />
+      {/* <PhotoForm photo={user.photoUrl} userName={user.userName} />
+      <UserForm age={user.age} gender={user.gender} knownAs={user.knownAs} interests={user.interests} /> */}
     </div>
   );
 };
@@ -24,4 +24,5 @@ UserPage.getLayout = function getLayout(page: ReactElement) {
 };
 
 UserPage.secured = true;
+
 export default UserPage;

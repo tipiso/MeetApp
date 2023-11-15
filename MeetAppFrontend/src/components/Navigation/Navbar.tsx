@@ -7,13 +7,18 @@ import FriendsIcon from '@/assets/images/FriendsIcon.svg';
 import Image from 'next/image';
 import { getUser } from '@/features/users/hooks';
 import { NavIcon } from '@/components/Navigation/NavIcon';
+import { useRouter } from 'next/router';
 
 type Props = {
   hideRoutes?: boolean;
 };
+
 export default function Navbar({ hideRoutes }: Props) {
   const { data } = useSession();
   const { data: user, isLoading } = getUser(data?.user.name);
+  const router = useRouter();
+
+  if (!isLoading && user && !user.photoUrl) router.push(routes.user.replace(':username', user.userName));
 
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">

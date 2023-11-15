@@ -61,7 +61,7 @@ export function SelectInput(props: Props) {
               <Select.Portal>
                 <Select.Content
                   position="popper"
-                  className="shadow-black-500/50 w-52 overflow-hidden bg-white shadow-lg"
+                  className="shadow-black-500/50 z-10 w-52 overflow-hidden bg-white shadow-lg"
                 >
                   <Select.Viewport>
                     <Select.Group>

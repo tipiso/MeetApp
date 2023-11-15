@@ -22,7 +22,7 @@ export default function UserPageLayout({ children }: LayoutProps) {
       </Head>
 
       <main className="relative flex min-h-screen w-full flex-col xl:container">
-        <Navbar />
+        <Navbar hideRoutes />
 
         <div className="flex flex-auto p-14">{children}</div>
 

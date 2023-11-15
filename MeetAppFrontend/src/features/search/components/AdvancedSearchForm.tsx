@@ -3,14 +3,13 @@ import { Form } from '@radix-ui/react-form';
 
 import { Input } from '@/components/Forms/Input';
 import { SearchIcon } from '@/assets/images/icons';
-import useSearchForm from '@/features/search/hooks/useSearchForm';
 import { SelectInput } from '@/components/Forms/SelectInput';
 import { useGetHobbies } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { useMemo } from 'react';
 import MultiSelect from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
-import { ColorTypeEnum, initialPagination, sexOptions } from '@/utils/constants';
+import { ColorTypeEnum, genderFilterOptions, initialPagination } from '@/utils/constants';
 import SuggestionCard from './SuggestionCard';
 import Pagination from '@/components/Pagination/Pagination';
 import { useAdvancedSearchForm } from '@/features/search/hooks/useSearchForm';
@@ -63,7 +62,7 @@ const AdvancedSearchForm = () => {
                   <Input className="mt-9" name="maxAge" />
                 </div>
               </div>
-              <SelectInput placeholder="All" name="gender" type="text" label="Gender" options={sexOptions} />
+              <SelectInput placeholder="All" name="gender" type="text" label="Gender" options={genderFilterOptions} />
             </div>
           </Form>
         </>
