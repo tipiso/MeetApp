@@ -22,4 +22,5 @@ UsersPage.getLayout = function getLayout(page: ReactElement) {
 };
 
 UsersPage.secured = true;
+
 export default UsersPage;
