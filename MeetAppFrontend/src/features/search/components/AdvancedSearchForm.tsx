@@ -31,7 +31,7 @@ const AdvancedSearchForm = () => {
       hobbies: hobbies ? hobbies.map((h) => h.value) : [],
     });
   };
-  console.log(data, isMutating, wasFetched);
+
   return (
     <div className="px-10">
       <FormProvider {...methods}>

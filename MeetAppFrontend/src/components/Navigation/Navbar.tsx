@@ -18,7 +18,7 @@ export default function Navbar({ hideRoutes }: Props) {
   const { data: user, isLoading } = getUser(data?.user.name);
   const router = useRouter();
 
-  if (!isLoading && user && !user.photoUrl) router.push(routes.user.replace(':username', user.userName));
+  if (!isLoading && user && !user.photoUrl && !hideRoutes) router.push(routes.user.replace(':username', user.userName));
 
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">

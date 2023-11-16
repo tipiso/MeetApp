@@ -11,6 +11,7 @@ type Props = {
   acceptFiles?: string[];
   label?: ReactNode;
 } & InputHTMLAttributes<HTMLInputElement>;
+
 export function FileInput(props: Props) {
   const { control } = useFormContext();
   const ref = useRef<HTMLInputElement>(null);
@@ -44,7 +45,7 @@ export function FileInput(props: Props) {
               onChange={(e) => {
                 const fileList = (e.target as HTMLInputElement).files;
                 if (fileList) {
-                  fieldProps.onChange(fileList[0]);
+                  fieldProps.onChange(fileList);
                 }
               }}
             />
