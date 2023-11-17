@@ -141,6 +141,24 @@ namespace API.Controllers
 
 			return BadRequest("Problem deleting photo");
 		}
+
+		[HttpPut("update-hobbies")]
+        public async Task<ActionResult<List<Hobby>>> UpdateUserHobbies([FromBody] HobbiesUpdateDto hobbiesDto)
+        {
+            var user = await _uow.UserRepository.GetUserByUsernameAsync(User.GetUsername());
+            
+			if (user == null) return NotFound();
+
+            var responseDto = _uow.HobbiesRepository.UpdateUserHobby(user, hobbiesDto);
+
+            if (_uow.HasChanges())
+            {
+                await _uow.Complete();
+                return Ok(responseDto);
+            }
+
+            return BadRequest("Failed to update hobbies");
+        }
 	}
 }
 

@@ -22,12 +22,14 @@ const getFilteredUsersService = (fetchDto: SearchFriendsDTO) => {
     }
     if (!!val) newParams.set(key, val);
   });
-  return api.get<User[]>(`users?${newParams.toString()}`);
+  return api.get<User[]>(`${usersUrl}?${newParams.toString()}`);
 };
 
 const getUserService = (username: string) => api.get<User>(`users/${username}`);
 
 const getLikedUsersService = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
   api.get<User[]>(`${likesUrl}?predicate=liked&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+
+const updateUserService = () => api.put(`${usersUrl}`);
 
 export { getUsersService, getUserService, getFilteredUsersService, getLikedUsersService, usersQueryKeys };
