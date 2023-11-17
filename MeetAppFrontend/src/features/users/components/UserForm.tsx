@@ -6,28 +6,11 @@ import { TextAreaInput } from '@/components/Forms/TextAreaInput';
 import Button from '@/components/Button';
 import { ColorTypeEnum, genderOptions } from '@/utils/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
 import Avatar from './Avatar';
 import { FileInput } from '@/components/Forms/FileInput';
-import { Hobby } from '../types';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import { createUrlFromImg } from '@/utils/helpers';
-
-const schema = z.object({
-  knownAs: z.string().min(1, { message: 'Name is required' }),
-  age: z.number().min(1, { message: 'Age is required' }),
-  gender: z.string().min(1, { message: 'Gender is required' }),
-  photo: z.custom<File[]>().refine((files) => {
-    console.log(files);
-    return files?.length === 1, 'Image is required.';
-  }),
-  // .refine((files) => files?.[0]?.size <= 100000, `Max file size is 10MB.`)
-  // .refine((files, ...args) => {
-  //   console.log(files, args);
-  //   return ['image/jpeg', 'image/pjpeg', 'image/png'].includes(files?.[0]?.type);
-  // }, '.jpg, .jpeg, .png and .webp files are accepted.'),
-  hobbies: z.object({ value: z.string(), label: z.string() }).array().min(3),
-});
+import { userFormSchema } from '../validators';
 
 type Props = {
   knownAs: string;
@@ -50,7 +33,7 @@ type FormValues = {
 const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }: Props) => {
   const methods = useForm({
     defaultValues: { knownAs, age, gender, interests, file: undefined, hobbies: [] },
-    resolver: zodResolver(schema),
+    resolver: zodResolver(userFormSchema),
   });
 
   const handleSubmit = async (data: FormValues) => {
@@ -61,7 +44,10 @@ const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }:
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-wrap gap-x-2.5 pt-6">
         <div className="flex w-full items-center pt-16">
-          <Avatar name={username} imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''} />
+          <Avatar
+            name={username}
+            imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
+          />
           <FileInput
             className="ml-6"
             name="file"

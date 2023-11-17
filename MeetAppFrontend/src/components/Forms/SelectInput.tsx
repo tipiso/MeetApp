@@ -29,6 +29,7 @@ const SelectItem = forwardRef<HTMLDivElement | null, SelectItemProps>(
     );
   },
 );
+SelectItem.displayName = 'SelectItem';
 
 export function SelectInput(props: Props) {
   const { control } = useFormContext();

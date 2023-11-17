@@ -13,21 +13,17 @@ import Link from 'next/link';
 import { login } from '@/services/Auth/login';
 import { ColorTypeEnum } from '@/utils/constants';
 import LoginLayout from '@/components/Layouts/LoginLayout';
+import { loginSchema } from '@/features/auth/validators';
 
 const defaultValues = {
   username: '',
   password: '',
 };
 
-const schema = z.object({
-  username: z.string().min(1, { message: 'Username is required' }),
-  password: z.string().min(1, { message: 'Password is required' }),
-});
-
 export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
+  const methods = useForm({ defaultValues, resolver: zodResolver(loginSchema) });
 
-  const handleSubmit = async ({ username, password }: z.infer<typeof schema>) => {
+  const handleSubmit = async ({ username, password }: z.infer<typeof loginSchema>) => {
     await login({
       username,
       password,

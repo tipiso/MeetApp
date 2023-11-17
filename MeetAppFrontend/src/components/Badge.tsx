@@ -28,5 +28,6 @@ const Badge = forwardRef(function Badge(
     </span>
   );
 });
+Badge.displayName = 'Badge';
 
 export default Badge;

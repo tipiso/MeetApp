@@ -1,5 +1,4 @@
 import { ReactElement } from 'react';
-import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form, FormSubmit } from '@radix-ui/react-form';
@@ -15,6 +14,7 @@ import { CheckboxInput } from '@/components/Forms/CheckboxInput';
 import DatePickerInput from '@/components/Forms/DatePicker';
 import { getISOfromJSDate } from '@/utils/parsers';
 import { SelectInput } from '@/components/Forms/SelectInput';
+import { registerSchema } from '@/features/auth/validators';
 
 const defaultValues = {
   username: '',
@@ -26,27 +26,8 @@ const defaultValues = {
   policy: false,
 };
 
-const schema = z
-  .object({
-    username: z.string().min(1, { message: 'Username is required' }),
-    password: z.string().min(1, { message: 'Password is required' }),
-    gender: z.string().min(1, { message: 'Gender is required' }),
-    city: z.string().min(1, { message: 'City is required' }),
-    dateOfBirth: z.date(),
-    confirmPassword: z.string().min(1, { message: 'Confirm Password is required' }),
-    policy: z.boolean(),
-  })
-  .superRefine(({ password, confirmPassword, policy }, ctx) => {
-    if (confirmPassword !== password) {
-      ctx.addIssue({ code: 'custom', message: 'Passwords do not match', path: ['confirmPassword'] });
-    }
-    if (!policy) {
-      ctx.addIssue({ code: 'custom', message: 'Policy agreement is required', path: ['policy'] });
-    }
-  });
-
 export default function Register() {
-  const methods = useForm({ defaultValues, resolver: zodResolver(schema) });
+  const methods = useForm({ defaultValues, resolver: zodResolver(registerSchema) });
 
   const handleSubmit = async (data: typeof defaultValues) => {
     const response = await register({ ...data, dateOfBirth: getISOfromJSDate(data.dateOfBirth!) });
