@@ -2,10 +2,10 @@
 {
 	public class UserHobby
 	{
-        public AppUser User { get; set; }
+        public virtual AppUser User { get; set; }
         public int UserId { get; set; }
 
-        public Hobby Hobby { get; set; }
+        public virtual Hobby Hobby { get; set; }
         public int HobbyId { get; set; }
     }
 }

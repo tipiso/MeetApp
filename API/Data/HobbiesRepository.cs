@@ -7,16 +7,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-    public class HobbiesRepository : IHobbiesRepository
-    {
+	public class HobbiesRepository : IHobbiesRepository
+	{
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
         public HobbiesRepository(DataContext context, IMapper mapper)
-        {
+		{
             _context = context;
             _mapper = mapper;
-        }
+		}
 
         public void AddHobby(Hobby hobby)
         {

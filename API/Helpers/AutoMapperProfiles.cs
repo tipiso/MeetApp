@@ -17,16 +17,17 @@ namespace API.Helpers
 				.ForMember(dest => dest.Age, opt => opt.MapFrom(src => src.DateOfBirth.CalculateAge()))
 				.ForMember(dest => dest.Hobbys, opt => opt.MapFrom(src => src.Hobbies.OrderBy(h => h.Name.Length)));
 			CreateMap<Photo, PhotoDto>();
-			CreateMap<MemberUpdateDto, AppUser>();
+			CreateMap<MemberUpdateDto, AppUser>()
+				.ForMember(x => x.Hobbies, y => y.Ignore());
 			CreateMap<RegisterDto, AppUser>();
 			CreateMap<Message, MessageDto>()
 				.ForMember(dest => dest.SenderPhotoUrl,
 				o => o.MapFrom(s => s.Sender.Photos.FirstOrDefault(x => x.IsMain).Url))
-                .ForMember(dest => dest.RecipientPhotoUrl,
-                o => o.MapFrom(s => s.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
+				.ForMember(dest => dest.RecipientPhotoUrl,
+				o => o.MapFrom(s => s.Recipient.Photos.FirstOrDefault(x => x.IsMain).Url));
 			CreateMap<DateTime, DateTime>().ConvertUsing(d => DateTime.SpecifyKind(d, DateTimeKind.Utc));
-            CreateMap<DateTime?, DateTime?>().ConvertUsing(d => d.HasValue ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : null);
-        }
+			CreateMap<DateTime?, DateTime?>().ConvertUsing(d => d.HasValue ? DateTime.SpecifyKind(d.Value, DateTimeKind.Utc) : null);
+		}
 	}
 }
 

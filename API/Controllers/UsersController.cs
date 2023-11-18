@@ -12,19 +12,19 @@ namespace API.Controllers
 	[Authorize]
 	public class UsersController : BaseApiController
 	{
-        private readonly IUnitOfWork _uow;
-        private readonly IMapper _mapper;
+		private readonly IUnitOfWork _uow;
+		private readonly IMapper _mapper;
 		private readonly IPhotoService _photoService;
 
 		public UsersController(IUnitOfWork uow, IMapper mapper, IPhotoService photoService)
 		{
-            _uow = uow;
-            _mapper = mapper;
+			_uow = uow;
+			_mapper = mapper;
 			_photoService = photoService;
 		}
 
 		[HttpGet]
-		public async Task<ActionResult<PagedList<AppUser>>> GetUsers([FromQuery]UserParams userParams)
+		public async Task<ActionResult<PagedList<MemberDto>>> GetUsers([FromQuery] UserParams userParams)
 		{
 			var gender = await _uow.UserRepository.GetUserGender(User.GetUsername());
 			userParams.CurrentUsername = User.GetUsername();
@@ -34,7 +34,7 @@ namespace API.Controllers
 				userParams.Gender = gender == "male" ? "female" : "male";
 			}
 
-            var users = await _uow.UserRepository.GetMembersAsync(userParams);
+			var users = await _uow.UserRepository.GetMembersAsync(userParams);
 
 			Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage, users.PageSize, users.TotalCount, users.TotalPages));
 
@@ -49,8 +49,7 @@ namespace API.Controllers
 			{
 				isCurrentUser = true;
 			}
-            return await _uow.UserRepository.GetMemberAsync(username, isCurrentUser);
-
+			return await _uow.UserRepository.GetMemberAsync(username, isCurrentUser);
 		}
 
 		[HttpPut]
@@ -58,11 +57,14 @@ namespace API.Controllers
 		{
 			var user = await _uow.UserRepository.GetUserByUsernameAsync(User.GetUsername());
 
-			if (user == null) return NotFound();
+			if (user == null) return NotFound(); 
+
+			var hobbiesDto = new HobbiesUpdateDto { hobbies = memberUpdateDto.Hobbies };
+			_uow.HobbiesRepository.UpdateUserHobby(user, hobbiesDto);
 
 			_mapper.Map(memberUpdateDto, user);
 
-			if (await _uow.Complete()) return NoContent();
+			if (await _uow.Complete()) return Ok(user);
 
 			return BadRequest("Failed to update user");
 		}
@@ -77,7 +79,7 @@ namespace API.Controllers
 			var result = await _photoService.AddPhotoAsync(file);
 
 			if (result.Error != null) return BadRequest(result.Error.Message);
-			
+
 			var photo = new Photo
 			{
 				Url = result.SecureUrl.AbsoluteUri,
@@ -141,24 +143,6 @@ namespace API.Controllers
 
 			return BadRequest("Problem deleting photo");
 		}
-
-		[HttpPut("update-hobbies")]
-        public async Task<ActionResult<List<Hobby>>> UpdateUserHobbies([FromBody] HobbiesUpdateDto hobbiesDto)
-        {
-            var user = await _uow.UserRepository.GetUserByUsernameAsync(User.GetUsername());
-            
-			if (user == null) return NotFound();
-
-            var responseDto = _uow.HobbiesRepository.UpdateUserHobby(user, hobbiesDto);
-
-            if (_uow.HasChanges())
-            {
-                await _uow.Complete();
-                return Ok(responseDto);
-            }
-
-            return BadRequest("Failed to update hobbies");
-        }
 	}
 }
 

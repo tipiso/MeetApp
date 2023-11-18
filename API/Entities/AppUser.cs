@@ -15,8 +15,8 @@ namespace API.Entities
 		public string City { get; set; }
 		public string Country { get; set; }
 
-		public List<Hobby> Hobbies { get; set; }
-        public List<UserHobby> UserHobbies { get; set; } = new();
+		public virtual List<Hobby> Hobbies { get; set; }
+        public virtual List<UserHobby> UserHobbies { get; set; } = new();
 
 		public List<Photo> Photos { get; set; } = new();
 
