@@ -13,6 +13,7 @@ import { ColorTypeEnum, genderFilterOptions, initialPagination } from '@/utils/c
 import SuggestionCard from './SuggestionCard';
 import Pagination from '@/components/Pagination/Pagination';
 import { useAdvancedSearchForm } from '@/features/search/hooks/useSearchForm';
+import { getValuesFromSelectOptions } from '@/utils/helpers';
 
 const AdvancedSearchForm = () => {
   const { trigger, methods, data, defaultValues, isMutating, pagination, getPage } = useAdvancedSearchForm();
@@ -28,7 +29,7 @@ const AdvancedSearchForm = () => {
       ...rest,
       pageNumber: initialPagination.currentPage,
       pageSize: initialPagination.pageSize,
-      hobbies: hobbies ? hobbies.map((h) => h.value) : [],
+      hobbies: getValuesFromSelectOptions(hobbies),
     });
   };
 

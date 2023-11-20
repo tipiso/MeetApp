@@ -6,4 +6,12 @@ type SearchFriendsDTO = {
   hobbies: string[];
 };
 
-export type { SearchFriendsDTO };
+type UpdateUserDTO = {
+  gender: string;
+  age: number;
+  introduction: string;
+  knownAs: string;
+  hobbies: string[];
+};
+
+export type { SearchFriendsDTO, UpdateUserDTO };

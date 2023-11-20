@@ -1,5 +1,6 @@
 import jwtDecode from 'jwt-decode';
 import { DecodedToken } from '@/services/Auth/types';
+import { Option } from '@/components/Forms/MultiSelect';
 
 export const transformErrorsToStringArr = (errors: Record<string, string[]>) =>
   Object.values(errors).flatMap((errorArr) => errorArr);
@@ -19,3 +20,5 @@ export const createUrlFromImg = (file?: string | File) => {
     return file;
   }
 };
+
+export const getValuesFromSelectOptions = (options?: Option[]) => (options ? options.map((h) => h.value) : []);

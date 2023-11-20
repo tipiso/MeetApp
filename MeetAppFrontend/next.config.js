@@ -2,9 +2,8 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['randomuser.me'],
+    domains: ['randomuser.me', 'res.cloudinary.com'],
   },
 };
-// (https://randomuser.me/api/portraits/women/54.jpg)
 
 module.exports = nextConfig;

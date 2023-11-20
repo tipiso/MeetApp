@@ -1,11 +1,13 @@
 import { api } from '@/utils/axios';
-import { likesUrl, usersUrl } from '@/utils/url';
+import { addPhotoUrl, likesUrl, usersUrl } from '@/utils/url';
 import { User } from '@/features/users/types';
 import { PaginationParams } from '@/components/Pagination/types';
-import { SearchFriendsDTO } from './dtos';
+import { SearchFriendsDTO, UpdateUserDTO } from './dtos';
 
 const usersQueryKeys = {
   users: 'users',
+  updatePhoto: () => usersQueryKeys.users + '/add-photo',
+  updateUser: () => usersQueryKeys.users + '/update',
   usersList: () => usersQueryKeys.users + '/list',
   likedUsers: 'likedUsers',
 };
@@ -30,6 +32,20 @@ const getUserService = (username: string) => api.get<User>(`users/${username}`);
 const getLikedUsersService = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
   api.get<User[]>(`${likesUrl}?predicate=liked&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
-const updateUserService = () => api.put(`${usersUrl}`);
+const updateUserService = (user: UpdateUserDTO) => api.put(`${usersUrl}`, user);
 
-export { getUsersService, getUserService, getFilteredUsersService, getLikedUsersService, usersQueryKeys };
+const addPhotoService = (photo: File) => {
+  const formData = new FormData();
+  formData.append('file', photo);
+  return api.post(`${usersUrl}${addPhotoUrl}`, formData);
+};
+
+export {
+  getUsersService,
+  getUserService,
+  getFilteredUsersService,
+  getLikedUsersService,
+  addPhotoService,
+  updateUserService,
+  usersQueryKeys,
+};

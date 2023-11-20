@@ -86,6 +86,10 @@ namespace API.Controllers
 				PublicId = result.PublicId
 			};
 
+			if (!user.Photos.Any(p => p.IsMain)) {
+				photo.IsMain = true;
+			}
+
 			user.Photos.Add(photo);
 
 			if (await _uow.Complete())

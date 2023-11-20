@@ -4,7 +4,7 @@ const userFormSchema = z.object({
   knownAs: z.string().min(1, { message: 'Name is required' }),
   age: z.number().min(1, { message: 'Age is required' }),
   gender: z.string().min(1, { message: 'Gender is required' }),
-  photo: z
+  file: z
     .custom<File[]>()
     .refine((files) => files?.length === 1, 'Image is required.')
     .refine((files) => files?.[0]?.size <= 100000, `Max file size is 10MB.`)

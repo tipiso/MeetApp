@@ -29,7 +29,7 @@ export function FileInput(props: Props) {
       name={props.name}
       render={({ field: { value, ...fieldProps }, fieldState }) => (
         <Form.FormField name={props.name}>
-          <Button className="ml-5" onClick={handleUpload} btnType={ColorTypeEnum.PRIMARY}>
+          <Button className="ml-5" onClick={handleUpload} btnType={ColorTypeEnum.PRIMARY} type="button">
             {props.label ? props.label : 'Input file here'}
           </Button>
           <Form.Control asChild>
@@ -46,6 +46,7 @@ export function FileInput(props: Props) {
                 const fileList = (e.target as HTMLInputElement).files;
                 if (fileList) {
                   fieldProps.onChange(fileList);
+                  
                 }
               }}
             />

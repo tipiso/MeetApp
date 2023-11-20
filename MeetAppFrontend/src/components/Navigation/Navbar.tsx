@@ -5,7 +5,7 @@ import LogoLight from '@/assets/images/LogoLight.svg';
 import MessagesIcon from '@/assets/images/MessagesIcon.svg';
 import FriendsIcon from '@/assets/images/FriendsIcon.svg';
 import Image from 'next/image';
-import { getUser } from '@/features/users/hooks';
+import { useGetUser } from '@/features/users/hooks';
 import { NavIcon } from '@/components/Navigation/NavIcon';
 import { useRouter } from 'next/router';
 
@@ -15,7 +15,7 @@ type Props = {
 
 export default function Navbar({ hideRoutes }: Props) {
   const { data } = useSession();
-  const { data: user, isLoading } = getUser(data?.user.name);
+  const { data: user, isLoading } = useGetUser(data?.user.name);
   const router = useRouter();
 
   if (!isLoading && user && !user.photoUrl && !hideRoutes) router.push(routes.user.replace(':username', user.userName));

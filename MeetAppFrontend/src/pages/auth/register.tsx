@@ -31,7 +31,14 @@ export default function Register() {
 
   const handleSubmit = async (data: typeof defaultValues) => {
     const response = await register({ ...data, dateOfBirth: getISOfromJSDate(data.dateOfBirth!) });
-    if (typeof response == 'string') methods.setError('root', { message: response });
+
+    if (typeof response == 'string') {
+      methods.setError('root', { message: response });
+    } else if (Array.isArray(response)) {
+      response.forEach((e) => {
+        methods.setError(`root.[${e}]`, { message: e });
+      });
+    }
   };
 
   return (
@@ -64,14 +71,16 @@ export default function Register() {
               <Input placeholder="Confirm Password" name="confirmPassword" type="password" label="Confirm Password" />
             </div>
 
-            {methods.formState.errors.root && Array.isArray(methods.formState.errors.root.message) ? (
-              methods.formState.errors.root.message.map((error) => (
-                <div key={error} className="text-red-600">
-                  {error}
-                </div>
-              ))
+            {methods.formState.errors.root ? (
+              <div className="mb-3">
+                {Object.keys(methods.formState.errors.root).map((key) => (
+                  <p key={key} className="text-sm text-red-600">
+                    {key}
+                  </p>
+                ))}
+              </div>
             ) : (
-              <div className="text-red-600">{methods.formState.errors.root?.message}</div>
+              <p className="text-sm text-red-600">{methods.formState.errors.root}</p>
             )}
 
             <div className="relative mb-6">

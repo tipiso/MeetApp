@@ -25,7 +25,11 @@ const register = async (data: RegisterPayload) => {
 
     if (axiosError.response?.status === 400) {
       if (axiosError.response && axiosError.response.data && typeof axiosError.response.data != 'string') {
-        formError = transformErrorsToStringArr(axiosError.response.data.errors);
+        if (Array.isArray(axiosError.response.data)) {
+          formError = axiosError.response.data.map((e: { code: string; description: string }) => e.description);
+        } else {
+          formError = transformErrorsToStringArr(axiosError.response.data.errors);
+        }
       } else {
         formError = axiosError.response.data;
       }

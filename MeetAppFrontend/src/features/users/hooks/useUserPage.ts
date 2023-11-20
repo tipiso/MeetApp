@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { getUser } from '@/features/users/hooks/index';
+import { useGetUser } from '@/features/users/hooks/index';
 import { useSignalRChatRoom } from '@/services/SignalR/useSignalRChatRoom';
 import { Group } from '@/services/SignalR/types';
 import { Message } from '@/features/messages/types';
@@ -12,7 +12,7 @@ const useUserPage = () => {
   const { query } = useRouter();
   const { data } = useSession();
   const isUserDefined = 'username' in query;
-  const { data: user, isLoading } = getUser(isUserDefined ? (query.username as string) : '');
+  const { data: user, isLoading } = useGetUser(isUserDefined ? (query.username as string) : '');
   /**TODO: Will have to move whole chat connection to messages tab / component */
   const { createHubConnection, hubConnection } = useSignalRChatRoom();
 

@@ -9,8 +9,11 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Avatar from './Avatar';
 import { FileInput } from '@/components/Forms/FileInput';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
-import { createUrlFromImg } from '@/utils/helpers';
+import { createUrlFromImg, getValuesFromSelectOptions } from '@/utils/helpers';
 import { userFormSchema } from '../validators';
+import { useAddPhoto, useUpdateUser } from '../hooks';
+import { useRouter } from 'next/router';
+import { routes } from '@/utils/routes';
 
 type Props = {
   knownAs: string;
@@ -26,20 +29,29 @@ type FormValues = {
   knownAs: string;
   gender: string;
   age: number;
+  introduction: string;
   hobbies: Option[];
   file?: File[];
 };
 
 const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }: Props) => {
   const methods = useForm({
-    defaultValues: { knownAs, age, gender, interests, file: undefined, hobbies: [] },
+    defaultValues: { knownAs: knownAs ?? '', introduction: '', age, gender, file: undefined, hobbies: [] },
     resolver: zodResolver(userFormSchema),
   });
+  const router = useRouter();
+  const addPhoto = useAddPhoto();
+  const updateUser = useUpdateUser();
+  const isLoading = addPhoto.isMutating || updateUser.isMutating;
 
-  const handleSubmit = async (data: FormValues) => {
-    console.log('submit', data, methods.getValues('file'));
+  const handleSubmit = async ({ file, hobbies, ...rest }: FormValues) => {
+    if (file) {
+      await addPhoto.trigger(file[0]);
+      await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(hobbies) });
+      router.push(routes.matches);
+    }
   };
-
+  console.log(methods.formState, methods.getValues());
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-wrap gap-x-2.5 pt-6">
@@ -78,7 +90,7 @@ const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }:
 
         <div className="mt-auto w-full text-right">
           <FormSubmit asChild>
-            <Button type="submit" btnType={ColorTypeEnum.PRIMARY}>
+            <Button isLoading={isLoading} disabled={isLoading} type="submit" btnType={ColorTypeEnum.PRIMARY}>
               Go to your profile
             </Button>
           </FormSubmit>
