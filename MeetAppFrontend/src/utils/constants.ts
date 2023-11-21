@@ -22,6 +22,17 @@ const genderOptions = [
   { label: 'Female', value: 'female' },
 ];
 
+const mbInBytes = 1048576;
+
 const initialPagination = { pageSize: 6, totalPage: 1, currentPage: 1, totalSize: 12 };
 
-export { API_URL, TOKEN_LIFE, HUB_URL, ColorTypeEnum, initialPagination, genderFilterOptions, genderOptions };
+export {
+  API_URL,
+  TOKEN_LIFE,
+  HUB_URL,
+  ColorTypeEnum,
+  initialPagination,
+  genderFilterOptions,
+  genderOptions,
+  mbInBytes,
+};

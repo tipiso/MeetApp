@@ -51,6 +51,7 @@ const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }:
       router.push(routes.matches);
     }
   };
+
   console.log(methods.formState, methods.getValues());
   return (
     <FormProvider {...methods}>
