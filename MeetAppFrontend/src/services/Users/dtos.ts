@@ -7,7 +7,6 @@ type SearchFriendsDTO = {
 };
 
 type UpdateUserDTO = {
-  gender: string;
   age: number;
   introduction: string;
   knownAs: string;

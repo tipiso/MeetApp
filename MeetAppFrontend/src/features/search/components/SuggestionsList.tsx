@@ -19,9 +19,11 @@ export default function SuggestionsList({ data, isLoading }: Props) {
     <>
       <h1 className="mb-4 px-10 text-2xl font-bold">Catch some suggestions from around {sessionData?.user.name}!</h1>
       <Carousel carouselData={data}>
-        {data?.map((u) => (
-          <SuggestionCard key={u.id} className="max-w-[400px] px-4" imgWidth={250} imgHeight={230} user={u} />
-        ))}
+        {data
+          ?.filter((u) => !!u.photoUrl)
+          .map((u) => (
+            <SuggestionCard key={u.id} className="max-w-[400px] px-4" imgWidth={250} imgHeight={230} user={u} />
+          ))}
       </Carousel>
     </>
   );

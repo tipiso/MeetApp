@@ -3,8 +3,13 @@ import { z } from 'zod';
 
 const userFormSchema = z.object({
   knownAs: z.string().min(1, { message: 'Name is required' }),
-  age: z.preprocess((v) => parseInt(z.string().parse(v), 10), z.number().min(1, { message: 'Age is required' })),
+  age: z.preprocess((v) => {
+    if (typeof v === 'number') return v;
+    return parseInt(z.string().parse(v), 10);
+  }, z.number().min(1, { message: 'Age is required' })),
   gender: z.string().min(1, { message: 'Gender is required' }),
+  country: z.string().min(1, { message: 'Country is required' }),
+  city: z.string().min(1, { message: 'City is required' }),
   file: z
     .custom<File[]>()
     .refine((files) => files?.length === 1, 'Image is required.')

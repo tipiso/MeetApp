@@ -27,16 +27,25 @@ type Props = {
 
 type FormValues = {
   knownAs: string;
-  gender: string;
   age: number;
   introduction: string;
   hobbies: Option[];
+  country: string;
+  city: string;
   file?: File[];
 };
 
-const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }: Props) => {
+const UserForm = ({ knownAs, gender, age, username, hobbies }: Props) => {
   const methods = useForm({
-    defaultValues: { knownAs: knownAs ?? '', introduction: '', age, gender, file: undefined, hobbies: [] },
+    defaultValues: {
+      knownAs: knownAs ?? '',
+      introduction: '',
+      age,
+      file: undefined,
+      hobbies: [],
+      city: '',
+      country: '',
+    },
     resolver: zodResolver(userFormSchema),
   });
   const router = useRouter();
@@ -55,7 +64,7 @@ const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }:
   console.log(methods.formState, methods.getValues());
   return (
     <FormProvider {...methods}>
-      <Form onSubmit={methods.handleSubmit(handleSubmit)} className="flex flex-wrap gap-x-2.5 pt-6">
+      <Form onSubmit={methods.handleSubmit(handleSubmit)} className="pt-6">
         <div className="flex w-full items-center pt-16">
           <Avatar
             name={username}
@@ -68,33 +77,44 @@ const UserForm = ({ knownAs, gender, age, interests, username, photo, hobbies }:
             acceptFiles={['image/jpeg', 'image/pjpeg', 'image/png']}
           />
         </div>
+        <div className="grid grid-cols-12 gap-x-2.5">
+          <div className="relative col-span-3 mb-6">
+            <Input required placeholder="Name" name="knownAs" type="text" label="Name" />
+          </div>
 
-        <div className="relative mb-6 w-3/12">
-          <Input required placeholder="Name" name="knownAs" type="text" label="Name" />
-        </div>
+          <div className="relative col-span-3 mb-6">
+            <Input required placeholder="Age" name="age" type="text" label="Age" />
+          </div>
 
-        <div className="relative mb-6 w-3/12">
-          <Input required placeholder="Age" name="age" type="text" label="Age" />
-        </div>
+          <div className="relative col-span-3 mb-6">
+            <Input required placeholder="City" name="city" type="text" label="City" />
+          </div>
 
-        <div className="relative mb-6 w-2/12">
-          <SelectInput required placeholder="Gender" name="gender" type="text" label="Gender" options={genderOptions} />
-        </div>
+          <div className="relative col-span-3 mb-6">
+            <Input required placeholder="Country" name="country" type="text" label="Country" />
+          </div>
 
-        <div className="relative mb-6 w-full">
-          <TextAreaInput required placeholder="Type here" name="introduction" type="text" label="Few words about you" />
-        </div>
+          <div className="relative col-span-12 mb-6">
+            <TextAreaInput
+              required
+              placeholder="Type here"
+              name="introduction"
+              type="text"
+              label="Few words about you"
+            />
+          </div>
 
-        <div className="relative mb-6 w-2/12">
-          <MultiSelect options={hobbies ?? []} placeholder="Select a few" name="hobbies" label="Pick your hobby" />
-        </div>
+          <div className="relative col-span-3 mb-6">
+            <MultiSelect options={hobbies ?? []} placeholder="Select a few" name="hobbies" label="Pick your hobby" />
+          </div>
 
-        <div className="mt-auto w-full text-right">
-          <FormSubmit asChild>
-            <Button isLoading={isLoading} disabled={isLoading} type="submit" btnType={ColorTypeEnum.PRIMARY}>
-              Go to your profile
-            </Button>
-          </FormSubmit>
+          <div className="col-span-12 mt-auto text-right">
+            <FormSubmit asChild>
+              <Button isLoading={isLoading} disabled={isLoading} type="submit" btnType={ColorTypeEnum.PRIMARY}>
+                Go to your profile
+              </Button>
+            </FormSubmit>
+          </div>
         </div>
       </Form>
     </FormProvider>

@@ -29,14 +29,16 @@ export default function Navbar({ hideRoutes }: Props) {
       </div>
       {!hideRoutes && (
         <nav className="flex-none">
-          {data?.user ? (
+          {data && data.user ? (
             <ul className="menu menu-horizontal flex items-center px-1">
               <NavIcon route={routes.matches} img={FriendsIcon} imgAlt="Friends icon" />
               <NavIcon route={routes.messages} img={MessagesIcon} imgAlt="Messages icon" />
               <li className="dropdown" tabIndex={0}>
                 <div className="avatar p-0" tabIndex={0}>
                   <div className="w-12 rounded-full">
-                    {user && <Image src={user.photoUrl} width={50} height={50} alt="User main photo minature" />}
+                    {user?.photoUrl && (
+                      <Image src={user.photoUrl} width={50} height={50} alt="User main photo minature" />
+                    )}
                   </div>
                 </div>
                 <ul
