@@ -28,6 +28,7 @@ const MultiSelect = (props: Props) => {
           {props.label && <Label text={props.label} {...props} />}
           <Select
             {...field}
+            className={props.className}
             unstyled
             isMulti
             controlShouldRenderValue={false}

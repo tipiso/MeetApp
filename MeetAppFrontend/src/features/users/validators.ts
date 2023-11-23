@@ -7,7 +7,7 @@ const userFormSchema = z.object({
     if (typeof v === 'number') return v;
     return parseInt(z.string().parse(v), 10);
   }, z.number().min(1, { message: 'Age is required' })),
-  gender: z.string().min(1, { message: 'Gender is required' }),
+  introduction: z.string().min(1, { message: 'Introduction is required' }),
   country: z.string().min(1, { message: 'Country is required' }),
   city: z.string().min(1, { message: 'City is required' }),
   file: z

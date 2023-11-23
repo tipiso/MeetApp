@@ -12,7 +12,6 @@ type Props = {
 };
 
 const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className }: Props) => {
-  console.log( username, photoUrl);
   return (
     <div className={cn('relative rounded-lg', className)}>
       <div className="relative h-full rounded-lg">

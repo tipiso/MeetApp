@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form, FormSubmit } from '@radix-ui/react-form';
@@ -28,9 +28,12 @@ const defaultValues = {
 
 export default function Register() {
   const methods = useForm({ defaultValues, resolver: zodResolver(registerSchema) });
+  const [formLoading, setFormLoading] = useState(false);
 
   const handleSubmit = async (data: typeof defaultValues) => {
+    setFormLoading(true);
     const response = await register({ ...data, dateOfBirth: getISOfromJSDate(data.dateOfBirth!) });
+    setFormLoading(false);
 
     if (typeof response == 'string') {
       methods.setError('root', { message: response });
@@ -40,7 +43,7 @@ export default function Register() {
       });
     }
   };
-
+  console.log(methods.formState.errors.root);
   return (
     <>
       <section className="flex flex-col justify-center py-24 pl-12">
@@ -73,11 +76,17 @@ export default function Register() {
 
             {methods.formState.errors.root ? (
               <div className="mb-3">
-                {Object.keys(methods.formState.errors.root).map((key) => (
-                  <p key={key} className="text-sm text-red-600">
-                    {key}
+                {'message' in methods.formState.errors.root ? (
+                  <p key={methods.formState.errors.root.message} className="text-sm text-red-600">
+                    {methods.formState.errors.root.message}
                   </p>
-                ))}
+                ) : (
+                  Object.keys(methods.formState.errors.root).map((key) => (
+                    <p key={key} className="text-sm text-red-600">
+                      {key}
+                    </p>
+                  ))
+                )}
               </div>
             ) : (
               <p className="text-sm text-red-600">{methods.formState.errors.root}</p>
@@ -98,7 +107,13 @@ export default function Register() {
 
             <div className="text-center">
               <FormSubmit asChild>
-                <Button className="w-1/2" type="submit" btnType={ColorTypeEnum.PRIMARY}>
+                <Button
+                  disabled={formLoading}
+                  isLoading={formLoading}
+                  className="w-1/2"
+                  type="submit"
+                  btnType={ColorTypeEnum.PRIMARY}
+                >
                   Register
                 </Button>
               </FormSubmit>

@@ -16,7 +16,7 @@ const register = async (data: RegisterPayload) => {
   try {
     const response = await api.post(registerUrl, data);
     if (response.status === 200) {
-      await login({ username: data.username, password: data.password });
+      await login({ username: data.username, password: data.password, redirectToUser: true });
       return true;
     }
   } catch (e) {

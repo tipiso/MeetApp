@@ -15,10 +15,7 @@ type Props = {
 
 export default function Navbar({ hideRoutes }: Props) {
   const { data } = useSession();
-  const { data: user, isLoading } = useGetUser(data?.user.name);
-  const router = useRouter();
-
-  if (!isLoading && user && !user.photoUrl && !hideRoutes) router.push(routes.user.replace(':username', user.userName));
+  const { data: user } = useGetUser(data?.user.name);
 
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">
@@ -45,7 +42,7 @@ export default function Navbar({ hideRoutes }: Props) {
                   tabIndex={0}
                   className="w-50 dropdown-content menu rounded-box z-[1] mt-4 -translate-x-3 bg-base-100 p-2 shadow"
                 >
-                  <li onClick={() => signOut({ callbackUrl: appRoutes.home })}>
+                  <li className="text-black" onClick={() => signOut({ callbackUrl: appRoutes.home })}>
                     <a>Log out</a>
                   </li>
                 </ul>

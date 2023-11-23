@@ -11,7 +11,7 @@ import { FileInput } from '@/components/Forms/FileInput';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import { createUrlFromImg, getValuesFromSelectOptions } from '@/utils/helpers';
 import { userFormSchema } from '../validators';
-import { useAddPhoto, useUpdateUser } from '../hooks';
+import { useAddPhoto, useGetUser, useUpdateUser } from '../hooks';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
 
@@ -35,7 +35,7 @@ type FormValues = {
   file?: File[];
 };
 
-const UserForm = ({ knownAs, gender, age, username, hobbies }: Props) => {
+const UserForm = ({ knownAs, age, username, hobbies }: Props) => {
   const methods = useForm({
     defaultValues: {
       knownAs: knownAs ?? '',
@@ -51,21 +51,22 @@ const UserForm = ({ knownAs, gender, age, username, hobbies }: Props) => {
   const router = useRouter();
   const addPhoto = useAddPhoto();
   const updateUser = useUpdateUser();
+  const getUser = useGetUser(username);
   const isLoading = addPhoto.isMutating || updateUser.isMutating;
 
   const handleSubmit = async ({ file, hobbies, ...rest }: FormValues) => {
     if (file) {
       await addPhoto.trigger(file[0]);
       await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(hobbies) });
-      router.push(routes.matches);
+      await getUser.mutate();
+      router.push(routes.search);
     }
   };
 
-  console.log(methods.formState, methods.getValues());
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(handleSubmit)} className="pt-6">
-        <div className="flex w-full items-center pt-16">
+        <div className="flex w-full items-center pt-16 pb-8">
           <Avatar
             name={username}
             imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
@@ -104,8 +105,14 @@ const UserForm = ({ knownAs, gender, age, username, hobbies }: Props) => {
             />
           </div>
 
-          <div className="relative col-span-3 mb-6">
-            <MultiSelect options={hobbies ?? []} placeholder="Select a few" name="hobbies" label="Pick your hobby" />
+          <div className="relative col-span-12 mb-6">
+            <MultiSelect
+              className="w-1/3"
+              options={hobbies ?? []}
+              placeholder="Select a few"
+              name="hobbies"
+              label="Pick your hobby"
+            />
           </div>
 
           <div className="col-span-12 mt-auto text-right">

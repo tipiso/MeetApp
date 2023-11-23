@@ -18,7 +18,7 @@ const SelectItem = forwardRef<HTMLDivElement | null, SelectItemProps>(
     return (
       <Select.Item
         className={cx(
-          'relative flex h-10 w-full items-center border-0 py-2 px-4 text-xs outline-0 hover:bg-gray-300',
+          'selectItem relative flex h-10 w-full items-center border-0 py-2 px-4 text-xs outline-0 hover:bg-gray-300 focus:bg-gray-300',
           className,
         )}
         {...props}
@@ -33,7 +33,7 @@ SelectItem.displayName = 'SelectItem';
 
 export function SelectInput(props: Props) {
   const { control } = useFormContext();
-
+  console.log(props.placeholder);
   return (
     <Controller
       {...props}
@@ -52,11 +52,15 @@ export function SelectInput(props: Props) {
             >
               <Select.Trigger
                 id={props.id || props.name}
+                aria-label={props.name}
                 className="text-normal select-bordered select w-full items-center border-base-300 text-base font-normal"
+                placeholder={props.placeholder}
               >
-                {props.placeholder && (
-                  <Select.Value placeholder={<span className="text-gray-400">{props.placeholder}</span>}></Select.Value>
-                )}
+                {field.value ? (
+                  <Select.Value />
+                ) : props.placeholder ? (
+                  <span className="text-gray-400">{props.placeholder}</span>
+                ) : null}
               </Select.Trigger>
 
               <Select.Portal>

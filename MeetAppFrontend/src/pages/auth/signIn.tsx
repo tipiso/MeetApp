@@ -1,4 +1,4 @@
-import { ReactElement } from 'react';
+import { ReactElement, useState } from 'react';
 import type { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next';
 import { getCsrfToken } from 'next-auth/react';
 import { useForm, FormProvider } from 'react-hook-form';
@@ -22,8 +22,10 @@ const defaultValues = {
 
 export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const methods = useForm({ defaultValues, resolver: zodResolver(loginSchema) });
+  const [formLoading, setFormLoading] = useState(false);
 
   const handleSubmit = async ({ username, password }: z.infer<typeof loginSchema>) => {
+    setFormLoading(true);
     await login({
       username,
       password,
@@ -31,6 +33,7 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
         if (error.status === 401) methods.setError('root', { message: 'Invalid username or password' });
       },
     });
+    setFormLoading(false);
   };
 
   return (
@@ -53,7 +56,13 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 
             <div className="w-full pt-[50px] text-center">
               <FormSubmit asChild>
-                <Button className="w-1/2" type="submit" btnType={ColorTypeEnum.PRIMARY}>
+                <Button
+                  disabled={formLoading}
+                  isLoading={formLoading}
+                  className="w-1/2"
+                  type="submit"
+                  btnType={ColorTypeEnum.PRIMARY}
+                >
                   Log In
                 </Button>
               </FormSubmit>

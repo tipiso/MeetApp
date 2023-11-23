@@ -1,7 +1,13 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { getUsersService, getUserService, usersQueryKeys, updateUserService, addPhotoService } from '@/services/Users/users';
+import {
+  getUsersService,
+  getUserService,
+  usersQueryKeys,
+  updateUserService,
+  addPhotoService,
+} from '@/services/Users/users';
 import { UpdateUserDTO } from '@/services/Users/dtos';
 
 function useGetUsers() {
