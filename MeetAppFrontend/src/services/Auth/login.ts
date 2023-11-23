@@ -22,7 +22,6 @@ export const login = async ({ username, password, onSuccess, onError, redirectTo
     });
 
     if (response?.ok) {
-      console.log(response, redirectToUser);
       onSuccess?.();
       Router.push(redirectUrl);
     } else throw response;

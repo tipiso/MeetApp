@@ -2,6 +2,7 @@ import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 
 import { routes } from '@/utils/routes';
+import { UserProvider } from '@/utils/UserProvider';
 
 export default function AuthWrap({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -16,5 +17,6 @@ export default function AuthWrap({ children }: { children: JSX.Element }) {
   if (status === 'loading') {
     return <div>Loading...</div>;
   }
-  return children;
+
+  return <UserProvider>{children}</UserProvider>;
 }

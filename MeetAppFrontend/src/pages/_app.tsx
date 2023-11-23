@@ -9,6 +9,7 @@ import AuthWrap from '@/services/Auth/AuthWrap';
 import SignalRPresenceProvider from '@/services/SignalR/SignalRPresenceProvider';
 import { Alert } from '@/components/Alert/Alert';
 import { Poppins } from '@next/font/google';
+import { SWRConfig } from 'swr';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -30,18 +31,20 @@ export default function App({ Component, pageProps }: AppPropsWithLayout) {
   return (
     <SessionProvider session={pageProps.session}>
       <SignalRPresenceProvider>
-        <main className={poppins.className + 'bg-white'}>
-          {getLayout(
-            Component.secured ? (
-              <AuthWrap>
+        <SWRConfig>
+          <main className={poppins.className + 'bg-white'}>
+            {getLayout(
+              Component.secured ? (
+                <AuthWrap>
+                  <Component {...pageProps} />
+                </AuthWrap>
+              ) : (
                 <Component {...pageProps} />
-              </AuthWrap>
-            ) : (
-              <Component {...pageProps} />
-            ),
-          )}
-          <Alert />
-        </main>
+              ),
+            )}
+            <Alert />
+          </main>
+        </SWRConfig>
       </SignalRPresenceProvider>
     </SessionProvider>
   );
