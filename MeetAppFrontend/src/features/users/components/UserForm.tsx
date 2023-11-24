@@ -17,12 +17,12 @@ import { routes } from '@/utils/routes';
 
 type Props = {
   knownAs: string;
-  gender: string;
   interests: string;
   age: number;
   photo?: string;
   hobbies?: Option[];
   username: string;
+  city: string;
 };
 
 type FormValues = {
@@ -35,7 +35,7 @@ type FormValues = {
   file?: File[];
 };
 
-const UserForm = ({ knownAs, age, username, hobbies }: Props) => {
+const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
   const methods = useForm({
     defaultValues: {
       knownAs: knownAs ?? '',
@@ -43,7 +43,7 @@ const UserForm = ({ knownAs, age, username, hobbies }: Props) => {
       age,
       file: undefined,
       hobbies: [],
-      city: '',
+      city,
       country: '',
     },
     resolver: zodResolver(userFormSchema),

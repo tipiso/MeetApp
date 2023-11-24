@@ -7,12 +7,12 @@ import { Option } from '@/components/Forms/MultiSelect';
 
 const UserPage = () => {
   const { isLoading, user } = useUserPage();
-  const { data: hobbies, isLoading:hobbiesLoading } = useGetHobbies();
+  const { data: hobbies, isLoading: hobbiesLoading } = useGetHobbies();
 
   const hobbiesMap = useMemo(() => hobbies?.data.map<Option>((h) => ({ value: `${h.id}`, label: h.name })), [hobbies]);
 
   if (isLoading || !user || hobbiesLoading) return <div>Loading...</div>;
-
+  console.log(user);
   return (
     <div className="flex w-full flex-col">
       <h1 className="text-4xl font-bold">Tell us about you!</h1>
@@ -21,10 +21,10 @@ const UserPage = () => {
         photo={user.photoUrl}
         username={user.userName}
         age={user.age}
-        gender={user.gender}
         knownAs={user.knownAs}
         interests={user.interests}
         hobbies={hobbiesMap}
+        city={user.city}
       />
     </div>
   );

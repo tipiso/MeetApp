@@ -1,21 +1,22 @@
 import Link from 'next/link';
 import { routes, routes as appRoutes } from '@/utils/routes';
-import { signOut, useSession } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import LogoLight from '@/assets/images/LogoLight.svg';
 import MessagesIcon from '@/assets/images/MessagesIcon.svg';
 import FriendsIcon from '@/assets/images/FriendsIcon.svg';
 import Image from 'next/image';
-import { useGetUser } from '@/features/users/hooks';
 import { NavIcon } from '@/components/Navigation/NavIcon';
-import { useRouter } from 'next/router';
+import { Cache, useSWRConfig } from 'swr';
+import { getDataFromSWRCache, getUsernameFromSession } from '@/utils/helpers';
 
 type Props = {
   hideRoutes?: boolean;
 };
 
 export default function Navbar({ hideRoutes }: Props) {
-  const { data } = useSession();
-  const { data: user } = useGetUser(data?.user.name);
+  const username = getUsernameFromSession();
+  const { cache, ...args } = useSWRConfig();
+  const user = getDataFromSWRCache(cache, username);
 
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">
@@ -26,7 +27,7 @@ export default function Navbar({ hideRoutes }: Props) {
       </div>
       {!hideRoutes && (
         <nav className="flex-none">
-          {data && data.user ? (
+          {user && user ? (
             <ul className="menu menu-horizontal flex items-center px-1">
               <NavIcon route={routes.matches} img={FriendsIcon} imgAlt="Friends icon" />
               <NavIcon route={routes.messages} img={MessagesIcon} imgAlt="Messages icon" />
