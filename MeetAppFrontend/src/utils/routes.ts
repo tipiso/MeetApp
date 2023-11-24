@@ -4,6 +4,7 @@ const routes = {
   register: '/auth/register',
   users: '/users',
   user: '/users/:username',
+  userProfile: '/users/:username/profile',
 
   messages: '/messages',
 

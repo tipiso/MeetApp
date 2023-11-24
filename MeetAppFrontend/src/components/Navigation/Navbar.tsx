@@ -6,8 +6,8 @@ import MessagesIcon from '@/assets/images/MessagesIcon.svg';
 import FriendsIcon from '@/assets/images/FriendsIcon.svg';
 import Image from 'next/image';
 import { NavIcon } from '@/components/Navigation/NavIcon';
-import { Cache, useSWRConfig } from 'swr';
-import { getDataFromSWRCache, getUsernameFromSession } from '@/utils/helpers';
+import { getUsernameFromSession } from '@/utils/helpers';
+import { useGetUser } from '@/features/users/hooks';
 
 type Props = {
   hideRoutes?: boolean;
@@ -15,8 +15,7 @@ type Props = {
 
 export default function Navbar({ hideRoutes }: Props) {
   const username = getUsernameFromSession();
-  const { cache, ...args } = useSWRConfig();
-  const user = getDataFromSWRCache(cache, username);
+  const { data: user } = useGetUser(username);
 
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">
@@ -41,8 +40,13 @@ export default function Navbar({ hideRoutes }: Props) {
                 </div>
                 <ul
                   tabIndex={0}
-                  className="w-50 dropdown-content menu rounded-box z-[1] mt-4 -translate-x-3 bg-base-100 p-2 shadow"
+                  className="w-50 dropdown-content menu rounded-box z-[1] mt-4 -translate-x-10 bg-base-100 p-2 shadow"
                 >
+                  <li className="text-black">
+                    <Link href={appRoutes.userProfile.replace(':username', username)} className="text-sm font-bold">
+                      My Profile
+                    </Link>
+                  </li>
                   <li className="text-black" onClick={() => signOut({ callbackUrl: appRoutes.home })}>
                     <a>Log out</a>
                   </li>

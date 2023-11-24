@@ -4,6 +4,7 @@ import Loader, { LoaderSizes } from '@/components/Loader';
 import SuggestionCard from '@/features/search/components/SuggestionCard';
 import { User } from '@/features/users/types';
 import { useSession } from 'next-auth/react';
+import { useMemo } from 'react';
 
 type Props = {
   data?: User[];
@@ -12,18 +13,20 @@ type Props = {
 
 export default function SuggestionsList({ data, isLoading }: Props) {
   const { data: sessionData } = useSession();
+
+  // Users without photos are not ready to be displayed, possible it will be filtered out on BE.
+  const filteredUsers = useMemo(() => (data ? data.filter((u) => !!u.photoUrl) : []), [data]);
+
   if (isLoading) return <Loader size={LoaderSizes.lg} />;
   if (!data) return <div>We have no suggestions for you yet.</div>;
 
   return (
     <>
       <h1 className="mb-4 px-10 text-2xl font-bold">Catch some suggestions from around {sessionData?.user.name}!</h1>
-      <Carousel carouselData={data}>
-        {data
-          ?.filter((u) => !!u.photoUrl)
-          .map((u) => (
-            <SuggestionCard key={u.id} className="max-w-[400px] px-4" imgWidth={250} imgHeight={230} user={u} />
-          ))}
+      <Carousel carouselData={filteredUsers}>
+        {filteredUsers.map((u) => (
+          <SuggestionCard key={u.id} className="max-w-[400px] px-4" imgWidth={250} imgHeight={230} user={u} />
+        ))}
       </Carousel>
     </>
   );
