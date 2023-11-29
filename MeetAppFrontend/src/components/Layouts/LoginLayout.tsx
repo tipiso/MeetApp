@@ -1,10 +1,6 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navigation/Navbar';
-import Link from 'next/link';
-import { routes as appRoutes } from '@/utils/routes';
-import Image from 'next/image';
-import Logo from '@/assets/images/Logo.svg';
 import { Footer } from '@/components/Footer';
 
 type LayoutProps = {
@@ -23,7 +19,7 @@ export default function LoginLayout({ children }: LayoutProps) {
 
       <main className="relative flex min-h-screen w-full flex-col xl:container">
         <Navbar hideRoutes />
-        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full w-full max-w-[1440px] overflow-hidden bg-grayBg bg-cover bg-no-repeat" />
+        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full max-w-[1440px] overflow-hidden bg-grayBg bg-cover bg-no-repeat" />
         <div className="z-10 flex flex-auto">{children}</div>
 
         <Footer />

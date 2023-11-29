@@ -1,10 +1,6 @@
 import { ReactNode } from 'react';
 import Head from 'next/head';
 import Navbar from '@/components/Navigation/Navbar';
-import Link from 'next/link';
-import { routes as appRoutes } from '@/utils/routes';
-import Image from 'next/image';
-import Logo from '@/assets/images/Logo.svg';
 import { Footer } from '@/components/Footer';
 
 type LayoutProps = {
@@ -24,7 +20,7 @@ export default function CleanLayout({ children }: LayoutProps) {
       <main className="relative flex min-h-screen w-full flex-col xl:container">
         <Navbar />
 
-        <div className="flex flex-auto p-14">{children}</div>
+        <div className="flex flex-auto">{children}</div>
 
         <Footer />
       </main>
