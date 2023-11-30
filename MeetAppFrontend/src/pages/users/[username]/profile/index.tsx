@@ -5,8 +5,23 @@ import { routes } from '@/utils/routes';
 import { useGetUser } from '@/features/users/hooks';
 import { getUsernameFromSession } from '@/utils/helpers';
 import Image from 'next/image';
+import Tabs, { useTabs } from '@/components/Tabs';
+import Button from '@/components/Button';
+import { ColorTypeEnum } from '@/utils/constants';
+
+enum ProfilePageTabsKeys {
+  CUSTOMER_INFO = 'customerInfo',
+  PHOTOS = 'photos',
+  CHAT = 'chat',
+}
+const profileTabs = [
+  { key: ProfilePageTabsKeys.CUSTOMER_INFO, text: 'Custom Informations' },
+  { key: ProfilePageTabsKeys.PHOTOS, text: 'Photos' },
+  { key: ProfilePageTabsKeys.CHAT, text: 'Chat' },
+];
 
 const ProfilePage = () => {
+  const tabsOpts = useTabs({ tabs: profileTabs });
   const user = useGetUser(getUsernameFromSession());
 
   return (
@@ -46,7 +61,13 @@ const ProfilePage = () => {
           <p>{user.data?.gender}</p>
         </div>
       </div>
-      <div className="col-span-7">s</div>
+      <div className="col-span-7 pl-12 pt-16">
+        <div className="flex items-center justify-between">
+          <Tabs active={tabsOpts.active} setActive={tabsOpts.updateActiveTab} tabs={profileTabs} />
+          <Button btnType={ColorTypeEnum.PRIMARY}>Invite to friends</Button>
+        </div>
+        <div>{tabsOpts.active}</div>
+      </div>
     </div>
   );
 };
