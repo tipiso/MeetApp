@@ -19,6 +19,6 @@ export default function ProfileTabs({active}:Props) {
     case ProfilePageTabsKeys.PHOTOS:
       return <div>Photos</div>
     default:
-      return;
+      return <div>No Tab Found</div>;
   }
 }

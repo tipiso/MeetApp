@@ -8,6 +8,8 @@ import Image from 'next/image';
 import Tabs, { useTabs } from '@/components/Tabs';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
+import ProfileTabs from '@/features/users/components/ProfileTabs';
+import UserInfoBlock from '@/features/users/components/UserInfoBlock';
 
 enum ProfilePageTabsKeys {
   CUSTOMER_INFO = 'customerInfo',
@@ -42,31 +44,17 @@ const ProfilePage = () => {
           height={340}
           alt="user profile"
         />
-        <div className="pb-3">
-          <p className="font-bold">Full Name</p>
-          <p>{user.data?.knownAs}</p>
-        </div>
-        <div className="pb-3">
-          <p className="font-bold">Location</p>
-          <p>
-            {user.data?.city} ({user.data?.country})
-          </p>
-        </div>
-        <div className="pb-3">
-          <p className="font-bold">Age</p>
-          <p>{user.data?.age}</p>
-        </div>
-        <div className="pb-3">
-          <p className="font-bold">Gender</p>
-          <p>{user.data?.gender}</p>
-        </div>
+        <UserInfoBlock label='Full Name' content={user.data?.knownAs ?? ''} />
+        <UserInfoBlock label='Location' content={`${user.data?.city} (${user.data?.country})`} />
+        <UserInfoBlock label='Age' content={`${user.data?.age}`} />
+        <UserInfoBlock label='Gender' content={`${user.data?.gender}`} />
       </div>
       <div className="col-span-7 pl-12 pt-16">
         <div className="flex items-center justify-between">
           <Tabs active={tabsOpts.active} setActive={tabsOpts.updateActiveTab} tabs={profileTabs} />
           <Button btnType={ColorTypeEnum.PRIMARY}>Invite to friends</Button>
         </div>
-        <div>{tabsOpts.active}</div>
+        <ProfileTabs active={tabsOpts.active} />
       </div>
     </div>
   );
