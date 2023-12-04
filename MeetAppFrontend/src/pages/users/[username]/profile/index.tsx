@@ -8,7 +8,7 @@ import Image from 'next/image';
 import Tabs, { useTabs } from '@/components/Tabs';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
-import ProfileTabs from '@/features/users/components/ProfileTabs';
+import ProfileTabs from '@/features/users/components/ProfileTabs/ProfileTabs';
 import UserInfoBlock from '@/features/users/components/UserInfoBlock';
 
 enum ProfilePageTabsKeys {
@@ -36,7 +36,7 @@ const ProfilePage = () => {
             { active: true, text: user.data?.knownAs ?? '', link: `${routes.userProfile}/${user.data?.knownAs ?? ''}` },
           ]}
         />
-        <h1 className="pt-6 pb-3">{user.data?.knownAs} Profile</h1>
+        <h1 className="pt-6 pb-3 text-2xl font-bold">{user.data?.knownAs} Profile</h1>
         <Image
           className="rounded-lg pb-4"
           src={user.data?.photoUrl ?? ''}
@@ -44,17 +44,17 @@ const ProfilePage = () => {
           height={340}
           alt="user profile"
         />
-        <UserInfoBlock label='Full Name' content={user.data?.knownAs ?? ''} />
-        <UserInfoBlock label='Location' content={`${user.data?.city} (${user.data?.country})`} />
-        <UserInfoBlock label='Age' content={`${user.data?.age}`} />
-        <UserInfoBlock label='Gender' content={`${user.data?.gender}`} />
+        <UserInfoBlock label="Full Name" content={user.data?.knownAs ?? ''} />
+        <UserInfoBlock label="Location" content={`${user.data?.city} (${user.data?.country})`} />
+        <UserInfoBlock label="Age" content={`${user.data?.age}`} />
+        <UserInfoBlock label="Gender" content={`${user.data?.gender}`} />
       </div>
       <div className="col-span-7 pl-12 pt-16">
         <div className="flex items-center justify-between">
           <Tabs active={tabsOpts.active} setActive={tabsOpts.updateActiveTab} tabs={profileTabs} />
           <Button btnType={ColorTypeEnum.PRIMARY}>Invite to friends</Button>
         </div>
-        <ProfileTabs active={tabsOpts.active} />
+        <ProfileTabs hobbies={user.data?.hobbys} introduction={user.data?.introduction} active={tabsOpts.active} />
       </div>
     </div>
   );
