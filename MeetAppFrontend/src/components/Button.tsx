@@ -4,21 +4,28 @@ import { ColorTypeEnum } from '@/utils/constants';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import Link, { LinkProps } from 'next/link';
 
+type UniversalBtnProps = {
+  children: ReactNode;
+  btnType?: ColorTypeEnum;
+  className?: string;
+  outline?: boolean;
+};
+
 type ButtonProps =
-  | ({ href: string; btnType?: ColorTypeEnum; className?: string; children?: ReactNode } & LinkProps)
+  | ({ href: string } & UniversalBtnProps & LinkProps)
   | ({
-      children: ReactNode;
       onClick?: () => void;
-      btnType?: ColorTypeEnum;
       isLoading?: boolean;
       type?: string;
-    } & ComponentProps<'button'>);
+    } & UniversalBtnProps &
+      ComponentProps<'button'>);
 
 export default function Button(props: ButtonProps) {
   const isAnchor = 'href' in props;
   const classes = cx('btn font-normal normal-case', props.className, {
     'btn-primary': props.btnType === ColorTypeEnum.PRIMARY,
     'btn-secondary': props.btnType === ColorTypeEnum.SECONDARY,
+    'btn-outline': !!props.outline
   });
 
   if (isAnchor) {
