@@ -2,6 +2,18 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
 const HUB_URL = process.env.NEXT_PUBLIC_HUB_URL || '';
 const TOKEN_LIFE = 7 * 24 * 60 * 60;
 
+enum ProfilePageTabsKeys {
+  CUSTOMER_INFO = 'customerInfo',
+  PHOTOS = 'photos',
+  CHAT = 'chat',
+}
+
+const profileTabs = [
+  { key: ProfilePageTabsKeys.CUSTOMER_INFO, text: 'Custom Informations' },
+  { key: ProfilePageTabsKeys.PHOTOS, text: 'Photos' },
+  { key: ProfilePageTabsKeys.CHAT, text: 'Chat' },
+];
+
 enum ColorTypeEnum {
   PRIMARY = 'primary',
   SECONDARY = 'secondary',
@@ -35,4 +47,6 @@ export {
   genderFilterOptions,
   genderOptions,
   mbInBytes,
+  profileTabs,
+  ProfilePageTabsKeys,
 };

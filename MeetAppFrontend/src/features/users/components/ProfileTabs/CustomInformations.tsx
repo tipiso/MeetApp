@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function CustomInformations({ hobbies, introduction }: Props) {
-  const { data, isMutating, pagination, getPage } = useLikedUsers();
+  const { data, isMutating, getPage } = useLikedUsers();
 
   useEffect(() => {
     getPage(1);

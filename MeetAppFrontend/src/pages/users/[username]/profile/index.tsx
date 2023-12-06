@@ -6,25 +6,18 @@ import { useGetUser } from '@/features/users/hooks';
 import { getUsernameFromSession } from '@/utils/helpers';
 import Image from 'next/image';
 import Tabs, { useTabs } from '@/components/Tabs';
-import Button from '@/components/Button';
-import { ColorTypeEnum } from '@/utils/constants';
+import { profileTabs } from '@/utils/constants';
 import ProfileTabs from '@/features/users/components/ProfileTabs/ProfileTabs';
 import UserInfoBlock from '@/features/users/components/UserInfoBlock';
-
-enum ProfilePageTabsKeys {
-  CUSTOMER_INFO = 'customerInfo',
-  PHOTOS = 'photos',
-  CHAT = 'chat',
-}
-const profileTabs = [
-  { key: ProfilePageTabsKeys.CUSTOMER_INFO, text: 'Custom Informations' },
-  { key: ProfilePageTabsKeys.PHOTOS, text: 'Photos' },
-  { key: ProfilePageTabsKeys.CHAT, text: 'Chat' },
-];
+import { useRouter } from 'next/router';
+import TabAction from '@/features/users/components/ProfileTabs/TabAction';
 
 const ProfilePage = () => {
+  const router = useRouter();
   const tabsOpts = useTabs({ tabs: profileTabs });
-  const user = useGetUser(getUsernameFromSession());
+  const user = useGetUser(router.query.username as string);
+
+  const isCurrentUserProfile = getUsernameFromSession() === router.query.username;
 
   return (
     <div className="grid w-full grid-cols-10 px-16">
@@ -52,9 +45,14 @@ const ProfilePage = () => {
       <div className="col-span-7 pl-12 pt-16">
         <div className="flex items-center justify-between">
           <Tabs active={tabsOpts.active} setActive={tabsOpts.updateActiveTab} tabs={profileTabs} />
-          <Button btnType={ColorTypeEnum.PRIMARY}>Invite to friends</Button>
+          <TabAction active={tabsOpts.active} isCurrentUserProfile={isCurrentUserProfile} />
         </div>
-        <ProfileTabs hobbies={user.data?.hobbys} introduction={user.data?.introduction} active={tabsOpts.active} />
+        <ProfileTabs
+          hobbies={user.data?.hobbys}
+          introduction={user.data?.introduction}
+          active={tabsOpts.active}
+          photos={user.data?.photos}
+        />
       </div>
     </div>
   );

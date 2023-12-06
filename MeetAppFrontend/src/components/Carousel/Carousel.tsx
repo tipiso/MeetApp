@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import Slider, { CustomArrowProps } from 'react-slick';
+import Slider, { CustomArrowProps, ResponsiveObject, Settings } from 'react-slick';
 import CarouselArrowLeft from '@/assets/images/CarouselArrowLeft.svg';
 import CarouselArrowRight from '@/assets/images/CarouselArrowRight.svg';
 import Image from 'next/image';
@@ -11,7 +11,8 @@ import styles from './Carousel.module.css';
 type Props = {
   children: ReactNode;
   carouselData: any & { id: string }[];
-};
+  responsiveSetup?: ResponsiveObject[];
+} & Settings;
 
 const SlickArrowLeft = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
   <button
@@ -48,7 +49,7 @@ const SlickArrowRight = ({ currentSlide, slideCount, ...props }: CustomArrowProp
   </button>
 );
 
-export default function Carousel({ children, carouselData }: Props) {
+export default function Carousel({ children, responsiveSetup, carouselData, ...props }: Props) {
   const getMiddleItem = () => {
     if (carouselData) {
       return Math.floor(carouselData.length / 2);
@@ -70,53 +71,56 @@ export default function Carousel({ children, carouselData }: Props) {
       arrows={true}
       prevArrow={<SlickArrowLeft />}
       nextArrow={<SlickArrowRight />}
-      responsive={[
-        {
-          breakpoint: 1536,
-          settings: {
-            slidesToShow: getSlidesToShow(4),
-            slidesToScroll: 1,
-            infinite: true,
-            arrows: true,
+      responsive={
+        responsiveSetup ?? [
+          {
+            breakpoint: 1536,
+            settings: {
+              slidesToShow: getSlidesToShow(4),
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: true,
+            },
           },
-        },
-        {
-          breakpoint: 1280,
-          settings: {
-            slidesToShow: getSlidesToShow(3),
-            slidesToScroll: 1,
-            infinite: true,
-            arrows: true,
+          {
+            breakpoint: 1280,
+            settings: {
+              slidesToShow: getSlidesToShow(3),
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: true,
+            },
           },
-        },
-        {
-          breakpoint: 768,
-          settings: {
-            slidesToShow: getSlidesToShow(3),
-            slidesToScroll: 1,
-            infinite: true,
-            arrows: true,
+          {
+            breakpoint: 768,
+            settings: {
+              slidesToShow: getSlidesToShow(3),
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: true,
+            },
           },
-        },
-        {
-          breakpoint: 640,
-          settings: {
-            slidesToShow: getSlidesToShow(2),
-            slidesToScroll: 1,
-            infinite: true,
-            arrows: true,
+          {
+            breakpoint: 640,
+            settings: {
+              slidesToShow: getSlidesToShow(2),
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: true,
+            },
           },
-        },
-        {
-          breakpoint: 480,
-          settings: {
-            slidesToShow: 1,
-            slidesToScroll: 1,
-            infinite: true,
-            arrows: true,
+          {
+            breakpoint: 480,
+            settings: {
+              slidesToShow: 1,
+              slidesToScroll: 1,
+              infinite: true,
+              arrows: true,
+            },
           },
-        },
-      ]}
+        ]
+      }
+      {...props}
     >
       {children}
     </Slider>
