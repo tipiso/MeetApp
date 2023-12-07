@@ -14,7 +14,7 @@ export default function Breadcrumbs({ breadcrumbs }: Props) {
     <div className="breadcrumbs text-sm">
       <ul>
         {breadcrumbs.map((bc) => (
-          <li className={bc.active ? 'pointer-events-none font-bold' : ''}>
+          <li key={bc.link} className={bc.active ? 'pointer-events-none font-bold' : ''}>
             <Link href={bc.link}>{bc.text}</Link>
           </li>
         ))}

@@ -17,7 +17,13 @@ module.exports = {
       },
     },
   },
-  plugins: [require('daisyui')],
+  plugins: [
+    function ({ addVariant }) {
+      addVariant('child', '& > *');
+      addVariant('child-hover', '& > *:hover');
+    },
+     require('daisyui')
+    ],
   daisyui: {
     themes: ['light'],
     base: true,

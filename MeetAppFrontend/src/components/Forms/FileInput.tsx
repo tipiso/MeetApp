@@ -38,7 +38,7 @@ export function FileInput(props: Props) {
               value={value?.filename}
               ref={ref}
               type="file"
-              className={cx(props.className, 'invisible', {
+              className={cx(props.className, 'hidden', {
                 ['input-error']: fieldState.error,
               })}
               accept={props.acceptFiles?.join(', ')}
@@ -46,7 +46,6 @@ export function FileInput(props: Props) {
                 const fileList = (e.target as HTMLInputElement).files;
                 if (fileList) {
                   fieldProps.onChange(fileList);
-                  
                 }
               }}
             />

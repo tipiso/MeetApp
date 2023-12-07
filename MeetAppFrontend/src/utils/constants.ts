@@ -38,6 +38,8 @@ const mbInBytes = 1048576;
 
 const initialPagination = { pageSize: 6, totalPage: 1, currentPage: 1, totalSize: 12 };
 
+const acceptedMimeFiles = ['image/jpeg', 'image/pjpeg', 'image/png'];
+
 export {
   API_URL,
   TOKEN_LIFE,
@@ -49,4 +51,5 @@ export {
   mbInBytes,
   profileTabs,
   ProfilePageTabsKeys,
+  acceptedMimeFiles,
 };

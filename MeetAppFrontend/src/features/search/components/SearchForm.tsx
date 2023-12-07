@@ -6,7 +6,7 @@ import SearchIcon from '@/assets/images/SearchIcon.svg';
 import Button from '@/components/Button';
 import { Input } from '@/components/Forms/Input';
 import FriendsList from '@/features/search/components/FriendsList';
-import SuggestionsList from '@/features/search/components/SuggestionsList';
+import SuggestionsList from '@/features/search/components/SuggestionsList/SuggestionsList';
 import { useSearchForm } from '@/features/search/hooks/useSearchForm';
 import { ColorTypeEnum } from '@/utils/constants';
 import { routes } from '@/utils/routes';

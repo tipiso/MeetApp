@@ -32,8 +32,14 @@ export const getUsernameFromSession = () => {
 };
 
 export const getDataFromSWRCache = (cache: Cache, queryKey: string) => {
-  console.log(cache, cache.get(queryKey));
   const cacheRecord = cache.get(queryKey);
   if (!!cacheRecord && !cacheRecord.isLoading && cacheRecord.data) return cacheRecord.data.data;
   return undefined;
+};
+
+export const getArrMiddleItem = (arr?: unknown[]) => {
+  if (arr) {
+    return Math.floor(arr.length / 2);
+  }
+  return 0;
 };

@@ -17,16 +17,17 @@ export default function Photos({ photos }: Props) {
         slidesToScroll={1}
         dots={true}
         infinite={true}
-        dotsClass="slick-dots slick-thumb"
+        dotsClass="!grid grid-cols-4 gap-x-3 w-full slick-thumb mt-6 child:cursor-pointer absolute"
         customPaging={(i) => (
           <a>
             <Image src={photos[i].url} width={150} height={150} alt="user photo miniature" />
           </a>
         )}
         carouselData={photos}
+        responsiveSetup={[]}
       >
         {photos?.map((p) => (
-          <Image src={p.url} width={250} height={250} alt="user photo" />
+          <Image key={p.id} src={p.url} width={250} height={250} alt="user photo" />
         ))}
       </Carousel>
     </section>

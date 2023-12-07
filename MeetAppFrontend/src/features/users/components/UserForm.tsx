@@ -1,10 +1,9 @@
 import { FormProvider, useForm } from 'react-hook-form';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
-import { SelectInput } from '@/components/Forms/SelectInput';
 import { TextAreaInput } from '@/components/Forms/TextAreaInput';
 import Button from '@/components/Button';
-import { ColorTypeEnum, genderOptions } from '@/utils/constants';
+import { ColorTypeEnum, acceptedMimeFiles } from '@/utils/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Avatar from './Avatar';
 import { FileInput } from '@/components/Forms/FileInput';
@@ -71,12 +70,7 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
             name={username}
             imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
           />
-          <FileInput
-            className="ml-6"
-            name="file"
-            label="Add your photo"
-            acceptFiles={['image/jpeg', 'image/pjpeg', 'image/png']}
-          />
+          <FileInput className="ml-6" name="file" label="Add your photo" acceptFiles={acceptedMimeFiles} />
         </div>
         <div className="grid grid-cols-12 gap-x-2.5">
           <div className="relative col-span-3 mb-6">

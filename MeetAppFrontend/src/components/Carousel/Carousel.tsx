@@ -6,7 +6,6 @@ import Image from 'next/image';
 
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
-import styles from './Carousel.module.css';
 
 type Props = {
   children: ReactNode;
@@ -50,76 +49,12 @@ const SlickArrowRight = ({ currentSlide, slideCount, ...props }: CustomArrowProp
 );
 
 export default function Carousel({ children, responsiveSetup, carouselData, ...props }: Props) {
-  const getMiddleItem = () => {
-    if (carouselData) {
-      return Math.floor(carouselData.length / 2);
-    }
-    return 0;
-  };
-
-  const getSlidesToShow = (slidesToShow: number) =>
-    carouselData.length > slidesToShow ? slidesToShow : carouselData.length;
-
   return (
     <Slider
-      className={styles.carousel}
-      dots={false}
-      slidesToScroll={1}
-      slidesToShow={getSlidesToShow(5)}
-      centerMode={true}
-      initialSlide={getMiddleItem()}
       arrows={true}
       prevArrow={<SlickArrowLeft />}
       nextArrow={<SlickArrowRight />}
-      responsive={
-        responsiveSetup ?? [
-          {
-            breakpoint: 1536,
-            settings: {
-              slidesToShow: getSlidesToShow(4),
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: true,
-            },
-          },
-          {
-            breakpoint: 1280,
-            settings: {
-              slidesToShow: getSlidesToShow(3),
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: true,
-            },
-          },
-          {
-            breakpoint: 768,
-            settings: {
-              slidesToShow: getSlidesToShow(3),
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: true,
-            },
-          },
-          {
-            breakpoint: 640,
-            settings: {
-              slidesToShow: getSlidesToShow(2),
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: true,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              infinite: true,
-              arrows: true,
-            },
-          },
-        ]
-      }
+      responsive={responsiveSetup ?? []}
       {...props}
     >
       {children}
