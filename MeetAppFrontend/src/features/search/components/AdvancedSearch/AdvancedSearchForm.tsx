@@ -10,13 +10,12 @@ import { useMemo } from 'react';
 import MultiSelect from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
 import { ColorTypeEnum, genderFilterOptions, initialPagination } from '@/utils/constants';
-import SuggestionCard from './SuggestionCard';
-import Pagination from '@/components/Pagination/Pagination';
 import { useAdvancedSearchForm } from '@/features/search/hooks/useSearchForm';
 import { getValuesFromSelectOptions } from '@/utils/helpers';
+import Results from './Results';
 
 const AdvancedSearchForm = () => {
-  const { trigger, methods, data, defaultValues, isMutating, pagination, getPage } = useAdvancedSearchForm();
+  const { trigger, methods, data, defaultValues, pagination, getPage } = useAdvancedSearchForm();
   const { data: hobbies, isLoading } = useGetHobbies();
   const wasFetched = Array.isArray(data);
 
@@ -67,25 +66,13 @@ const AdvancedSearchForm = () => {
             </div>
           </Form>
         </>
-        {wasFetched && (
-          <div>
-            {data && data.length ? (
-              <>
-                <p className="text-2xl font-bold">Search results ({data.length})</p>
-                <div className="grid grid-cols-1 gap-6 pt-6 md:grid-cols-2 lg:grid-cols-3">
-                  {data.map((u) => (
-                    <SuggestionCard key={u.id} imgWidth={250} imgHeight={230} user={u} />
-                  ))}
-                </div>
-              </>
-            ) : (
-              <p>No results</p>
-            )}
-            {pagination.totalPage > 1 && (
-              <Pagination handlePageChange={getPage} formValues={methods.getValues()} {...pagination} />
-            )}
-          </div>
-        )}
+        <Results
+          users={data}
+          wasFetched={wasFetched}
+          pagination={pagination}
+          formValues={methods.getValues()}
+          getPage={getPage}
+        />
       </FormProvider>
     </div>
   );

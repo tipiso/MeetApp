@@ -1,7 +1,7 @@
 import { ReactElement } from 'react';
 
 import Layout from '@/components/Layouts/SearchLayout';
-import AdvancedSearchForm from '@/features/search/components/AdvancedSearchForm';
+import AdvancedSearchForm from '@/features/search/components/AdvancedSearch/AdvancedSearchForm';
 
 const AdvancedSearchPage = () => {
   return (
