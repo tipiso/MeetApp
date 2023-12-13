@@ -21,6 +21,7 @@ const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className
           className="relative w-full rounded-lg pb-12"
           src={photoUrl}
           alt={`main img of user ${username}`}
+          loading="lazy"
         />
         <div className="absolute top-0 h-full w-full rounded-lg bg-gradient-to-t from-black"></div>
 

@@ -86,7 +86,7 @@ export default function SuggestionsList({ data, isLoading }: Props) {
         carouselData={filteredUsers}
       >
         {filteredUsers.map((u) => (
-          <SuggestionCard key={u.id} className="max-w-[400px] px-4" imgWidth={250} imgHeight={230} user={u} />
+          <SuggestionCard key={u.id} className="max-w-[400px] px-4" imgWidth={250} imgHeight={250} user={u} />
         ))}
       </Carousel>
     </>
