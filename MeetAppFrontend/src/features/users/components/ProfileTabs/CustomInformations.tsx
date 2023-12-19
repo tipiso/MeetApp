@@ -38,16 +38,18 @@ export default function CustomInformations({ hobbies, introduction }: Props) {
             <p className="max-w-sm text-center">You don't actually have any added friends</p>
           </div>
         ) : (
-          <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 xl:grid-cols-6">
-            {data.map((u) => (
-              <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
-            ))}
-            <div>
+          <>
+            <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 xl:grid-cols-6">
+              {data.map((u) => (
+                <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
+              ))}
+            </div>
+            <div className="text-right pt-6">
               <Button outline type="button" btnType={ColorTypeEnum.PRIMARY}>
                 Check more
               </Button>
             </div>
-          </div>
+          </>
         )}
       </section>
     </>
