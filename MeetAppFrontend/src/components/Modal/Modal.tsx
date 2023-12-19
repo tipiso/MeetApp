@@ -1,27 +1,29 @@
 import { ReactNode } from 'react';
 import Button from '../Button';
 import { ColorTypeEnum } from '@/utils/constants';
+import classNames from 'classnames';
 
 type Props = {
   id: string;
   open: boolean;
   title: string;
   children: ReactNode;
+  className?: string;
   toggle: () => void;
   onClosed?: () => void;
 };
 
-const Modal = ({ id, open, title, children, toggle, onClosed }: Props) => {
+const Modal = ({ id, open, title, children, toggle, className, onClosed }: Props) => {
   const handleClose = () => {
     toggle();
     onClosed && onClosed();
   };
-  console.log(open);
+
   if (!open) return null;
   return (
     open && (
       <dialog id={id} className="modal" open={open}>
-        <div className="modal-box">
+        <div className={classNames('modal-box', className)}>
           <h3 className="text-lg font-bold">{title}</h3>
           <div className="py-4">{children}</div>
           <footer className="modal-action">
