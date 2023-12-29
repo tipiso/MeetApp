@@ -1,4 +1,4 @@
-import { ReactElement, useMemo } from 'react';
+import { ReactElement, useEffect, useMemo } from 'react';
 import Layout from '@/components/Layouts/CleanLayout';
 import Breadcrumbs from '@/components/BreadCrumbs';
 import { routes } from '@/utils/routes';
@@ -15,21 +15,32 @@ import TabAction from '@/features/users/components/ProfileTabs/TabAction';
 const ProfilePage = () => {
   const router = useRouter();
   const user = useGetUser(router.query.username as string);
+  const query = router.query;
 
   const isCurrentUserProfile = getUsernameFromSession() === router.query.username;
-  const preparedTabs = useMemo(() => isCurrentUserProfile ? profileTabs.filter(t => t.key !== ProfilePageTabsKeys.CHAT) : profileTabs, [isCurrentUserProfile]);
+  const preparedTabs = useMemo(
+    () => (isCurrentUserProfile ? profileTabs.filter((t) => t.key !== ProfilePageTabsKeys.CHAT) : profileTabs),
+    [isCurrentUserProfile],
+  );
   const tabsOpts = useTabs({ tabs: preparedTabs });
+
+  const breadcrumbs = [
+    { text: 'Home', link: routes.home },
+    { text: 'Search', link: routes.search },
+    { active: true, text: user.data?.knownAs ?? '', link: `${routes.userProfile}/${user.data?.knownAs ?? ''}` },
+  ];
+
+  useEffect(() => {
+    if (!!query.openTab) {
+      const tabToActivate = preparedTabs.find((t) => t.key === query.openTab);
+      tabToActivate && tabsOpts.updateActiveTab(tabToActivate);
+    } else tabsOpts.updateActiveTab(preparedTabs[0]);
+  }, [preparedTabs]);
 
   return (
     <div className="grid w-full grid-cols-10 px-16">
       <div className="col-span-3 bg-gray-100 px-4 pt-16">
-        <Breadcrumbs
-          breadcrumbs={[
-            { text: 'Home', link: routes.home },
-            { text: 'Search', link: routes.search },
-            { active: true, text: user.data?.knownAs ?? '', link: `${routes.userProfile}/${user.data?.knownAs ?? ''}` },
-          ]}
-        />
+        <Breadcrumbs breadcrumbs={breadcrumbs} />
         <h1 className="pt-6 pb-3 text-2xl font-bold">{user.data?.knownAs} Profile</h1>
         <Image
           className="rounded-lg pb-4"

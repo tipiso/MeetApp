@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { routes, routes as appRoutes } from '@/utils/routes';
+import { routes } from '@/utils/routes';
 import { signOut } from 'next-auth/react';
 import LogoLight from '@/assets/images/LogoLight.svg';
 import MessagesIcon from '@/assets/images/MessagesIcon.svg';
@@ -20,7 +20,7 @@ export default function Navbar({ hideRoutes }: Props) {
   return (
     <header className="navbar z-10 bg-neutral px-12 text-neutral-content">
       <div className="flex-1">
-        <Link className="relative h-6 w-32 text-xl normal-case disabled:hover" href={appRoutes.home}>
+        <Link className="relative h-6 w-32 text-xl normal-case disabled:hover" href={routes.home}>
           <Image fill src={LogoLight} alt="meetApp logo" />
         </Link>
       </div>
@@ -43,18 +43,18 @@ export default function Navbar({ hideRoutes }: Props) {
                   className="w-50 dropdown-content menu rounded-box z-[1] mt-4 -translate-x-10 bg-base-100 p-2 shadow"
                 >
                   <li className="text-black">
-                    <Link href={appRoutes.userProfile.replace(':username', username)} className="text-sm font-bold">
+                    <Link href={routes.userProfile.replace(':username', username)} className="text-sm font-bold">
                       My Profile
                     </Link>
                   </li>
-                  <li className="text-black" onClick={() => signOut({ callbackUrl: appRoutes.home })}>
+                  <li className="text-black" onClick={() => signOut({ callbackUrl: routes.home })}>
                     <a>Log out</a>
                   </li>
                 </ul>
               </li>
             </ul>
           ) : (
-            <Link href={appRoutes.signin} className="text-sm font-bold">
+            <Link href={routes.signin} className="text-sm font-bold">
               Log In
             </Link>
           )}

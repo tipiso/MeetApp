@@ -2,7 +2,7 @@ import { useLikedUsers } from '@/features/search/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import Pagination from '@/components/Pagination/Pagination';
 import { useEffect } from 'react';
-import FriendCard from '@/features/search/components/FriendCard';
+import FriendCard from './FriendCard';
 
 const FriendsList = () => {
   const { data, isMutating, pagination, getPage } = useLikedUsers();

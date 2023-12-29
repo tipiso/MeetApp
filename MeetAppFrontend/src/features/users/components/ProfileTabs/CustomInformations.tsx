@@ -44,7 +44,7 @@ export default function CustomInformations({ hobbies, introduction }: Props) {
                 <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
               ))}
             </div>
-            <div className="text-right pt-6">
+            <div className="pt-6 text-right">
               <Button outline type="button" btnType={ColorTypeEnum.PRIMARY}>
                 Check more
               </Button>

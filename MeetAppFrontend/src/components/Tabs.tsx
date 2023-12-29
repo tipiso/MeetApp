@@ -29,6 +29,7 @@ export default function Tabs({ tabs, active, setActive }: Props) {
     <div role="tablist" className="tabs tabs-boxed p-0">
       {tabs.map((t) => (
         <a
+          key={t.key}
           onClick={() => setActive(t)}
           role="tab"
           className={`tab h-12 ${active.key === t.key ? 'tab-active' : ''}`}
