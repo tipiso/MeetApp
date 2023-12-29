@@ -3,6 +3,7 @@ import { Hobby, Photo } from '../../types';
 import CustomInformations from './CustomInformations';
 import Photos from './Photos';
 import { ProfilePageTabsKeys } from '@/utils/constants';
+import Chat from './Chat';
 
 type Props = {
   active: Tab;
@@ -16,10 +17,10 @@ export default function ProfileTabs({ active, hobbies, introduction, photos }: P
     case ProfilePageTabsKeys.CUSTOMER_INFO:
       return <CustomInformations hobbies={hobbies} introduction={introduction} />;
     case ProfilePageTabsKeys.CHAT:
-      return <div>Chat</div>;
+      return <Chat />;
     case ProfilePageTabsKeys.PHOTOS:
       return <Photos photos={photos} />;
     default:
-      return <div>No Tab Found</div>;
+      return 'Default';
   }
 }
