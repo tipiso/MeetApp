@@ -21,6 +21,6 @@ export default function ProfileTabs({ active, hobbies, introduction, photos }: P
     case ProfilePageTabsKeys.PHOTOS:
       return <Photos photos={photos} />;
     default:
-      return 'Default';
+      return <>Default</>;
   }
 }

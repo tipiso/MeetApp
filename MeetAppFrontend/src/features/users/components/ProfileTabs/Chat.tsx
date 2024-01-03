@@ -1,7 +1,18 @@
+import { useSignalRChatRoom } from '@/services/SignalR/useSignalRChatRoom';
 import classNames from 'classnames';
-import React from 'react';
+import { FormProvider, useForm } from 'react-hook-form';
+import { Form } from '@radix-ui/react-form';
+import { Input } from '@/components/Forms/Input';
+import Button from '@/components/Button';
+import { ColorTypeEnum } from '@/utils/constants';
+import { useRouter } from 'next/router';
 
-function ChatMessage() {
+type MsgProps = {
+  sender: string;
+  recipient: string;
+};
+
+function ChatMessage(props: MsgProps) {
   const alignSelf = 'self-end';
   return (
     <div className={classNames(alignSelf)}>
@@ -12,9 +23,37 @@ function ChatMessage() {
 }
 
 export default function Chat() {
+  const methods = useForm({ defaultValues: { newMessage: '' } });
+  const query = useRouter().query;
+
+  const chat = useSignalRChatRoom();
+
+  const handleSubmit = async ({ newMessage }: { newMessage: string }) => {
+    try {
+      if (query.username && typeof query.username === 'string' ) {
+        await chat.sendMessage(query.username, newMessage);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  console.log(chat);
   return (
     <div className="flex w-full flex-col pt-4">
-      <ChatMessage />
+      {/* <ChatMessage /> */}
+      <FormProvider {...methods}>
+        <Form onSubmit={methods.handleSubmit(handleSubmit)} className="w-full pb-8">
+          <div className="relative w-full">
+            <Input
+              required
+              placeholder="Type here"
+              name="newMessage"
+              type="text"
+              submitBtn={<Button btnType={ColorTypeEnum.PRIMARY}>Send</Button>}
+            />
+          </div>
+        </Form>
+      </FormProvider>
     </div>
   );
 }

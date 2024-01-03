@@ -8,13 +8,13 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
-	public class MessagesController : BaseApiController
-	{
+    public class MessagesController : BaseApiController
+    {
         private readonly IUnitOfWork _uow;
         private readonly IMapper _mapper;
 
         public MessagesController(IUnitOfWork uow, IMapper mapper)
-		{
+        {
             _uow = uow;
             _mapper = mapper;
         }
@@ -61,6 +61,14 @@ namespace API.Controllers
             return Ok(messages);
         }
 
+        [HttpGet("thread/{username}")]
+        public async Task<ActionResult<IEnumerable<MessageDto>>> GetMessageThread(string username)
+        {
+            var currentUsername = User.GetUsername();
+
+            return Ok(await _uow.MessageRepository.GetMessageThread(currentUsername, username));
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMessage(int id)
@@ -69,7 +77,7 @@ namespace API.Controllers
 
             var message = await _uow.MessageRepository.GetMessage(id);
 
-            if (message.RecipientUsername != username && message.RecipientUsername != username )
+            if (message.RecipientUsername != username && message.RecipientUsername != username)
             {
                 return Unauthorized();
             }
@@ -83,6 +91,6 @@ namespace API.Controllers
 
             return BadRequest("Failed to delete message");
         }
-	}
+    }
 }
 

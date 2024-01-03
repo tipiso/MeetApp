@@ -31,6 +31,12 @@ export const getUsernameFromSession = () => {
   return '';
 };
 
+export const getTokenFromSession = () => {
+  const session = useSession();
+  if (session && session.data) return session.data.accessToken;
+  return '';
+};
+
 export const getDataFromSWRCache = (cache: Cache, queryKey: string) => {
   const cacheRecord = cache.get(queryKey);
   if (!!cacheRecord && !cacheRecord.isLoading && cacheRecord.data) return cacheRecord.data.data;
