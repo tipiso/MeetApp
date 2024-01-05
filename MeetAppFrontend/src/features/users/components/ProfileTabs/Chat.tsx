@@ -9,15 +9,19 @@ import { useRouter } from 'next/router';
 import useMessageThread from '@/features/messages/useMessageThread';
 import { Message } from '@/features/messages/types';
 import { getUsernameFromSession } from '@/utils/helpers';
+import { getDateAndTimeFromDate } from '@/utils/parsers';
 
 type MsgProps = Message & { recipientName: string };
 
 function ChatMessage(props: MsgProps) {
   const isSender = getUsernameFromSession() === props.senderUsername;
+  const { dateString, timeString } = getDateAndTimeFromDate(props.messageSent);
 
   return (
-    <div className={classNames(isSender ? 'self-end' : 'self-start')}>
-      <span className="text-sm">{new Date(props.messageSent).toUTCString()}</span>
+    <div className={classNames(isSender ? 'self-end' : 'self-start', 'max-w-[50%] pt-3')}>
+      <span className="text-sm">
+        {dateString} {timeString} {!props.dateRead && <span className="text-xs italic text-base-300">(unread)</span>}
+      </span>
       <p
         className={classNames(
           isSender ? 'border-secondary bg-secondary text-white' : 'border-gray-200 bg-base-200',
@@ -42,6 +46,7 @@ export default function Chat() {
     try {
       if (recipientName) {
         await chat.sendMessage(recipientName, newMessage);
+        methods.reset();
         mt.mutate();
       }
     } catch (e) {
@@ -50,9 +55,9 @@ export default function Chat() {
   };
   console.log(chat, mt);
   return (
-    <div className="flex w-full flex-col pt-4">
+    <div className="flex w-full flex-col pt-10">
       {mt.data?.map((m) => (
-        <ChatMessage {...m} recipientName={recipientName} />
+        <ChatMessage key={m.id} {...m} recipientName={recipientName} />
       ))}
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(handleSubmit)} className="w-full pt-8">
