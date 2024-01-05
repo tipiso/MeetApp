@@ -1,4 +1,4 @@
-import { useLikedUsers } from '@/features/search/hooks';
+import { useLikedUsers } from '@/features/users/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import Pagination from '@/components/Pagination/Pagination';
 import { useEffect } from 'react';

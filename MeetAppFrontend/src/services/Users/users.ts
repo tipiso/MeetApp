@@ -11,9 +11,9 @@ const usersQueryKeys = {
   usersList: () => usersQueryKeys.users + '/list',
   likedUsers: 'likedUsers',
 };
-const getUsersService = () => api.get<User[]>(usersUrl);
+const getUsers = () => api.get<User[]>(usersUrl);
 
-const getFilteredUsersService = (fetchDto: SearchFriendsDTO) => {
+const getFilteredUsers= (fetchDto: SearchFriendsDTO) => {
   const newParams = new URLSearchParams();
   Object.entries(fetchDto).forEach(([key, val]) => {
     if (Array.isArray(val)) {
@@ -27,25 +27,25 @@ const getFilteredUsersService = (fetchDto: SearchFriendsDTO) => {
   return api.get<User[]>(`${usersUrl}?${newParams.toString()}`);
 };
 
-const getUserService = (username: string) => api.get<User>(`users/${username}`);
+const getUser = (username: string) => api.get<User>(`users/${username}`);
 
-const getLikedUsersService = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
+const getLikedUsers = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
   api.get<User[]>(`${likesUrl}?predicate=liked&pageNumber=${pageNumber}&pageSize=${pageSize}`);
 
-const updateUserService = (user: UpdateUserDTO) => api.put(`${usersUrl}`, user);
+const updateUser = (user: UpdateUserDTO) => api.put(`${usersUrl}`, user);
 
-const addPhotoService = (photo: File) => {
+const addPhoto = (photo: File) => {
   const formData = new FormData();
   formData.append('file', photo);
   return api.post(`${usersUrl}${addPhotoUrl}`, formData);
 };
 
 export {
-  getUsersService,
-  getUserService,
-  getFilteredUsersService,
-  getLikedUsersService,
-  addPhotoService,
-  updateUserService,
+  getUsers,
+  getUser,
+  getFilteredUsers,
+  getLikedUsers,
+  addPhoto,
+  updateUser,
   usersQueryKeys,
 };

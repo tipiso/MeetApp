@@ -1,5 +1,5 @@
 import Loader, { LoaderSizes } from '@/components/Loader';
-import { useLikedUsers } from '@/features/search/hooks';
+import { useLikedUsers } from '@/features/users/hooks';
 import { useEffect } from 'react';
 import { Hobby } from '../../types';
 import HobbiesList from '@/features/search/components/HobbiesList';
@@ -16,7 +16,7 @@ export default function CustomInformations({ hobbies, introduction }: Props) {
   const { data, isMutating, getPage } = useLikedUsers();
 
   useEffect(() => {
-    getPage(1);
+    if (!data) getPage(1);
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;

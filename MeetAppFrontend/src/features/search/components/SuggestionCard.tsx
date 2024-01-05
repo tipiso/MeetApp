@@ -1,7 +1,7 @@
 import { ReactNode, useState } from 'react';
 
 import { User } from '@/features/users/types';
-import { useLikeUser } from '@/features/search/hooks';
+import { useLikeUser } from '@/features/users/hooks';
 import { alert } from '@/components/Alert/Alert';
 import { ColorTypeEnum } from '@/utils/constants';
 import Button from '@/components/Button';
