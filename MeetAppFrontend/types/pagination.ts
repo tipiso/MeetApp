@@ -1,3 +1,5 @@
 type PaginationDTO = { pageNumber: number; pageSize: number };
 
-export type { PaginationDTO };
+type UserLikesFilterPredicate = 'liked' | 'likedBy';
+
+export type { PaginationDTO, UserLikesFilterPredicate };

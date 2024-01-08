@@ -10,13 +10,14 @@ import { ColorTypeEnum } from '@/utils/constants';
 type Props = {
   hobbies?: Hobby[];
   introduction?: string;
+  userId?: number;
 };
 
-export default function CustomInformations({ hobbies, introduction }: Props) {
+export default function CustomInformations({ hobbies, introduction, userId }: Props) {
   const { data, isMutating, getPage } = useLikedUsers();
 
   useEffect(() => {
-    if (!data) getPage(1);
+    if (!data) getPage(1, userId, 'likedBy');
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;

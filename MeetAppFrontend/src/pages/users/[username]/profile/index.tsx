@@ -60,6 +60,7 @@ const ProfilePage = () => {
           <TabAction active={tabsOpts.active} isCurrentUserProfile={isCurrentUserProfile} />
         </div>
         <ProfileTabs
+          userId={user.data?.id}
           hobbies={user.data?.hobbys}
           introduction={user.data?.introduction}
           active={tabsOpts.active}

@@ -10,12 +10,13 @@ type Props = {
   hobbies?: Hobby[];
   introduction?: string;
   photos?: Photo[];
+  userId?: number;
 };
 
-export default function ProfileTabs({ active, hobbies, introduction, photos }: Props) {
+export default function ProfileTabs({ active, hobbies, introduction, photos, userId }: Props) {
   switch (active.key) {
     case ProfilePageTabsKeys.CUSTOMER_INFO:
-      return <CustomInformations hobbies={hobbies} introduction={introduction} />;
+      return <CustomInformations userId={userId} hobbies={hobbies} introduction={introduction} />;
     case ProfilePageTabsKeys.CHAT:
       return <Chat />;
     case ProfilePageTabsKeys.PHOTOS:

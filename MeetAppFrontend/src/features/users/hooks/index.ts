@@ -2,9 +2,9 @@ import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
 import { getUsers, getUser, usersQueryKeys, updateUser, addPhoto, getLikedUsers } from '@/services/Users/users';
-import { UpdateUserDTO } from '@/services/Users/dtos';
+import { LikedUsersDTO, UpdateUserDTO } from '@/services/Users/dtos';
 import { initialPagination } from '@/utils/constants';
-import { PaginationDTO } from 'types/pagination';
+import { PaginationDTO, UserLikesFilterPredicate } from 'types/pagination';
 import { likeUser } from '@/services/likes';
 
 function useGetUsers() {
@@ -34,12 +34,12 @@ function useAddPhoto() {
 }
 
 function useLikedUsers() {
-  const fetcher = (url: string, { arg }: { arg: PaginationDTO }) => getLikedUsers(arg);
+  const fetcher = (url: string, { arg }: { arg: PaginationDTO & Partial<LikedUsersDTO> }) => getLikedUsers(arg);
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers, fetcher);
 
-  const getPage = async (pageNumber: number) => {
-    await rest.trigger({ pageNumber, pageSize: initialPagination.pageSize });
+  const getPage = async (pageNumber: number, userId?: number, predicate?: UserLikesFilterPredicate) => {
+    await rest.trigger({ pageNumber, pageSize: initialPagination.pageSize, userId, predicate });
   };
 
   return {

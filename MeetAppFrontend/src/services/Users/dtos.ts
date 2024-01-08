@@ -1,3 +1,5 @@
+import { UserLikesFilterPredicate } from 'types/pagination';
+
 type SearchFriendsDTO = {
   searchString: string;
   minAge: string;
@@ -13,4 +15,9 @@ type UpdateUserDTO = {
   hobbies: string[];
 };
 
-export type { SearchFriendsDTO, UpdateUserDTO };
+type LikedUsersDTO = {
+  userId: number;
+  predicate: UserLikesFilterPredicate;
+};
+
+export type { SearchFriendsDTO, UpdateUserDTO, LikedUsersDTO };

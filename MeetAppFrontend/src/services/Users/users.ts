@@ -2,7 +2,8 @@ import { api } from '@/utils/axios';
 import { addPhotoUrl, likesUrl, usersUrl } from '@/utils/url';
 import { User } from '@/features/users/types';
 import { PaginationParams } from '@/components/Pagination/types';
-import { SearchFriendsDTO, UpdateUserDTO } from './dtos';
+import { LikedUsersDTO, SearchFriendsDTO, UpdateUserDTO } from './dtos';
+import { mapDTOToURLEntry } from '@/utils/parsers';
 
 const usersQueryKeys = {
   users: 'users',
@@ -14,23 +15,16 @@ const usersQueryKeys = {
 const getUsers = () => api.get<User[]>(usersUrl);
 
 const getFilteredUsers= (fetchDto: SearchFriendsDTO) => {
-  const newParams = new URLSearchParams();
-  Object.entries(fetchDto).forEach(([key, val]) => {
-    if (Array.isArray(val)) {
-      if (val.length) {
-        val.forEach((ai) => newParams.append(key, ai));
-      }
-      return;
-    }
-    if (!!val) newParams.set(key, val);
-  });
+  const newParams = mapDTOToURLEntry(fetchDto);
   return api.get<User[]>(`${usersUrl}?${newParams.toString()}`);
 };
 
 const getUser = (username: string) => api.get<User>(`users/${username}`);
 
-const getLikedUsers = ({ pageNumber = 1, pageSize = 8 }: PaginationParams) =>
-  api.get<User[]>(`${likesUrl}?predicate=liked&pageNumber=${pageNumber}&pageSize=${pageSize}`);
+const getLikedUsers = ({ pageNumber = 1, pageSize = 8, userId, predicate = "liked" }: PaginationParams & Partial<LikedUsersDTO>) => {
+  const newParams = mapDTOToURLEntry({ pageNumber, pageSize, userId: userId ?? '', predicate });
+  return api.get<User[]>(`${likesUrl}?${newParams.toString()}`);
+}
 
 const updateUser = (user: UpdateUserDTO) => api.put(`${usersUrl}`, user);
 

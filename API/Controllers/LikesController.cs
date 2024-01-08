@@ -48,7 +48,7 @@ namespace API.Controllers
         [HttpGet]
         public async Task<ActionResult<PagedList<LikeDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
         {
-            likesParams.UserId = User.GetUserId();
+            likesParams.UserId = likesParams.UserId != null ? likesParams.UserId : User.GetUserId();
             var users = await _uow.LikesRepository.GetUserLikes(likesParams);
 
             Response.AddPaginationHeader(new PaginationHeader(users.CurrentPage,
