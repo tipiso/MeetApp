@@ -53,7 +53,7 @@ export default function Chat() {
       console.log(e);
     }
   };
-  console.log(chat, mt);
+
   return (
     <div className="flex w-full flex-col pt-10">
       {mt.data?.map((m) => (

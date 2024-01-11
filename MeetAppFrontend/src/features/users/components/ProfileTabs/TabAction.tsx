@@ -38,7 +38,6 @@ export default function TabAction({ active, isCurrentUserProfile }: Props) {
 
   /** Current user profile setup */
   if (active.key === ProfilePageTabsKeys.PHOTOS) {
-    console.log(methods.getValues('file'));
     return (
       <>
         <Button onClick={() => modal.toggle()} type="button" btnType={ColorTypeEnum.PRIMARY}>
