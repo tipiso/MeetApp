@@ -10,6 +10,7 @@ import useMessageThread from '@/features/messages/useMessageThread';
 import { Message } from '@/features/messages/types';
 import { getUsernameFromSession } from '@/utils/helpers';
 import { getDateAndTimeFromDate } from '@/utils/parsers';
+import Loader, { LoaderSizes } from '@/components/Loader';
 
 type MsgProps = Message & { recipientName: string };
 
@@ -56,9 +57,11 @@ export default function Chat() {
 
   return (
     <div className="flex w-full flex-col pt-10">
-      {mt.data?.map((m) => (
-        <ChatMessage key={m.id} {...m} recipientName={recipientName} />
-      ))}
+      {mt.isLoading ? (
+        <Loader size={LoaderSizes.lg} />
+      ) : (
+        mt.data?.map((m) => <ChatMessage key={m.id} {...m} recipientName={recipientName} />)
+      )}
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(handleSubmit)} className="w-full pt-8">
           <div className="relative w-full">
@@ -67,7 +70,11 @@ export default function Chat() {
               placeholder="Type here"
               name="newMessage"
               type="text"
-              submitBtn={<Button btnType={ColorTypeEnum.PRIMARY}>Send</Button>}
+              submitBtn={
+                <Button isLoading={mt.isLoading} disabled={mt.isLoading} btnType={ColorTypeEnum.PRIMARY}>
+                  Send
+                </Button>
+              }
             />
           </div>
         </Form>

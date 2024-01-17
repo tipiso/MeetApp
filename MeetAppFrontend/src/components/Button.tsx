@@ -22,10 +22,10 @@ type ButtonProps =
 
 export default function Button(props: ButtonProps) {
   const isAnchor = 'href' in props;
-  const classes = cx('btn font-normal normal-case', props.className, {
+  const classes = cx('btn font-normal flex flex-nowrap normal-case', props.className, {
     'btn-primary': props.btnType === ColorTypeEnum.PRIMARY,
     'btn-secondary': props.btnType === ColorTypeEnum.SECONDARY,
-    'btn-outline': !!props.outline
+    'btn-outline': !!props.outline,
   });
 
   if (isAnchor) {
