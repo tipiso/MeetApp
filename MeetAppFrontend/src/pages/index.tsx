@@ -7,10 +7,10 @@ import { routes } from '@/utils/routes';
 export default function HomePage() {
   return (
     <div className="relative flex w-full pl-12">
-      <section className="flex w-full pt-28">
+      <section className="flex w-full pt-20">
         <div className="flex w-1/2 flex-col pt-20">
           <h1 className="text-4xl font-bold">Meet people in your area</h1>
-          <p className="pt-[60px] text-2xl leading-snug">
+          <p className="pt-[40px] text-2xl leading-snug">
             Meet people who share the same passions as you. Who knows? Maybe you'll create amazing insights together.
           </p>
 

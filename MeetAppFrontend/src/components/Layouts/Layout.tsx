@@ -19,7 +19,7 @@ export default function Layout({ children }: LayoutProps) {
 
       <main className="relative flex min-h-screen w-full flex-col xl:container">
         <Navbar />
-        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
+        <div className="h-[min(782px, 100vh)] absolute left-0 top-[4rem] z-0 w-full w-full max-w-[1440px] bg-grayBg bg-cover bg-no-repeat" />
         <div className="mt-5 flex flex-auto">{children}</div>
 
         <Footer />
