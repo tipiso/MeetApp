@@ -1,4 +1,3 @@
-
 using API.DTOs;
 using API.Entities;
 using API.Extensions;
@@ -46,7 +45,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<PagedList<LikeDto>>> GetUserLikes([FromQuery]LikesParams likesParams)
+        public async Task<ActionResult<PagedList<LikeDto>>> GetUserLikes([FromQuery] LikesParams likesParams)
         {
             likesParams.UserId = likesParams.UserId != null ? likesParams.UserId : User.GetUserId();
             var users = await _uow.LikesRepository.GetUserLikes(likesParams);

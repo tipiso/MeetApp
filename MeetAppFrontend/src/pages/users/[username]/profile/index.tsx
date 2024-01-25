@@ -24,11 +24,14 @@ const ProfilePage = () => {
   );
   const tabsOpts = useTabs({ tabs: preparedTabs });
 
-  const breadcrumbs = useMemo(() => [
-    { text: 'Home', link: routes.home },
-    { text: 'Search', link: routes.search },
-    { active: true, text: user.data?.knownAs ?? '', link: `${routes.userProfile}/${user.data?.knownAs ?? ''}` },
-  ], [user]);
+  const breadcrumbs = useMemo(
+    () => [
+      { text: 'Home', link: routes.home },
+      { text: 'Search', link: routes.search },
+      { active: true, text: user.data?.knownAs ?? '', link: `${routes.userProfile}/${user.data?.knownAs ?? ''}` },
+    ],
+    [user],
+  );
 
   useEffect(() => {
     if (!!query.openTab) {

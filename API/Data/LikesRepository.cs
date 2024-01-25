@@ -27,6 +27,16 @@ namespace API.Data
             var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = _context.Likes.AsQueryable();
 
+            // Additional pair check, to see wether users should chat with each other
+            if (likesParams.Predicate == "friends")
+            {
+                likes = likes
+                    .Where(x => likes
+                    .Any(y => y.TargetUserId == x.SourceUserId && y.SourceUserId == x.TargetUserId))
+                    .Where(l => l.SourceUserId != likesParams.UserId);
+                users = likes.Select(like => like.TargetUser);
+            }
+
             if (likesParams.Predicate == "liked")
             {
                 likes = likes.Where(like => like.SourceUserId == likesParams.UserId);

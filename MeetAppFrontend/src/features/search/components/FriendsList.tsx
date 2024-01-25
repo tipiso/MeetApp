@@ -8,7 +8,7 @@ const FriendsList = () => {
   const { data, isMutating, pagination, getPage } = useLikedUsers();
 
   useEffect(() => {
-    getPage(1);
+    getPage(1, undefined, "friends");
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;

@@ -28,7 +28,17 @@ namespace API.Data
 
             if (isCurrentUser) query = query.IgnoreQueryFilters();
 
-            return await query.SingleOrDefaultAsync();
+            var member = await query.SingleOrDefaultAsync();
+
+            if (!isCurrentUser)
+            {
+                var isLikedByCurrentUser = _context.Users
+                .Where(u => u.LikedByUsers.Any(lu => lu.SourceUserId == member.Id));
+
+                member.IsLikedByCurrentUser = isLikedByCurrentUser != null;
+            }
+
+            return member;
         }
 
         public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -46,7 +56,7 @@ namespace API.Data
                 .Where(u => u.UserHobbies
                 .Any(uh => userParams.Hobbies.Contains(uh.HobbyId)));
             }
-        
+
             if (!String.IsNullOrEmpty(userParams.SearchString))
             {
                 query = query.Where(u => u.UserName.Contains(userParams.SearchString) || u.KnownAs.Contains(userParams.SearchString));

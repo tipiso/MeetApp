@@ -15,5 +15,6 @@ export default function TabAction({ active, isCurrentUserProfile }: Props) {
   if (active.key === ProfilePageTabsKeys.PHOTOS) {
     return <PhotoForm />;
   }
+
   return null;
 }

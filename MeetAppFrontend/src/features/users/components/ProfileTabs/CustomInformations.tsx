@@ -17,7 +17,7 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
   const { data, isMutating, getPage } = useLikedUsers();
 
   useEffect(() => {
-    if (!data) getPage(1, userId, 'likedBy');
+    if (!data) getPage(1, userId, 'friends');
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
