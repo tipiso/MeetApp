@@ -38,7 +38,12 @@ export default function Button(props: ButtonProps) {
   } else {
     const { btnType, isLoading, disabled, children, ...rest } = props;
     return (
-      <button {...rest} className={cx(classes, disabled && 'btn-disabled text-neutral')}>
+      <button
+        {...rest}
+        tabIndex={-1}
+        aria-disabled="true"
+        className={cx(classes, disabled && 'btn-disabled')}
+      >
         {isLoading && <Loader fitToContainer size={LoaderSizes.sm} />} {children}
       </button>
     );

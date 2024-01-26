@@ -7,10 +7,10 @@ import { getUsernameFromSession } from '@/utils/helpers';
 import Image from 'next/image';
 import Tabs, { useTabs } from '@/components/Tabs';
 import { ProfilePageTabsKeys, profileTabs } from '@/utils/constants';
-import ProfileTabs from '@/features/users/components/ProfileTabs/ProfileTabs';
+import ProfileTabs from '@/features/users/components/profile/ProfileTabs';
 import UserInfoBlock from '@/features/users/components/UserInfoBlock';
 import { useRouter } from 'next/router';
-import TabAction from '@/features/users/components/ProfileTabs/TabAction';
+import TabAction from '@/features/users/components/profile/TabAction';
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -18,10 +18,13 @@ const ProfilePage = () => {
   const query = router.query;
 
   const isCurrentUserProfile = getUsernameFromSession() === router.query.username;
+  const displayInviteBtn = !isCurrentUserProfile && !user.data?.isLikedByCurrentUser;
+
   const preparedTabs = useMemo(
     () => (isCurrentUserProfile ? profileTabs.filter((t) => t.key !== ProfilePageTabsKeys.CHAT) : profileTabs),
     [isCurrentUserProfile],
   );
+
   const tabsOpts = useTabs({ tabs: preparedTabs });
 
   const breadcrumbs = useMemo(
@@ -60,7 +63,7 @@ const ProfilePage = () => {
       <div className="col-span-7 pl-12 pt-16">
         <div className="flex items-center justify-between">
           <Tabs active={tabsOpts.active} setActive={tabsOpts.updateActiveTab} tabs={preparedTabs} />
-          <TabAction active={tabsOpts.active} isCurrentUserProfile={isCurrentUserProfile} />
+          <TabAction active={tabsOpts.active} displayInviteBtn={displayInviteBtn} />
         </div>
         <ProfileTabs
           userId={user.data?.id}

@@ -9,6 +9,7 @@ export type User = {
   lastActive: Date;
   gender: Gender;
   introduction: string;
+  isLikedByCurrentUser: boolean;
   lookingFor: string;
   interests: string;
   city: string;

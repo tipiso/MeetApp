@@ -5,11 +5,11 @@ import PhotoForm from './PhotoForm';
 
 type Props = {
   active: Tab;
-  isCurrentUserProfile: boolean;
+  displayInviteBtn: boolean;
 };
 
-export default function TabAction({ active, isCurrentUserProfile }: Props) {
-  if (!isCurrentUserProfile) return <Button btnType={ColorTypeEnum.PRIMARY}>Invite to friends</Button>;
+export default function TabAction({ active, displayInviteBtn }: Props) {
+  if (displayInviteBtn) return <Button btnType={ColorTypeEnum.PRIMARY}>Invite to friends</Button>;
 
   /** Current user profile setup */
   if (active.key === ProfilePageTabsKeys.PHOTOS) {

@@ -7,6 +7,7 @@ import UserCard from '@/components/UserCard';
 import UserNameText from '@/features/users/components/UserNameText';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
+import { getUsernameFromSession } from '@/utils/helpers';
 
 type Props = {
   user: User;
@@ -19,9 +20,11 @@ type Props = {
 
 const FriendCard = ({ user, className }: Props) => {
   const router = useRouter();
+  const currentUsername = getUsernameFromSession();
+  const isCurrentUser = user.userName === currentUsername;
 
   const moveToChat = () => {
-    router.push(routes.userProfile.replace(':username', user.userName ) + `?openTab=${ProfilePageTabsKeys.CHAT}`);
+    router.push(routes.userProfile.replace(':username', user.userName) + `?openTab=${ProfilePageTabsKeys.CHAT}`);
   };
 
   return (
@@ -33,6 +36,7 @@ const FriendCard = ({ user, className }: Props) => {
       <div className="absolute bottom-0 left-0 right-0">
         <Button
           type="button"
+          disabled={isCurrentUser}
           onClick={moveToChat}
           btnType={ColorTypeEnum.PRIMARY}
           className="mt-auto w-full rounded-t-none"
