@@ -30,11 +30,9 @@ namespace API.Data
             // Additional pair check, to see wether users should chat with each other
             if (likesParams.Predicate == "friends")
             {
-                likes = likes
-                    .Where(x => likes
-                    .Any(y => y.TargetUserId == x.SourceUserId && y.SourceUserId == x.TargetUserId))
-                    .Where(l => l.SourceUserId != likesParams.UserId);
-                users = likes.Select(like => like.TargetUser);
+                likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
+                users = likes.Select(like => like.TargetUser)
+                    .Where(u => u.LikedUsers.Any(lu => lu.TargetUserId == likesParams.UserId));
             }
 
             if (likesParams.Predicate == "liked")
