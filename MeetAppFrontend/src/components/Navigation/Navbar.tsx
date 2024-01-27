@@ -8,6 +8,8 @@ import Image from 'next/image';
 import { NavIcon } from '@/components/Navigation/NavIcon';
 import { getUsernameFromSession } from '@/utils/helpers';
 import { useGetUser } from '@/features/users/hooks';
+import { Popover } from '../Popover';
+import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
 
 type Props = {
   hideRoutes?: boolean;
@@ -29,7 +31,12 @@ export default function Navbar({ hideRoutes }: Props) {
           {user && user ? (
             <ul className="menu menu-horizontal flex items-center px-1">
               <NavIcon route={routes.matches} img={FriendsIcon} imgAlt="Friends icon" />
-              <NavIcon route={routes.messages} img={MessagesIcon} imgAlt="Messages icon" />
+              <Popover>
+                <PopoverTrigger>
+                  <NavIcon img={MessagesIcon} imgAlt="Messages icon" />
+                </PopoverTrigger>
+                <PopoverContent>Test Karonta</PopoverContent>
+              </Popover>
               <li className="dropdown" tabIndex={0}>
                 <div className="avatar p-0" tabIndex={0}>
                   <div className="w-12 rounded-full">
