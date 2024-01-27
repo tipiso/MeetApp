@@ -25,7 +25,10 @@ const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className
             loading="lazy"
           />
         )}
-        <div className="absolute top-0 h-full w-full rounded-lg bg-gradient-to-t from-black"></div>
+        <div
+          style={{ backgroundPositionY: '-3rem', backgroundImage: 'linear-gradient(to bottom, transparent 60%, black)' }}
+          className="bg-bottom-12 absolute top-0 h-full w-full rounded-lg bg-gradient-to-t from-black"
+        ></div>
 
         {children}
       </div>
