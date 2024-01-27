@@ -10,6 +10,8 @@ import { getUsernameFromSession } from '@/utils/helpers';
 import { useGetUser } from '@/features/users/hooks';
 import { Popover } from '../Popover';
 import { PopoverContent, PopoverTrigger } from '@radix-ui/react-popover';
+import NavbarMessagesBox from '@/features/messages/components/NavbarMessagesBox';
+import Avatar from '@/features/users/components/Avatar';
 
 type Props = {
   hideRoutes?: boolean;
@@ -35,30 +37,30 @@ export default function Navbar({ hideRoutes }: Props) {
                 <PopoverTrigger>
                   <NavIcon img={MessagesIcon} imgAlt="Messages icon" />
                 </PopoverTrigger>
-                <PopoverContent>Test Karonta</PopoverContent>
+                <PopoverContent>
+                  <NavbarMessagesBox />
+                </PopoverContent>
               </Popover>
-              <li className="dropdown" tabIndex={0}>
-                <div className="avatar p-0" tabIndex={0}>
-                  <div className="w-12 rounded-full">
-                    {user?.photoUrl && (
-                      <Image src={user.photoUrl} width={50} height={50} alt="User main photo minature" />
-                    )}
+
+              <Popover>
+                <PopoverTrigger className=" h-12 ">
+                  <div className="avatar p-0" tabIndex={0}>
+                    {user?.photoUrl && <Avatar imgUrl={user.photoUrl} name={user.knownAs} width={50} height={50} />}
                   </div>
-                </div>
-                <ul
-                  tabIndex={0}
-                  className="w-50 dropdown-content menu rounded-box z-[1] mt-4 -translate-x-10 bg-base-100 p-2 shadow"
-                >
-                  <li className="text-black">
-                    <Link href={routes.userProfile.replace(':username', username)} className="text-sm font-bold">
-                      My Profile
-                    </Link>
-                  </li>
-                  <li className="text-black" onClick={() => signOut({ callbackUrl: routes.home })}>
-                    <a>Log out</a>
-                  </li>
-                </ul>
-              </li>
+                </PopoverTrigger>
+                <PopoverContent>
+                  <ul tabIndex={0} className="w-50 dropdown-content menu rounded-box z-[1] mt-4 bg-base-100 p-2 shadow">
+                    <li className="text-black">
+                      <Link href={routes.userProfile.replace(':username', username)} className="text-sm font-bold">
+                        My Profile
+                      </Link>
+                    </li>
+                    <li className="text-black" onClick={() => signOut({ callbackUrl: routes.home })}>
+                      <a>Log out</a>
+                    </li>
+                  </ul>
+                </PopoverContent>
+              </Popover>
             </ul>
           ) : (
             <Link href={routes.signin} className="text-sm font-bold">
