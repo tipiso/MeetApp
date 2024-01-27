@@ -11,12 +11,9 @@ type Props = {
   label?: string;
 };
 
-/** Probably should have went with Shadcn in retrospect, styling headless UI is much easier with tailwind. Also, radix is missing
- * multiselect and datepicker, so it already cost more time than it should have.
- */
 export default function DatePickerInput(props: Props) {
-  const { control, getValues, register } = useFormContext();
-  console.log(getValues());
+  const { control } = useFormContext();
+
   return (
     <Controller
       control={control}
