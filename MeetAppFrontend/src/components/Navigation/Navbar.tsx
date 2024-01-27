@@ -32,7 +32,15 @@ export default function Navbar({ hideRoutes }: Props) {
         <nav className="flex-none">
           {user && user ? (
             <ul className="menu menu-horizontal flex items-center px-1">
-              <NavIcon route={routes.matches} img={FriendsIcon} imgAlt="Friends icon" />
+              <Popover>
+                <PopoverTrigger>
+                  <NavIcon img={FriendsIcon} imgAlt="Friends icon" />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div>List of invites</div>
+                </PopoverContent>
+              </Popover>
+
               <Popover>
                 <PopoverTrigger>
                   <NavIcon img={MessagesIcon} imgAlt="Messages icon" />
