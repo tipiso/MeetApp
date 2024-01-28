@@ -8,7 +8,8 @@ import NavbarMessagesBox from '@/features/messages/components/NavbarMessagesBox'
 import Avatar from '@/features/users/components/Avatar';
 import { routes } from '@/utils/routes';
 import Link from 'next/link';
-import { signOut } from 'next-auth/react';
+import logOut from '@/services/Auth/logout';
+import { isAuthenticated } from '@/utils/helpers';
 
 type Props = {
   user?: User;
@@ -17,7 +18,7 @@ type Props = {
 export default function NavMenu({ user }: Props) {
   return (
     <nav className="flex-none">
-      {user && user ? (
+      {user && isAuthenticated() ? (
         <ul className="menu menu-horizontal flex items-center px-1">
           <Popover>
             <PopoverTrigger>
@@ -50,7 +51,7 @@ export default function NavMenu({ user }: Props) {
                     My Profile
                   </Link>
                 </li>
-                <li className="text-black" onClick={() => signOut({ callbackUrl: routes.home })}>
+                <li className="text-black" onClick={() => logOut({ callbackUrl: routes.home })}>
                   <a>Log out</a>
                 </li>
               </ul>

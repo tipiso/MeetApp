@@ -25,6 +25,11 @@ export const createUrlFromImg = (file?: string | File) => {
 
 export const getValuesFromSelectOptions = (options?: Option[]) => (options ? options.map((h) => h.value) : []);
 
+export const isAuthenticated = () => {
+  const session = useSession();
+  return session.status === 'authenticated';
+};
+
 export const getUsernameFromSession = () => {
   const session = useSession();
   if (session && session.data) return session.data.user.name;
@@ -35,12 +40,6 @@ export const getTokenFromSession = () => {
   const session = useSession();
   if (session && session.data) return session.data.accessToken;
   return '';
-};
-
-export const getDataFromSWRCache = (cache: Cache, queryKey: string) => {
-  const cacheRecord = cache.get(queryKey);
-  if (!!cacheRecord && !cacheRecord.isLoading && cacheRecord.data) return cacheRecord.data.data;
-  return undefined;
 };
 
 export const getArrMiddleItem = (arr?: unknown[]) => {

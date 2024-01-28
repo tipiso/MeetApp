@@ -1,9 +1,9 @@
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
-import { signOut } from 'next-auth/react';
 import { routes } from '@/utils/routes';
 import { useGetUser } from '@/features/users/hooks';
 import useStore from '@/store/store';
+import logOut from './logout';
 
 export default function AuthWrap({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -19,7 +19,7 @@ export default function AuthWrap({ children }: { children: JSX.Element }) {
   const userQuery = useGetUser(data?.user.name);
   const setUser = useStore((state) => state.setUser);
 
-  if (userQuery.error) signOut({ callbackUrl: routes.signin });
+  if (userQuery.error) logOut({ callbackUrl: routes.signin });
 
   if (status === 'loading' || userQuery.isLoading) {
     return <div>Loading...</div>;

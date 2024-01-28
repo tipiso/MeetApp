@@ -10,6 +10,7 @@ type AppStore = {
 type AppStoreActions = {
   setUser: (loggedUser: User) => void;
   setLikedUsers: (friends: User[]) => void;
+  reset: () => void;
 };
 
 const initialState = {
@@ -23,6 +24,7 @@ const initialState = {
     created: new Date(),
     lastActive: new Date(),
     gender: '' as Gender,
+    isLikedByCurrentUser: false,
     introduction: '',
     lookingFor: '',
     interests: '',
@@ -37,17 +39,20 @@ const initialState = {
 const useStore = create<AppStore & AppStoreActions>()(
   devtools(
     persist(
-    (set) => ({
-      // States
-      ...initialState,
-      // Setters
-      setUser: (loggedUser) => set(() => ({ user: loggedUser })),
-      setLikedUsers: (likedUsers) => set(() => ({ likedUsers })),
-    })  ,  {
-      name: 'app-storage',
-    },
+      (set) => ({
+        // States
+        ...initialState,
+        // Setters
+        setUser: (loggedUser) => set(() => ({ user: loggedUser })),
+        setLikedUsers: (likedUsers) => set(() => ({ likedUsers })),
+        reset: () => {
+          set(initialState);
+        },
+      }),
+      {
+        name: 'app-storage',
+      },
     ),
-
   ),
 );
 
