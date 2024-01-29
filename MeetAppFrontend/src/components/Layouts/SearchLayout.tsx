@@ -17,13 +17,11 @@ export default function SearchLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative flex min-h-screen w-full flex-col bg-gray-100 xl:container">
-        <Navbar />
-
+      <Navbar />
+      <main className="relative flex min-h-[calc(100dvh-64px)] w-full flex-col bg-gray-100 xl:container">
         <div className="mt-5 pb-5">{children}</div>
-
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }

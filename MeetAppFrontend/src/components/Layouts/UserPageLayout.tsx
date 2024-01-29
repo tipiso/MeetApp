@@ -21,13 +21,11 @@ export default function UserPageLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative flex min-h-screen w-full flex-col xl:container">
-        <Navbar hideRoutes />
-
+      <Navbar hideRoutes />
+      <main className="relative flex min-h-[calc(100dvh-64px)] w-full flex-col xl:container">
         <div className="flex flex-auto p-14">{children}</div>
-
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }

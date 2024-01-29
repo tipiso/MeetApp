@@ -17,13 +17,12 @@ export default function LoginLayout({ children }: LayoutProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="relative flex min-h-screen w-full flex-col xl:container">
-        <Navbar hideRoutes />
-        <div className="absolute left-0 top-[4rem] z-0 h-[782px] w-full max-w-[1440px] overflow-hidden bg-grayBg bg-cover bg-no-repeat" />
+      <Navbar hideRoutes />
+      <main className="relative flex min-h-[calc(100dvh-64px)] w-full flex-col xl:container">
+        <div className="absolute left-0 z-0 h-[782px] w-full max-w-[1440px] overflow-hidden bg-grayBg bg-cover bg-no-repeat" />
         <div className="z-10 flex flex-auto">{children}</div>
-
-        <Footer />
       </main>
+      <Footer />
     </div>
   );
 }
