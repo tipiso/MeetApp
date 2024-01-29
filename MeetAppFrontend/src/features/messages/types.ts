@@ -3,9 +3,11 @@ type Message = {
   senderId: number;
   senderUsername: string;
   senderPhotoUrl: string;
+  senderKnownAs: string;
   recipientId: number;
   recipientUsername: string;
   recipientPhotoUrl: string;
+  recipientKnownAs: string;
   content: string;
   dateRead: null;
   messageSent: Date;

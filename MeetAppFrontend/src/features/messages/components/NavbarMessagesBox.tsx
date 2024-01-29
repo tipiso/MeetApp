@@ -14,7 +14,7 @@ function MessageInbox({ message }: Props) {
   return (
     <li>
       <div className="flex items-center px-4 pb-2">
-        <Avatar imgUrl={message.senderPhotoUrl} name={message.recipientUsername} minWidth={60} width={60} height={60} />
+        <Avatar imgUrl={message.senderPhotoUrl} name={message.recipientKnownAs} minWidth={60} width={60} height={60} />
         <div className="ml-2 min-w-0 flex-grow flex-col">
           <div className="flex items-center justify-between">
             <span className="font-bold">{message.senderUsername}</span>
