@@ -9,4 +9,6 @@ const messagesQueryKeys = {
 
 const getMessageThread = (recipient: string) => api.get<Message[]>(`${messagesUrl}${threadUrl}/${recipient}`);
 
-export { messagesQueryKeys, getMessageThread };
+const getMessagesForUser = () => api.get<Message[]>(`${messagesUrl}`);
+
+export { messagesQueryKeys, getMessageThread, getMessagesForUser };

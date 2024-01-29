@@ -17,9 +17,10 @@ export default function AuthWrap({ children }: { children: JSX.Element }) {
 
   //initial user call to fill cache store
   const userQuery = useGetUser(data?.user.name);
-  const setUser = useStore((state) => state.setUser);
 
   if (userQuery.error) logOut({ callbackUrl: routes.signin });
+
+  const setUser = useStore((state) => state.setUser);
 
   if (status === 'loading' || userQuery.isLoading) {
     return <div>Loading...</div>;

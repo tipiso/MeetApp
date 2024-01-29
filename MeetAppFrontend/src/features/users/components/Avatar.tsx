@@ -4,10 +4,11 @@ type Props = {
   imgUrl?: string;
   name: string;
   width?: number;
+  minWidth?: number;
   height?: number;
 };
 
-const Avatar = ({ imgUrl, name, width = 128, height = 128 }: Props) => {
+const Avatar = ({ imgUrl, name, width = 128, height = 128, minWidth }: Props) => {
   return (
     <div className="avatar">
       {imgUrl ? (
@@ -15,7 +16,7 @@ const Avatar = ({ imgUrl, name, width = 128, height = 128 }: Props) => {
           <Image
             src={imgUrl}
             alt={`Avatar img for user ${name}`}
-            style={{ maxWidth: `${width}px`, maxHeight: `${height}px` }}
+            style={{ maxWidth: `${width}px`, maxHeight: `${height}px`, minWidth: minWidth ?? 'auto' }}
             width={width}
             height={height}
           />

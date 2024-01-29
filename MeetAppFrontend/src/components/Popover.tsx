@@ -13,7 +13,7 @@ export const PopoverTrigger = PopoverPrimitive.Trigger;
 export const PopoverContent = React.forwardRef(
   ({ children, ...props }: Props, forwardedRef: Ref<HTMLDivElement> | undefined) => (
     <PopoverPrimitive.Portal>
-      <PopoverPrimitive.Content className="dropdown-content" sideOffset={5} {...props} ref={forwardedRef}>
+      <PopoverPrimitive.Content className="dropdown-content z-10" sideOffset={5} {...props} ref={forwardedRef}>
         {children}
         <PopoverPrimitive.Arrow />
       </PopoverPrimitive.Content>
