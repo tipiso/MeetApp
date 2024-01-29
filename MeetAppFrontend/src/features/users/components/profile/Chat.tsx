@@ -6,7 +6,7 @@ import { Input } from '@/components/Forms/Input';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import { useRouter } from 'next/router';
-import useMessageThread from '@/features/messages/useMessageThread';
+import { useMessageThread } from '@/features/messages/index';
 import { Message } from '@/features/messages/types';
 import { getUsernameFromSession } from '@/utils/helpers';
 import { getDateAndTimeFromDate } from '@/utils/parsers';
