@@ -69,6 +69,14 @@ namespace API.Controllers
             return Ok(await _uow.MessageRepository.GetMessageThread(currentUsername, username));
         }
 
+        [HttpGet("conversations")]
+        public async Task<ActionResult<IEnumerable<MessageDto>>> GetUserConversations()
+        {
+            var currentUsername = User.GetUsername();
+
+            return Ok(await _uow.MessageRepository.GetConversationsForUser(currentUsername));
+        }
+
 
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteMessage(int id)

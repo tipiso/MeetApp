@@ -20,7 +20,7 @@ function ChatMessage(props: MsgProps) {
 
   return (
     <div className={classNames(isSender ? 'self-end' : 'self-start', 'max-w-[50%] pt-3')}>
-      <span className="text-sm">
+      <span className="text-xs">
         {dateString} {timeString} {!props.dateRead && <span className="text-xs italic text-base-300">(unread)</span>}
       </span>
       <p

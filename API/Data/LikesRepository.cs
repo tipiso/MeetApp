@@ -31,7 +31,8 @@ namespace API.Data
             if (likesParams.Predicate == "friends")
             {
                 likes = likes.Where(like => like.SourceUserId == likesParams.UserId);
-                users = likes.Select(like => like.TargetUser)
+                users = likes
+                    .Select(like => like.TargetUser)
                     .Where(u => u.LikedUsers.Any(lu => lu.TargetUserId == likesParams.UserId));
             }
 

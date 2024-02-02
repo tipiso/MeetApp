@@ -2,19 +2,20 @@
 using API.Entities;
 using API.Helpers;
 using API.Interfaces;
+using System.Linq;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Data
 {
-	public class MessageRepository : IMessageRepository
-	{
+    public class MessageRepository : IMessageRepository
+    {
         private readonly DataContext _context;
         private readonly IMapper _mapper;
 
         public MessageRepository(DataContext context, IMapper mapper)
-		{
+        {
             _context = context;
             _mapper = mapper;
         }
@@ -39,6 +40,21 @@ namespace API.Data
             return await _context.Connections.FindAsync(connectionId);
         }
 
+        public async Task<IEnumerable<MessageDto>> GetConversationsForUser(string username)
+        {
+            var latestMessages = _context.Messages
+                    .Include(m => m.Sender)
+                    .ThenInclude(u => u.Photos)
+                    .Where(m => m.SenderUsername == username|| m.RecipientUsername == username)
+                    .ToList()
+                    .GroupBy(m => new { ConversationId = Math.Min(m.SenderId, m.RecipientId), OtherUserId = Math.Max(m.SenderId, m.RecipientId) })
+                    .Select(g => g.OrderByDescending(m => m.MessageSent).FirstOrDefault())
+                    .OrderByDescending(m => m.MessageSent)
+                    .AsQueryable();
+
+            return latestMessages.ProjectTo<MessageDto>(_mapper.ConfigurationProvider).ToList();
+        }
+
         public async Task<Group> GetGroupForConnection(string connectionId)
         {
             return await _context.Groups.Include(x => x.Connections)
@@ -48,7 +64,7 @@ namespace API.Data
 
         public async Task<Message> GetMessage(int id)
         {
-           return await _context.Messages.FindAsync(id);
+            return await _context.Messages.FindAsync(id);
         }
 
         public async Task<Group> GetMessageGroup(string groupName)
@@ -63,6 +79,7 @@ namespace API.Data
             var query = _context.Messages
                 .OrderByDescending(m => m.MessageSent)
                 .AsQueryable();
+
 
             query = messageParams.Container switch
             {
@@ -85,14 +102,14 @@ namespace API.Data
 
         public async Task<IEnumerable<MessageDto>> GetMessageThread(string currentUsername, string recipientUsername)
         {
-            var query =  _context.Messages
+            var query = _context.Messages
                 .Where(
                     m => m.RecipientUsername == currentUsername && m.RecipientDelete == false &&
                     m.SenderUsername == recipientUsername ||
                     m.RecipientUsername == recipientUsername && m.SenderDeleted == false &&
                     m.SenderUsername == currentUsername
                 )
-                .OrderByDescending(m => m.MessageSent)
+                .OrderBy(m => m.MessageSent)
                 .AsQueryable();
 
             var unreadMessages = query.Where(m => m.DateRead == null
