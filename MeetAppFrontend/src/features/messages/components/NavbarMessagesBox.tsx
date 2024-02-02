@@ -1,12 +1,13 @@
 import React from 'react';
 import { Message } from '@/features/messages/types';
 import Avatar from '@/features/users/components/Avatar';
-import { useGetUserMessages } from '..';
+import { useGetUserConversations, useGetUserMessages } from '..';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { getDateAndTimeFromDate } from '@/utils/parsers';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
 import { ProfilePageTabsKeys } from '@/utils/constants';
+import { getUsernameFromSession, isGivenUsernameCurrentUser } from '@/utils/helpers';
 
 type Props = {
   message: Message;
@@ -16,16 +17,26 @@ type Props = {
 function MessageInbox({ message, moveToChat }: Props) {
   const date = getDateAndTimeFromDate(message.messageSent);
 
+  const isCurrentUserSender = getUsernameFromSession() === message.senderUsername;
+
   return (
     <li onClick={moveToChat}>
       <div className="flex items-center px-4 pb-2">
-        <Avatar imgUrl={message.senderPhotoUrl} name={message.senderKnownAs} minWidth={60} width={60} height={60} />
+        <Avatar
+          imgUrl={isCurrentUserSender ? message.recipientPhotoUrl : message.senderPhotoUrl}
+          name={isCurrentUserSender ? message.recipientKnownAs : message.senderKnownAs}
+          minWidth={60}
+          width={60}
+          height={60}
+        />
         <div className="ml-2 min-w-0 flex-grow flex-col">
           <div className="flex items-center justify-between">
-            <span className="font-bold">{message.senderKnownAs}</span>
+            <span className="font-bold">{isCurrentUserSender ? message.recipientKnownAs : message.senderKnownAs}</span>
             <span className="text-xs">{date.dateString}</span>
           </div>
-          <p className="min-w-0 max-w-full truncate text-sm">{message.content}</p>
+          <p className="min-w-0 max-w-full truncate text-sm">
+            {isCurrentUserSender ? `You: ${message.content}` : `${message.senderKnownAs}: ${message.content}`}
+          </p>
         </div>
       </div>
     </li>
@@ -33,7 +44,7 @@ function MessageInbox({ message, moveToChat }: Props) {
 }
 
 export default function NavbarMessagesBox() {
-  const { isLoading, data } = useGetUserMessages();
+  const { isLoading, data } = useGetUserConversations();
   const router = useRouter();
 
   const moveToChat = (username: string) => {
