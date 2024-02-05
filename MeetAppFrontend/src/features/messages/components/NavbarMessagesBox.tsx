@@ -1,13 +1,13 @@
 import React from 'react';
 import { Message } from '@/features/messages/types';
 import Avatar from '@/features/users/components/Avatar';
-import { useGetUserConversations, useGetUserMessages } from '..';
+import { useGetUserConversations } from '..';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { getDateAndTimeFromDate } from '@/utils/parsers';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
 import { ProfilePageTabsKeys } from '@/utils/constants';
-import { getUsernameFromSession, isGivenUsernameCurrentUser } from '@/utils/helpers';
+import { getUsernameFromSession } from '@/utils/helpers';
 
 type Props = {
   message: Message;

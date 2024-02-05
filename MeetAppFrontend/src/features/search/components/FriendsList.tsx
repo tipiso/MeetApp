@@ -1,14 +1,14 @@
-import { useLikedUsers } from '@/features/users/hooks';
+import { useLikedUsersWithPagination } from '@/features/users/hooks';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import Pagination from '@/components/Pagination/Pagination';
 import { useEffect } from 'react';
 import FriendCard from './FriendCard';
 
 const FriendsList = () => {
-  const { data, isMutating, pagination, getPage } = useLikedUsers();
+  const { data, isMutating, pagination, getPage } = useLikedUsersWithPagination();
 
   useEffect(() => {
-    getPage(1, undefined, "friends");
+    getPage({ pageNumber: 1, pageSize: 6, predicate: 'friends' });
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;

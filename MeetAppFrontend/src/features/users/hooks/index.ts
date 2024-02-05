@@ -1,10 +1,18 @@
 import useSWR from 'swr';
 import useSWRMutation from 'swr/mutation';
 
-import { getUsers, getUser, usersQueryKeys, updateUser, addPhoto, getLikedUsers } from '@/services/Users/users';
+import {
+  getUsers,
+  getUser,
+  usersQueryKeys,
+  updateUser,
+  addPhoto,
+  getLikedUsers,
+  getLikedUsersWithPagination,
+} from '@/services/Users/users';
 import { LikedUsersDTO, UpdateUserDTO } from '@/services/Users/dtos';
 import { initialPagination } from '@/utils/constants';
-import { PaginationDTO, UserLikesFilterPredicate } from 'types/pagination';
+import { PaginationDTO } from 'types/pagination';
 import { likeUser } from '@/services/likes';
 
 function useGetUsers() {
@@ -33,19 +41,37 @@ function useAddPhoto() {
   return { data: data?.data, ...rest };
 }
 
-function useLikedUsers() {
-  const fetcher = (url: string, { arg }: { arg: PaginationDTO & Partial<LikedUsersDTO> }) => getLikedUsers(arg);
+function useLikedUsersWithPagination() {
+  const fetcher = (url: string, { arg }: { arg: PaginationDTO & Partial<LikedUsersDTO> }) =>
+    getLikedUsersWithPagination(arg);
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers, fetcher);
 
-  const getPage = async (pageNumber: number, userId?: number, predicate?: UserLikesFilterPredicate) => {
-    await rest.trigger({ pageNumber, pageSize: initialPagination.pageSize, userId, predicate });
+  const getPage = async ({
+    pageNumber,
+    userId,
+    predicate,
+    pageSize = initialPagination.pageSize,
+  }: PaginationDTO & Partial<LikedUsersDTO>) => {
+    await rest.trigger({ pageNumber, pageSize, userId, predicate });
   };
 
   return {
     data: data?.data,
     ...rest,
     getPage,
+    pagination: data?.headers.pagination ?? initialPagination,
+  };
+}
+
+function useLikedUsers() {
+  const fetcher = (url: string, { arg }: { arg: Partial<LikedUsersDTO> }) => getLikedUsers(arg);
+
+  const { data, ...rest } = useSWR(usersQueryKeys.likedUsers, fetcher);
+
+  return {
+    data: data?.data,
+    ...rest,
     pagination: data?.headers.pagination ?? initialPagination,
   };
 }
@@ -60,4 +86,4 @@ function useLikeUser() {
   };
 }
 
-export { useGetUser, useGetUsers, useUpdateUser, useAddPhoto, useLikeUser, useLikedUsers };
+export { useGetUser, useGetUsers, useUpdateUser, useAddPhoto, useLikeUser, useLikedUsersWithPagination, useLikedUsers };

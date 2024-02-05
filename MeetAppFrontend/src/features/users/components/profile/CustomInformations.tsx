@@ -1,5 +1,5 @@
 import Loader, { LoaderSizes } from '@/components/Loader';
-import { useLikedUsers } from '@/features/users/hooks';
+import { useLikedUsersWithPagination } from '@/features/users/hooks';
 import { useEffect } from 'react';
 import { Hobby } from '../../types';
 import HobbiesList from '@/features/search/components/HobbiesList';
@@ -14,10 +14,10 @@ type Props = {
 };
 
 export default function CustomInformations({ hobbies, introduction, userId }: Props) {
-  const { data, isMutating, getPage } = useLikedUsers();
+  const { data, isMutating, getPage } = useLikedUsersWithPagination();
 
   useEffect(() => {
-    if (!data) getPage(1, userId, 'friends');
+    if (!data) getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;

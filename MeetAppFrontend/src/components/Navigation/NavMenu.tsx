@@ -10,6 +10,7 @@ import { routes } from '@/utils/routes';
 import Link from 'next/link';
 import logOut from '@/services/Auth/logout';
 import { isAuthenticated } from '@/utils/helpers';
+import NavbarInvitesBox from '@/features/users/components/NavbarInvitesBox';
 
 type Props = {
   user?: User;
@@ -25,7 +26,7 @@ export default function NavMenu({ user }: Props) {
               <NavIcon img={FriendsIcon} imgAlt="Friends icon" />
             </PopoverTrigger>
             <PopoverContent>
-              <div>List of invites</div>
+              <NavbarInvitesBox />
             </PopoverContent>
           </Popover>
 
