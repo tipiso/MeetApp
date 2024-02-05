@@ -67,12 +67,16 @@ function useLikedUsersWithPagination() {
 function useLikedUsers() {
   const fetcher = (url: string, { arg }: { arg: Partial<LikedUsersDTO> }) => getLikedUsers(arg);
 
-  const { data, ...rest } = useSWR(usersQueryKeys.likedUsers, fetcher);
+  const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers, fetcher);
+
+  const getUsers = ({ predicate, userId }: Partial<LikedUsersDTO>) => {
+    rest.trigger({ predicate, userId });
+  };
 
   return {
     data: data?.data,
+    getUsers,
     ...rest,
-    pagination: data?.headers.pagination ?? initialPagination,
   };
 }
 

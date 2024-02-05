@@ -11,7 +11,7 @@ import { getUsernameFromSession } from '@/utils/helpers';
 
 type Props = {
   message: Message;
-  moveToChat: () => void;
+  moveToChat: (username: string) => void;
 };
 
 function MessageInbox({ message, moveToChat }: Props) {
@@ -20,7 +20,7 @@ function MessageInbox({ message, moveToChat }: Props) {
   const isCurrentUserSender = getUsernameFromSession() === message.senderUsername;
 
   return (
-    <li onClick={moveToChat}>
+    <li onClick={() => moveToChat(isCurrentUserSender ? message.recipientUsername : message.senderUsername)}>
       <div className="flex items-center px-4 pb-2">
         <Avatar
           imgUrl={isCurrentUserSender ? message.recipientPhotoUrl : message.senderPhotoUrl}
@@ -54,7 +54,7 @@ export default function NavbarMessagesBox() {
   return (
     <ul className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 flex-nowrap overflow-auto bg-base-100 px-0 py-0 shadow">
       {isLoading && <Loader size={LoaderSizes.lg} />}
-      {data && data.map((m) => <MessageInbox key={m.id} message={m} moveToChat={() => moveToChat(m.senderUsername)} />)}
+      {data && data.map((m) => <MessageInbox key={m.id} message={m} moveToChat={moveToChat} />)}
     </ul>
   );
 }

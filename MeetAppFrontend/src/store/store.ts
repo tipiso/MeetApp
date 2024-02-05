@@ -4,12 +4,12 @@ import { devtools, persist } from 'zustand/middleware';
 
 type AppStore = {
   user: User;
-  likedUsers: User[];
+  friends: User[];
 };
 
 type AppStoreActions = {
   setUser: (loggedUser: User) => void;
-  setLikedUsers: (friends: User[]) => void;
+  setFriends: (friends: User[]) => void;
   reset: () => void;
 };
 
@@ -33,7 +33,7 @@ const initialState = {
     photos: [],
     hobbys: [],
   },
-  likedUsers: [],
+  friends: [],
 };
 
 const useStore = create<AppStore & AppStoreActions>()(
@@ -44,7 +44,7 @@ const useStore = create<AppStore & AppStoreActions>()(
         ...initialState,
         // Setters
         setUser: (loggedUser) => set(() => ({ user: loggedUser })),
-        setLikedUsers: (likedUsers) => set(() => ({ likedUsers })),
+        setFriends: (friends) => set(() => ({ friends })),
         reset: () => {
           set(initialState);
         },
