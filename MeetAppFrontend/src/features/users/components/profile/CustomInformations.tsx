@@ -14,12 +14,12 @@ type Props = {
 };
 
 export default function CustomInformations({ hobbies, introduction, userId }: Props) {
-  const { data, isMutating, getPage } = useLikedUsersWithPagination();
+  const { data, isMutating, getPage } = useLikedUsersWithPagination(userId);
 
   useEffect(() => {
-    if (!data) getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
-  }, []);
-
+    if (userId) getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
+  }, [userId]);
+  console.log(data, userId);
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
 
   return (
@@ -36,7 +36,7 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
         <h2 className="mb-3 text-2xl font-bold">Friends ({data ? data.length : 0})</h2>
         {!data || !data.length ? (
           <div className="flex justify-center p-10 text-2xl font-light">
-            <p className="max-w-sm text-center">You don't actually have any added friends</p>
+            <p className="max-w-sm text-center">No friends added yet.</p>
           </div>
         ) : (
           <>

@@ -48,7 +48,7 @@ export default function NavMenu({ user }: Props) {
             <PopoverContent>
               <ul tabIndex={0} className="w-50 dropdown-content menu rounded-box z-[1] mt-4 bg-base-100 p-2 shadow">
                 <li className="text-black">
-                  <Link href={routes.userProfile.replace(':username', user.userName)} className="text-sm font-bold">
+                  <Link href={routes.currentUserProfile} className="text-sm font-bold">
                     My Profile
                   </Link>
                 </li>

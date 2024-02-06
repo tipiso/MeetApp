@@ -5,6 +5,7 @@ const routes = {
   users: '/users',
   user: '/users/:username',
   userProfile: '/users/:username/profile',
+  currentUserProfile: '/users/me',
 
   messages: '/messages',
 

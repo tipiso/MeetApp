@@ -53,6 +53,7 @@ export default function NavbarMessagesBox() {
 
   return (
     <ul className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 flex-nowrap overflow-auto bg-base-100 px-0 py-0 shadow">
+      <h2 className="p-4 text-base font-bold">Chat:</h2>
       {isLoading && <Loader size={LoaderSizes.lg} />}
       {data && data.map((m) => <MessageInbox key={m.id} message={m} moveToChat={moveToChat} />)}
     </ul>

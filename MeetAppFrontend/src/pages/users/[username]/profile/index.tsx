@@ -3,10 +3,9 @@ import Layout from '@/components/Layouts/CleanLayout';
 import Breadcrumbs from '@/components/BreadCrumbs';
 import { routes } from '@/utils/routes';
 import { useGetUser } from '@/features/users/hooks';
-import { getUsernameFromSession } from '@/utils/helpers';
 import Image from 'next/image';
 import Tabs, { useTabs } from '@/components/Tabs';
-import { ProfilePageTabsKeys, profileTabs } from '@/utils/constants';
+import { profileTabs } from '@/utils/constants';
 import ProfileTabs from '@/features/users/components/profile/ProfileTabs';
 import UserInfoBlock from '@/features/users/components/UserInfoBlock';
 import { useRouter } from 'next/router';
@@ -17,14 +16,12 @@ const ProfilePage = () => {
   const user = useGetUser(router.query.username as string);
   const query = router.query;
 
-  const isCurrentUserProfile = getUsernameFromSession() === router.query.username;
-  const displayInviteBtn = !isCurrentUserProfile && !user.data?.isLikedByCurrentUser;
+  const displayInviteBtn = !user.data?.isLikedByCurrentUser;
 
   const preparedTabs = useMemo(
-    () => (isCurrentUserProfile ? profileTabs.filter((t) => t.key !== ProfilePageTabsKeys.CHAT) : profileTabs),
-    [isCurrentUserProfile],
+    () => profileTabs,
+    [],
   );
-
   const tabsOpts = useTabs({ tabs: preparedTabs });
 
   const breadcrumbs = useMemo(

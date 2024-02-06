@@ -41,11 +41,11 @@ function useAddPhoto() {
   return { data: data?.data, ...rest };
 }
 
-function useLikedUsersWithPagination() {
+function useLikedUsersWithPagination(userId?: number) {
   const fetcher = (url: string, { arg }: { arg: PaginationDTO & Partial<LikedUsersDTO> }) =>
     getLikedUsersWithPagination(arg);
 
-  const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers, fetcher);
+  const { data, ...rest } = useSWRMutation(usersQueryKeys.likedUsers + userId, fetcher);
 
   const getPage = async ({
     pageNumber,

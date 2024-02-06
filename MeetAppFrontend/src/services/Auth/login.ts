@@ -13,7 +13,7 @@ type loginProps = {
 
 export const login = async ({ username, password, onSuccess, onError, redirectToUser }: loginProps) => {
   try {
-    const redirectUrl = redirectToUser ? `${routes.users}/${username}` : routes.home;
+    const redirectUrl = redirectToUser ? routes.currentUserProfile : routes.home;
     const response = await signIn('credentials', {
       username,
       password,
