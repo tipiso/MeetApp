@@ -44,12 +44,7 @@ namespace API.Controllers
 		[HttpGet("{username}")]
 		public async Task<ActionResult<MemberDto>> GetUser(string username)
 		{
-			var isCurrentUser = false;
-			if (User.GetUsername() == username)
-			{
-				isCurrentUser = true;
-			}
-			return await _uow.UserRepository.GetMemberAsync(username, isCurrentUser);
+			return await _uow.UserRepository.GetMemberAsync(username, User.GetUsername());
 		}
 
 		[HttpPut]

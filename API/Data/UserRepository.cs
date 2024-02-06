@@ -19,12 +19,18 @@ namespace API.Data
             _context = context;
         }
 
-        public async Task<MemberDto> GetMemberAsync(string username, bool isCurrentUser)
+        public async Task<MemberDto> GetMemberAsync(string username, string currentUsername)
         {
+            var isCurrentUser = false;
+			if (currentUsername == username)
+			{
+				isCurrentUser = true;
+			}
+
             var query = _context.Users
-             .Where(x => x.UserName == username)
-             .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
-             .AsQueryable();
+                .Where(x => x.UserName == username)
+                .ProjectTo<MemberDto>(_mapper.ConfigurationProvider)
+                .AsQueryable();
 
             if (isCurrentUser) query = query.IgnoreQueryFilters();
 
@@ -32,8 +38,13 @@ namespace API.Data
 
             if (!isCurrentUser)
             {
-                var isLikedByCurrentUser = _context.Users
-                .Where(u => u.LikedByUsers.Any(lu => lu.SourceUserId == member.Id));
+                var currentUser = await _context.Users
+                    .Include(u => u.LikedUsers)
+                    .FirstOrDefaultAsync(u => u.UserName == currentUsername);
+
+                var isLikedByCurrentUser = currentUser
+                    .LikedUsers
+                    .Find(lu => lu.TargetUserId == member.Id);
 
                 member.IsLikedByCurrentUser = isLikedByCurrentUser != null;
             }
