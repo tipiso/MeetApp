@@ -5,3 +5,11 @@
 .btn.btn-disabled {
     @apply text-neutral;
 }
+
+.slick-next, .slick-preev {
+    z-index: 1;
+}
+
+.slick-next:before, .slick-prev:before {
+    content: none!important;
+}

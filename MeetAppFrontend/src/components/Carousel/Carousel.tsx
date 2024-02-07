@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import Slider, { CustomArrowProps, ResponsiveObject, Settings } from 'react-slick';
-import CarouselArrowLeft from '@/assets/images/CarouselArrowLeft.svg';
-import CarouselArrowRight from '@/assets/images/CarouselArrowRight.svg';
+import CarouselArrowLeft from '@/assets/images/LeftCarouselArrow.svg';
+import CarouselArrowRight from '@/assets/images/RightCarouselArrow.svg';
 import Image from 'next/image';
 
 import 'slick-carousel/slick/slick.css';
@@ -16,16 +16,18 @@ type Props = {
 const SlickArrowLeft = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
   <button
     {...props}
-    className={'slick-prev slick-arrow' + (slideCount && currentSlide === 0 ? ' slick-disabled' : '')}
+    className={
+      'slick-prev slick-arrow rounded-[50%] !bg-gray-700' + (slideCount && currentSlide === 0 ? ' slick-disabled' : '')
+    }
     aria-hidden="true"
     aria-disabled={!!(currentSlide && currentSlide === 0)}
     type="button"
   >
     <Image
-      className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 cursor-pointer"
       src={CarouselArrowLeft}
-      height={50}
-      width={50}
+      height={18}
+      width={18}
       alt="arrow left icon"
     />
   </button>
@@ -33,16 +35,19 @@ const SlickArrowLeft = ({ currentSlide, slideCount, ...props }: CustomArrowProps
 const SlickArrowRight = ({ currentSlide, slideCount, ...props }: CustomArrowProps) => (
   <button
     {...props}
-    className={'slick-next slick-arrow' + (slideCount && currentSlide === slideCount - 1 ? ' slick-disabled' : '')}
+    className={
+      'slick-next slick-arrow rounded-[50%] !bg-gray-700 before:content-none' +
+      (slideCount && currentSlide === slideCount - 1 ? ' slick-disabled' : '')
+    }
     aria-hidden="true"
     aria-disabled={!!(slideCount && currentSlide === slideCount - 1)}
     type="button"
   >
     <Image
-      className="absolute top-1/2 -translate-y-1/2 cursor-pointer"
+      className="absolute top-1/2 left-1/2 -translate-x-1/2  -translate-y-1/2 cursor-pointer"
       src={CarouselArrowRight}
-      height={50}
-      width={50}
+      height={18}
+      width={18}
       alt="arrow right icon"
     />
   </button>

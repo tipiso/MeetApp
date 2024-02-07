@@ -8,7 +8,7 @@ type Props = {
 
 export default function Photos({ photos }: Props) {
   if (!photos) return null;
-  console.log(photos);
+
   return (
     <section className="pt-10 pb-4">
       <h2 className="mb-3 text-2xl font-bold">Photos</h2>
