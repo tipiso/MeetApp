@@ -3,7 +3,7 @@ using API.Entities;
 using API.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-
+// tjJacDGq0bm5eMNKoaAp0g9oT9pq1VOFO40SRuoCljxJlvzy7o6ZhPX1
 namespace API.Data
 {
 	public class Seed
@@ -15,14 +15,14 @@ namespace API.Data
 
 		public static async Task SeedHobbies(DataContext context)
 		{
-            if (await context.Hobbies.AnyAsync()) return;
+			if (await context.Hobbies.AnyAsync()) return;
 
-            var hobbiesData = await File.ReadAllTextAsync("Data/HobbiesData.json");
+			var hobbiesData = await File.ReadAllTextAsync("Data/HobbiesData.json");
 			var jHobbies = JsonSerializer.Deserialize<List<JsonHobby>>(hobbiesData);
 
 			foreach (JsonHobby jHobby in jHobbies)
 			{
-                await context.Hobbies.AddAsync(new Hobby { Name = jHobby.hobby });
+				await context.Hobbies.AddAsync(new Hobby { Name = jHobby.hobby });
 				await context.SaveChangesAsync();
 			}
 		}
@@ -38,9 +38,9 @@ namespace API.Data
 			var roles = new List<AppRole>
 			{
 				new AppRole{ Name = Roles.Member },
-                new AppRole{ Name = Roles.Admin },
-                new AppRole{ Name = Roles.Moderator }
-            };
+				new AppRole{ Name = Roles.Admin },
+				new AppRole{ Name = Roles.Moderator }
+			};
 
 
 			foreach (var role in roles)
@@ -56,7 +56,7 @@ namespace API.Data
 			{
 				user.UserName = user.UserName.ToLower();
 
-				var randomHobby = hobbies[rnd.Next(hobbies.Count)];	
+				var randomHobby = hobbies[rnd.Next(hobbies.Count)];
 				user.UserHobbies.Add(new UserHobby { HobbyId = randomHobby.Id, UserId = user.Id });
 
 				await userManager.CreateAsync(user, "Pa$$w0rd");

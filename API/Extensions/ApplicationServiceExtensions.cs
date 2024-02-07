@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Extensions
 {
-	public static class ApplicationServiceExtensions
-	{
-		public static IServiceCollection AddAplicationServices(this IServiceCollection services, IConfiguration config)
-		{
+    public static class ApplicationServiceExtensions
+    {
+        public static IServiceCollection AddAplicationServices(this IServiceCollection services, IConfiguration config)
+        {
             services.AddDbContext<DataContext>(options =>
             {
                 options.UseSqlite(config.GetConnectionString("DefaultConnection"));
@@ -20,6 +20,7 @@ namespace API.Extensions
             services.AddScoped<ITokenService, TokenService>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.Configure<CloudinarySettings>(config.GetSection("CloudinarySettings"));
+            services.Configure<PexelsSettings>(config.GetSection("PexelsSettings"));
             services.AddScoped<IPhotoService, PhotoService>();
             services.AddScoped<LogUserActivity>();
 
@@ -30,6 +31,6 @@ namespace API.Extensions
 
             return services;
         }
-	}
+    }
 }
 
