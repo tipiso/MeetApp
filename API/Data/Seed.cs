@@ -3,7 +3,7 @@ using API.Entities;
 using API.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-// tjJacDGq0bm5eMNKoaAp0g9oT9pq1VOFO40SRuoCljxJlvzy7o6ZhPX1
+
 namespace API.Data
 {
 	public class Seed

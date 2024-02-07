@@ -3,13 +3,20 @@
 @tailwind utilities;
 
 .btn.btn-disabled {
-    @apply text-neutral;
+  @apply text-neutral;
 }
 
-.slick-next, .slick-preev {
-    z-index: 1;
+.slick-slide img {
+  object-fit: cover;
+  aspect-ratio: 1 / 1;
 }
 
-.slick-next:before, .slick-prev:before {
-    content: none!important;
+.slick-next,
+.slick-preev {
+  z-index: 1;
+}
+
+.slick-next:before,
+.slick-prev:before {
+  content: none !important;
 }

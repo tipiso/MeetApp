@@ -12,7 +12,7 @@ const UserPage = () => {
   const hobbiesMap = useMemo(() => hobbies?.data.map<Option>((h) => ({ value: `${h.id}`, label: h.name })), [hobbies]);
 
   if (isLoading || !user || hobbiesLoading) return <div>Loading...</div>;
-  console.log(user);
+
   return (
     <div className="flex w-full flex-col">
       <h1 className="text-4xl font-bold">Tell us about you!</h1>

@@ -30,11 +30,13 @@ const CurrentUserPage = () => {
       <div className="col-span-3 bg-gray-100 px-4 pt-16">
         <Breadcrumbs breadcrumbs={breadcrumbs} />
         <h1 className="pt-6 pb-3 text-2xl font-bold">{user.knownAs} Profile</h1>
-        <Image className="rounded-lg pb-4" src={user.photoUrl ?? ''} width={340} height={340} alt="user profile" />
-        <UserInfoBlock label="Full Name" content={user.knownAs ?? ''} />
-        <UserInfoBlock label="Location" content={`${user.city} (${user.country})`} />
-        <UserInfoBlock label="Age" content={`${user.age}`} />
-        <UserInfoBlock label="Gender" content={`${user.gender}`} />
+        <Image className="rounded-lg" src={user.photoUrl ?? ''} width={340} height={340} alt="user profile" />
+        <div className="pt-4">
+          <UserInfoBlock label="Full Name" content={user.knownAs ?? ''} />
+          <UserInfoBlock label="Location" content={`${user.city} (${user.country})`} />
+          <UserInfoBlock label="Age" content={`${user.age}`} />
+          <UserInfoBlock label="Gender" content={`${user.gender}`} />
+        </div>
       </div>
       <div className="col-span-7 pl-12 pt-16">
         <div className="flex items-center justify-between">
