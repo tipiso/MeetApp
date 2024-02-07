@@ -5,7 +5,7 @@ import { routes } from '@/utils/routes';
 import { useGetUser } from '@/features/users/hooks';
 import Image from 'next/image';
 import Tabs, { useTabs } from '@/components/Tabs';
-import { profileTabs } from '@/utils/constants';
+import { ProfilePageTabsKeys, profileTabs } from '@/utils/constants';
 import ProfileTabs from '@/features/users/components/profile/ProfileTabs';
 import UserInfoBlock from '@/features/users/components/UserInfoBlock';
 import { useRouter } from 'next/router';
@@ -19,10 +19,13 @@ const ProfilePage = () => {
   const displayInviteBtn = !user.data?.isLikedByCurrentUser;
 
   const preparedTabs = useMemo(
-    () => profileTabs,
+    () =>
+      user.data?.isLikedByCurrentUser ? profileTabs : profileTabs.filter((t) => t.key !== ProfilePageTabsKeys.CHAT),
     [],
   );
-  const tabsOpts = useTabs({ tabs: preparedTabs });
+  const tabsOpts = useTabs({
+    tabs: preparedTabs,
+  });
 
   const breadcrumbs = useMemo(
     () => [

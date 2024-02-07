@@ -44,7 +44,7 @@ export default function NavbarInvitesBox() {
   }, []);
 
   const newInvites = data?.filter((u) => !friends.find((f) => f.id === u.id));
-  console.log(data, isMutating);
+
   return (
     <ul className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 flex-nowrap overflow-auto bg-base-100 px-0 py-0 shadow">
       {isMutating && <Loader size={LoaderSizes.lg} />}
