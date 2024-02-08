@@ -41,7 +41,7 @@ export default function Button(props: ButtonProps) {
       <button
         {...rest}
         tabIndex={-1}
-        aria-disabled="true"
+        aria-disabled={disabled}
         className={cx(classes, disabled && 'btn-disabled')}
       >
         {isLoading && <Loader fitToContainer size={LoaderSizes.sm} />} {children}

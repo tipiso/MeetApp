@@ -25,25 +25,52 @@ function PhotoForm() {
 
   const handleSubmit = async ({ file }: { file?: File[] }) => {
     if (file) {
-      await addPhoto.trigger(file[0]);
+      try {
+        await addPhoto.trigger(file[0]);
+      } catch (e) {
+      } finally {
+        modal.toggle();
+        methods.reset();
+      }
     }
   };
 
+  const inputLabel = methods.getValues('file') ? 'Replace photo' : 'Add your photo';
+  console.log(methods.getValues());
   return (
     <>
       <Button onClick={() => modal.toggle()} type="button" btnType={ColorTypeEnum.PRIMARY}>
         Add your photo
       </Button>
-      <Modal
-        id="Photo-form"
-        open={modal.isOpen}
-        title="Add new photo"
-        toggle={modal.toggle}
-        className="xs:w-full max-w-none lg:w-1/2"
-        onClosed={() => methods.reset()}
-      >
-        <FormProvider {...methods}>
-          <div>
+      <FormProvider {...methods}>
+        <Modal
+          id="Photo-form"
+          open={modal.isOpen}
+          title="Add new photo"
+          toggle={modal.toggle}
+          className="xs:w-full max-w-none lg:w-3/4"
+          onClosed={() => methods.reset()}
+          action={
+            <Form className="flex gap-2 text-end" onSubmit={methods.handleSubmit(handleSubmit)}>
+              <FileInput
+                btnType={ColorTypeEnum.SECONDARY}
+                className="mx-0"
+                name="file"
+                label={inputLabel}
+                acceptFiles={acceptedMimeFiles}
+              />
+              <Button
+                type="submit"
+                btnType={ColorTypeEnum.PRIMARY}
+                disabled={methods.formState.isSubmitting}
+                isLoading={methods.formState.isSubmitting}
+              >
+                Submit photo
+              </Button>
+            </Form>
+          }
+        >
+          <div className="flex min-h-[50vh] w-full items-center justify-center ">
             {methods.getValues('file') ? (
               <Image width={500} height={500} src={createUrlFromImg(methods.getValues('file')?.[0]) ?? ''} alt="" />
             ) : (
@@ -52,12 +79,8 @@ function PhotoForm() {
               </div>
             )}
           </div>
-
-          <Form className="inline-block w-full pt-4 text-end" onSubmit={methods.handleSubmit(handleSubmit)}>
-            <FileInput className="mx-0" name="file" label="Add your photo" acceptFiles={acceptedMimeFiles} />
-          </Form>
-        </FormProvider>
-      </Modal>
+        </Modal>
+      </FormProvider>
     </>
   );
 }
