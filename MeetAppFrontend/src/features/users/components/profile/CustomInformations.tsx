@@ -19,7 +19,7 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
   useEffect(() => {
     if (userId) getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
   }, [userId]);
-  console.log(data, userId);
+
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
 
   return (
