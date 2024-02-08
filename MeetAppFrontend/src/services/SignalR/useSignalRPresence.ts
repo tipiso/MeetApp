@@ -9,7 +9,7 @@ const useSignalRPresence = () => {
   const authenticated = isAuthenticated();
 
   const createHubConnection = (token: string) => {
-    if (!authenticated) return;
+    if (!authenticated || hubConnection?.state !== 'Disconnected') return;
 
     setHubConnection(
       new HubConnectionBuilder()
@@ -22,7 +22,7 @@ const useSignalRPresence = () => {
   };
 
   useEffect(() => {
-    if (hubConnection && hubConnection.state === 'Disconnected') {
+    if (hubConnection && authenticated && hubConnection.state === 'Disconnected') {
       hubConnection?.start().catch((error) => console.log('[SignalR] start error:', error));
     }
 
