@@ -13,6 +13,7 @@ export default function Photos({ photos }: Props) {
     <section className="pt-10 pb-4">
       <h2 className="mb-3 text-2xl font-bold">Photos</h2>
       <Carousel
+        className="profile-carousel"
         slidesToShow={1}
         slidesToScroll={1}
         dots={true}
@@ -27,7 +28,7 @@ export default function Photos({ photos }: Props) {
         responsiveSetup={[]}
       >
         {photos?.map((p) => (
-          <Image key={p.id} src={p.url} width={250} height={250} alt="user photo" />
+          <Image className="max-w-full" key={p.id} src={p.url} width={250} height={250} alt="user photo" />
         ))}
       </Carousel>
     </section>

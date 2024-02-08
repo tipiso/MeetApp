@@ -20,3 +20,18 @@
 .slick-prev:before {
   content: none !important;
 }
+
+.profile-carousel {
+  .slick-slide img {
+    aspect-ratio: auto;
+  }
+
+  .slick-track {
+    display: flex;
+    justify-content: center;
+  }
+
+  .slick-current {
+    width: unset !important;
+  }
+}

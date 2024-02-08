@@ -45,6 +45,14 @@ export default function NavbarInvitesBox() {
 
   const newInvites = data?.filter((u) => !friends.find((f) => f.id === u.id));
 
+  if ((!isMutating && !data) || !data?.length) {
+    return (
+      <div className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 bg-base-100 pt-16 text-center shadow">
+        You don't have any new invites.
+      </div>
+    );
+  }
+
   return (
     <ul className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 flex-nowrap overflow-auto bg-base-100 px-0 py-0 shadow">
       {isMutating && <Loader size={LoaderSizes.lg} />}
@@ -55,11 +63,6 @@ export default function NavbarInvitesBox() {
             <InviteBoxItem user={u} onClick={() => router.push(`${usersUrl}/${u.userName}/profile`)} />
           ))}
         </>
-      )}
-      {!isMutating && !newInvites && (
-        <li className="pointer-events-none flex h-full items-center px-4 pb-2 hover:cursor-default">
-          <span>You don't have any new likes</span>
-        </li>
       )}
     </ul>
   );
