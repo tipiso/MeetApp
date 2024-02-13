@@ -22,16 +22,31 @@
 }
 
 .profile-carousel {
+  display: flex !important;
+  flex-direction: column;
+  min-height: 500px;
+
+  .slick-list {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    height: 100%;
+  }
+
   .slick-slide img {
     aspect-ratio: auto;
+    width: auto !important;
+  }
+
+  .slick-active {
+    div {
+      display: flex;
+      justify-content: center;
+    }
   }
 
   .slick-track {
     display: flex;
     justify-content: center;
-  }
-
-  .slick-current {
-    width: unset !important;
   }
 }
