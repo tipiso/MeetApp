@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { LegacyRef, ReactNode, forwardRef } from 'react';
 import Slider, { CustomArrowProps, ResponsiveObject, Settings } from 'react-slick';
 import CarouselArrowLeft from '@/assets/images/LeftCarouselArrow.svg';
 import CarouselArrowRight from '@/assets/images/RightCarouselArrow.svg';
@@ -53,9 +53,13 @@ const SlickArrowRight = ({ currentSlide, slideCount, ...props }: CustomArrowProp
   </button>
 );
 
-export default function Carousel({ children, responsiveSetup, carouselData, ...props }: Props) {
+const Carousel = forwardRef(function Carousel(
+  { children, responsiveSetup, carouselData, ...props }: Props,
+  ref: LegacyRef<Slider> | undefined,
+) {
   return (
     <Slider
+      ref={ref}
       arrows={true}
       prevArrow={<SlickArrowLeft />}
       nextArrow={<SlickArrowRight />}
@@ -65,4 +69,6 @@ export default function Carousel({ children, responsiveSetup, carouselData, ...p
       {children}
     </Slider>
   );
-}
+});
+
+export default Carousel;

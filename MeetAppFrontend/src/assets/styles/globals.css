@@ -21,8 +21,20 @@
   content: none !important;
 }
 
+.slick-thumb li img {
+  filter: grayscale(100%);
+  aspect-ratio: 1 / 1;
+}
+
+.slick-thumb li.slick-active img {
+  filter: grayscale(0);
+}
+
 .profile-carousel {
-  display: flex !important;
+  li img {
+    aspect-ratio: 1 / 1;
+  }
+  /* display: flex !important;
   flex-direction: column;
   min-height: 500px;
 
@@ -48,5 +60,5 @@
   .slick-track {
     display: flex;
     justify-content: center;
-  }
+  } */
 }

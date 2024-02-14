@@ -10,10 +10,13 @@ import { userPhotoValidator } from '../../validators';
 import { Form } from '@radix-ui/react-form';
 import { FileInput } from '@/components/Forms/FileInput';
 import { useAddPhoto } from '../../hooks';
-import { createUrlFromImg } from '@/utils/helpers';
+import { createUrlFromImg, getUsernameFromSession } from '@/utils/helpers';
 import Image from 'next/image';
+import { useSWRConfig } from 'swr';
 
 function PhotoForm() {
+  const username = getUsernameFromSession();
+  const { mutate } = useSWRConfig();
   const addPhoto = useAddPhoto();
   const methods = useForm({
     defaultValues: {
@@ -31,12 +34,13 @@ function PhotoForm() {
       } finally {
         modal.toggle();
         methods.reset();
+        mutate(username);
       }
     }
   };
 
   const inputLabel = methods.getValues('file') ? 'Replace photo' : 'Add your photo';
-  console.log(methods.getValues());
+
   return (
     <>
       <Button onClick={() => modal.toggle()} type="button" btnType={ColorTypeEnum.PRIMARY}>
