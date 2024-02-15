@@ -31,7 +31,6 @@ const Modal = ({ id, open, title, children, toggle, className, action, onClosed 
           </div>
           <div className="py-4">{children}</div>
           <footer className="modal-action">
-            {/* if there is a button in form, it will close the modal */}
             <Button outline btnType={ColorTypeEnum.SECONDARY} type="button" onClick={handleClose} className="btn">
               Close
             </Button>
