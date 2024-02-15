@@ -6,6 +6,7 @@ import ProfileTabs from '@/features/users/components/profile/ProfileTabs';
 import TabAction from '@/features/users/components/profile/TabAction';
 import useStore from '@/store/store';
 import ProfileSummary from '@/features/users/components/profile/ProfileSummary';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const CurrentUserPage = () => {
   const user = useStore((state) => state.user);
@@ -34,7 +35,11 @@ const CurrentUserPage = () => {
 };
 
 CurrentUserPage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return (
+    <MainLayout>
+      <Layout>{page}</Layout>
+    </MainLayout>
+  );
 };
 
 CurrentUserPage.secured = true;

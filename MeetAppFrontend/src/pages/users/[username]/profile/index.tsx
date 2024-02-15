@@ -7,6 +7,7 @@ import ProfileTabs from '@/features/users/components/profile/ProfileTabs';
 import { useRouter } from 'next/router';
 import TabAction from '@/features/users/components/profile/TabAction';
 import ProfileSummary from '@/features/users/components/profile/ProfileSummary';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const ProfilePage = () => {
   const router = useRouter();
@@ -52,7 +53,11 @@ const ProfilePage = () => {
 };
 
 ProfilePage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return (
+    <MainLayout>
+      <Layout>{page}</Layout>
+    </MainLayout>
+  );
 };
 
 ProfilePage.secured = true;

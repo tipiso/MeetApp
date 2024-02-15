@@ -10,7 +10,7 @@ type Props = {
 export function NavIcon({ route, img, imgAlt }: Props) {
   const iconBody = (
     <div className="flex h-12 w-12 items-center justify-center rounded-full bg-gray-700">
-      <Image src={img} alt={imgAlt} />
+      <Image src={img} alt={imgAlt} priority />
     </div>
   );
 

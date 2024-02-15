@@ -3,6 +3,7 @@ import Layout from '@/components/Layouts/Layout';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import { routes } from '@/utils/routes';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 export default function HomePage() {
   return (
@@ -27,5 +28,9 @@ export default function HomePage() {
 }
 
 HomePage.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>;
+  return (
+    <MainLayout>
+      <Layout>{page}</Layout>
+    </MainLayout>
+  );
 };

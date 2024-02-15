@@ -14,6 +14,7 @@ import { login } from '@/services/Auth/login';
 import { ColorTypeEnum } from '@/utils/constants';
 import LoginLayout from '@/components/Layouts/LoginLayout';
 import { loginSchema } from '@/features/auth/validators';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const defaultValues = {
   username: '',
@@ -89,7 +90,11 @@ export default function SignIn({ csrfToken }: InferGetServerSidePropsType<typeof
 }
 
 SignIn.getLayout = function getLayout(page: ReactElement) {
-  return <LoginLayout>{page}</LoginLayout>;
+  return (
+    <MainLayout hideRoutes>
+      <LoginLayout>{page}</LoginLayout>
+    </MainLayout>
+  );
 };
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {

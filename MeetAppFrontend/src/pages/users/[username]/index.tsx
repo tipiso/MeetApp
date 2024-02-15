@@ -4,6 +4,7 @@ import UserPageLayout from '@/components/Layouts/UserPageLayout';
 import UserForm from '@/features/users/components/UserForm';
 import { useGetHobbies } from '@/features/search/hooks';
 import { Option } from '@/components/Forms/MultiSelect';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const UserPage = () => {
   const { isLoading, user } = useUserPage();
@@ -31,7 +32,11 @@ const UserPage = () => {
 };
 
 UserPage.getLayout = function getLayout(page: ReactElement) {
-  return <UserPageLayout>{page}</UserPageLayout>;
+  return (
+    <MainLayout hideRoutes>
+      <UserPageLayout>{page}</UserPageLayout>
+    </MainLayout>
+  );
 };
 
 UserPage.secured = true;

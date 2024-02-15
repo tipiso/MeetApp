@@ -15,6 +15,7 @@ import DatePickerInput from '@/components/Forms/DatePicker';
 import { getISOfromJSDate } from '@/utils/parsers';
 import { SelectInput } from '@/components/Forms/SelectInput';
 import { registerSchema } from '@/features/auth/validators';
+import MainLayout from '@/components/Layouts/MainLayout';
 
 const defaultValues = {
   username: '',
@@ -143,5 +144,9 @@ export default function Register() {
 }
 
 Register.getLayout = function getLayout(page: ReactElement) {
-  return <LoginLayout>{page}</LoginLayout>;
+  return (
+    <MainLayout hideRoutes>
+      <LoginLayout>{page}</LoginLayout>
+    </MainLayout>
+  );
 };
