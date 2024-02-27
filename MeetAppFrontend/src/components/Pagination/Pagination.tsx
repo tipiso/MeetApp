@@ -9,8 +9,6 @@ type Props = {
 };
 
 export default function Pagination({
-  pageSize,
-  totalSize,
   totalPage,
   currentPage,
   handlePageChange,

@@ -10,7 +10,7 @@ import { useMemo } from 'react';
 import MultiSelect from '@/components/Forms/MultiSelect';
 import Button from '@/components/Button';
 import { ColorTypeEnum, genderFilterOptions, initialPagination } from '@/utils/constants';
-import { useAdvancedSearchForm } from '@/features/search/hooks/useSearchForm';
+import { useAdvancedSearchForm } from '@/features/search/hooks';
 import { getValuesFromSelectOptions } from '@/utils/helpers';
 import Results from './Results';
 
