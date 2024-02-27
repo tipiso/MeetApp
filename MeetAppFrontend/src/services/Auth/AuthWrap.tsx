@@ -4,6 +4,7 @@ import { routes } from '@/utils/routes';
 import { useGetUser } from '@/features/users/hooks';
 import useStore from '@/store/store';
 import logOut from './logout';
+import { useEffect } from 'react';
 
 export default function AuthWrap({ children }: { children: JSX.Element }) {
   const router = useRouter();
@@ -26,9 +27,16 @@ export default function AuthWrap({ children }: { children: JSX.Element }) {
     return <div>Loading...</div>;
   }
 
+  useEffect(() => {
+    const fillInfoRoute = `${routes.users}/${userQuery.data?.userName}`;
+    if (!userQuery.data?.photoUrl && !router.pathname.includes(fillInfoRoute)) {
+      router.push(fillInfoRoute);
+    }
+  }, [userQuery.data?.photoUrl]);
+
   if (userQuery.data) {
     setUser(userQuery.data);
   }
-  console.log('AuthWrapUpdate');
+
   return <>{children}</>;
 }

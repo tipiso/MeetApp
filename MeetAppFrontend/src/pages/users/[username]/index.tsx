@@ -1,5 +1,5 @@
 import { ReactElement, useMemo } from 'react';
-import useUserPage from '@/features/users/hooks/useUserPage';
+import { useUserPage } from '@/features/users/hooks';
 import UserPageLayout from '@/components/Layouts/UserPageLayout';
 import UserForm from '@/features/users/components/UserForm';
 import { useGetHobbies } from '@/features/search/hooks';

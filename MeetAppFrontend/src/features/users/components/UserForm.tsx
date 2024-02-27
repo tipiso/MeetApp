@@ -66,10 +66,12 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(handleSubmit)} className="pt-6">
         <div className="flex w-full items-center pt-16 pb-8">
-          <Avatar
-            name={username}
-            imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
-          />
+          <div className="pr-4">
+            <Avatar
+              name={username}
+              imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
+            />
+          </div>
           <FileInput className="ml-6" name="file" label="Add your photo" acceptFiles={acceptedMimeFiles} />
         </div>
         <div className="grid grid-cols-12 gap-x-2.5">

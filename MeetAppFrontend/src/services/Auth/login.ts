@@ -8,22 +8,22 @@ type loginProps = {
   password: string;
   onSuccess?: () => void;
   onError?: (error: any) => void;
-  redirectToUser?: boolean;
+  redirectUrl?: string;
 };
 
-export const login = async ({ username, password, onSuccess, onError, redirectToUser }: loginProps) => {
+export const login = async ({ username, password, onSuccess, onError, redirectUrl }: loginProps) => {
   try {
-    const redirectUrl = redirectToUser ? routes.currentUserProfile : routes.home;
+    const redirect = redirectUrl ? redirectUrl : routes.home;
     const response = await signIn('credentials', {
       username,
       password,
-      callbackUrl: redirectUrl,
+      callbackUrl: redirect,
       redirect: false,
     });
 
     if (response?.ok) {
       onSuccess?.();
-      Router.push(redirectUrl);
+      Router.push(redirect);
     } else throw response;
   } catch (error) {
     onError?.(error);

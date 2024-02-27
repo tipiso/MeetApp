@@ -23,7 +23,7 @@ const Avatar = ({ imgUrl, name, width = 128, height = 128, minWidth }: Props) =>
         </div>
       ) : (
         <div className="placeholder avatar">
-          <div className="rounded-full bg-neutral-focus text-neutral-content">
+          <div style={{ width: `${width}px`, height: `${height}px`, minWidth: minWidth ?? 'auto' }} className="rounded-full bg-neutral-focus text-neutral-content">
             <span className="text-3xl">{name.substring(0, 1).toUpperCase()}</span>
           </div>
         </div>

@@ -2,6 +2,7 @@ import { api } from '@/utils/axios';
 import { registerUrl } from '@/utils/url';
 import { login } from '@/services/Auth/login';
 import { transformErrorsToStringArr } from '@/utils/helpers';
+import { routes } from '@/utils/routes';
 
 type RegisterPayload = {
   username: string;
@@ -16,7 +17,11 @@ const register = async (data: RegisterPayload) => {
   try {
     const response = await api.post(registerUrl, data);
     if (response.status === 200) {
-      await login({ username: data.username, password: data.password, redirectToUser: true });
+      await login({
+        username: data.username,
+        password: data.password,
+        redirectUrl: `${routes.users}/${data.username}`,
+      });
       return true;
     }
   } catch (e) {
