@@ -19,7 +19,7 @@ const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className
           <Image
             height={imgHeight}
             width={imgWidth}
-            className="relative w-full rounded-lg pb-12"
+            className="relative aspect-square w-full rounded-lg object-cover pb-12"
             src={photoUrl}
             alt={`main img of user ${username}`}
             loading="lazy"

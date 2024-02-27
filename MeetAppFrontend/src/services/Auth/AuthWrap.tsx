@@ -29,6 +29,6 @@ export default function AuthWrap({ children }: { children: JSX.Element }) {
   if (userQuery.data) {
     setUser(userQuery.data);
   }
-
+  console.log('AuthWrapUpdate');
   return <>{children}</>;
 }

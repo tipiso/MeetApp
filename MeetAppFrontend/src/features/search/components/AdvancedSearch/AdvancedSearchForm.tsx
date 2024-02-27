@@ -71,6 +71,7 @@ const AdvancedSearchForm = () => {
           wasFetched={wasFetched}
           pagination={pagination}
           formValues={methods.getValues()}
+          totalItems={pagination.totalItems}
           getPage={getPage}
         />
       </FormProvider>

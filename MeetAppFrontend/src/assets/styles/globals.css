@@ -6,11 +6,6 @@
   @apply text-neutral;
 }
 
-.slick-slide img {
-  object-fit: cover;
-  aspect-ratio: 1 / 1;
-}
-
 .slick-next,
 .slick-preev {
   z-index: 1;
@@ -31,34 +26,13 @@
 }
 
 .profile-carousel {
+  .slick-next,
+  .slick-prev {
+    width: 50px;
+    height: 50px;
+  }
+
   li img {
     aspect-ratio: 1 / 1;
   }
-  /* display: flex !important;
-  flex-direction: column;
-  min-height: 500px;
-
-  .slick-list {
-    display: flex;
-    flex: 1;
-    align-items: center;
-    height: 100%;
-  }
-
-  .slick-slide img {
-    aspect-ratio: auto;
-    width: auto !important;
-  }
-
-  .slick-active {
-    div {
-      display: flex;
-      justify-content: center;
-    }
-  }
-
-  .slick-track {
-    display: flex;
-    justify-content: center;
-  } */
 }
