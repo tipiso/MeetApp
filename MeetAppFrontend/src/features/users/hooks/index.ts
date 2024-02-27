@@ -14,6 +14,9 @@ import { LikedUsersDTO, UpdateUserDTO } from '@/services/Users/dtos';
 import { initialPagination } from '@/utils/constants';
 import { PaginationDTO } from 'types/pagination';
 import { likeUser } from '@/services/likes';
+import { useRouter } from 'next/router';
+import { useSession } from 'next-auth/react';
+import { isGivenUsernameCurrentUser } from '@/utils/helpers';
 
 function useGetUsers() {
   const { data, ...rest } = useSWR(usersQueryKeys.usersList(), getUsers);
@@ -90,4 +93,24 @@ function useLikeUser() {
   };
 }
 
-export { useGetUser, useGetUsers, useUpdateUser, useAddPhoto, useLikeUser, useLikedUsersWithPagination, useLikedUsers };
+const useUserPage = () => {
+  const { query } = useRouter();
+  const { data } = useSession();
+  const isUserDefined = 'username' in query;
+  const { data: user, isLoading } = useGetUser(isUserDefined ? (query.username as string) : '');
+
+  const canEdit = isGivenUsernameCurrentUser(query.username as string, data?.accessToken);
+
+  return { user, isLoading, canEdit };
+};
+
+export {
+  useGetUser,
+  useGetUsers,
+  useUpdateUser,
+  useAddPhoto,
+  useLikeUser,
+  useLikedUsersWithPagination,
+  useLikedUsers,
+  useUserPage,
+};

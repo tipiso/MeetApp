@@ -6,6 +6,8 @@ import { SearchFriendsDTO } from '@/services/Users/dtos';
 import { getHobbies, hobbiesQueryKeys } from '@/services/hobbies';
 import { PaginationDTO } from 'types/pagination';
 import { initialPagination } from '@/utils/constants';
+import { useForm } from 'react-hook-form';
+import { Option } from '@/components/Forms/MultiSelect';
 
 function useBaseMatches() {
   const mutateFetcher = (url: string, { arg }: { arg: string }) =>
@@ -44,4 +46,34 @@ function useGetHobbies() {
   };
 }
 
-export { useMatches, useGetHobbies, useBaseMatches };
+// Search Forms
+const defaultValues = {
+  searchString: '',
+  minAge: '',
+  maxAge: '',
+  hobbies: [] as Option[],
+  gender: '',
+};
+
+/** Needs RHF context */
+function useAdvancedSearchForm() {
+  const methods = useForm({
+    defaultValues,
+  });
+
+  const { data, isMutating, trigger, pagination, getPage } = useMatches();
+
+  return { methods, data, isMutating, trigger, defaultValues, pagination, getPage };
+}
+
+function useSearchForm() {
+  const methods = useForm({
+    defaultValues,
+  });
+
+  const { data, isMutating, trigger } = useBaseMatches();
+
+  return { methods, data, isMutating, trigger, defaultValues };
+}
+
+export { useMatches, useGetHobbies, useBaseMatches, useAdvancedSearchForm, useSearchForm };
