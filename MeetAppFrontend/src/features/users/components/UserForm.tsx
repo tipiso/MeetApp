@@ -13,6 +13,8 @@ import { userFormSchema } from '../validators';
 import { useAddPhoto, useGetUser, useUpdateUser } from '../hooks';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
+import useStore from '@/store/store';
+import { useEffect } from 'react';
 
 type Props = {
   knownAs: string;
@@ -51,6 +53,7 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
   const addPhoto = useAddPhoto();
   const updateUser = useUpdateUser();
   const getUser = useGetUser(username);
+  const setUser = useStore((state) => state.setUser);
   const isLoading = addPhoto.isMutating || updateUser.isMutating;
 
   const handleSubmit = async ({ file, hobbies, ...rest }: FormValues) => {
@@ -58,9 +61,15 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
       await addPhoto.trigger(file[0]);
       await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(hobbies) });
       await getUser.mutate();
-      router.push(routes.search);
     }
   };
+
+  useEffect(() => {
+    if (getUser.data && getUser.data.photoUrl) {
+      setUser(getUser.data);
+      router.push(routes.search);
+    }
+  }, [getUser.isLoading])
 
   return (
     <FormProvider {...methods}>
@@ -68,6 +77,8 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
         <div className="flex w-full items-center pt-16 pb-8">
           <div className="pr-4">
             <Avatar
+              width={128}
+              height={128}
               name={username}
               imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
             />
