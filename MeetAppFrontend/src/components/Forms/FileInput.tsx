@@ -45,6 +45,7 @@ export function FileInput(props: Props) {
               accept={props.acceptFiles?.join(', ')}
               onChange={(e) => {
                 const fileList = (e.target as HTMLInputElement).files;
+                console.log(fileList);
                 if (fileList) {
                   fieldProps.onChange(fileList);
                 }

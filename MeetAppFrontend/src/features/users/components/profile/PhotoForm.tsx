@@ -10,16 +10,13 @@ import { userPhotoValidator } from '../../validators';
 import { Form } from '@radix-ui/react-form';
 import { FileInput } from '@/components/Forms/FileInput';
 import { useAddPhoto } from '../../hooks';
-import { createUrlFromImg, getUsernameFromSession } from '@/utils/helpers';
+import { createUrlFromImg } from '@/utils/helpers';
 import Image from 'next/image';
-import { useSWRConfig } from 'swr';
 import { alert } from '@/components/Alert/Alert';
 import useStore from '@/store/store';
 
 function PhotoForm() {
   const updatePhotos = useStore((state) => state.updatePhotos);
-  const username = getUsernameFromSession();
-  const { mutate } = useSWRConfig();
   const addPhoto = useAddPhoto();
   const methods = useForm({
     defaultValues: {
@@ -28,6 +25,7 @@ function PhotoForm() {
     resolver: zodResolver(z.object({ file: userPhotoValidator })),
   });
   const modal = useModal();
+  const fileValue = methods.watch('file');
 
   const handleSubmit = async ({ file }: { file?: File[] }) => {
     if (file) {
@@ -36,18 +34,17 @@ function PhotoForm() {
         if (res?.data) {
           updatePhotos([res.data]);
           alert('Photo added succesfully', ColorTypeEnum.SUCCESS);
+          modal.toggle();
+          methods.resetField('file');
         }
       } catch (e) {
         alert('Something went wrong, please try again.', ColorTypeEnum.DANGER);
-      } finally {
-        modal.toggle();
-        methods.reset();
       }
     }
   };
 
   const inputLabel = methods.getValues('file') ? 'Replace photo' : 'Add your photo';
-
+  console.log(fileValue, methods.getValues('file'));
   return (
     <>
       <Button onClick={() => modal.toggle()} type="button" btnType={ColorTypeEnum.PRIMARY}>
@@ -82,8 +79,8 @@ function PhotoForm() {
           }
         >
           <div className="flex min-h-[50vh] w-full items-center justify-center ">
-            {methods.getValues('file') ? (
-              <Image width={500} height={500} src={createUrlFromImg(methods.getValues('file')?.[0]) ?? ''} alt="" />
+            {fileValue ? (
+              <Image width={500} height={500} src={createUrlFromImg(fileValue[0]) ?? ''} alt="" />
             ) : (
               <div className="flex min-h-[50vh] w-full items-center justify-center bg-slate-50">
                 Here there will be your photo's preview
