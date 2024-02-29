@@ -14,7 +14,7 @@ import { useAddPhoto, useGetUser, useUpdateUser } from '../hooks';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
 import useStore from '@/store/store';
-import { useEffect } from 'react';
+import { alert } from '@/components/Alert/Alert';
 
 type Props = {
   knownAs: string;
@@ -58,18 +58,20 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
 
   const handleSubmit = async ({ file, hobbies, ...rest }: FormValues) => {
     if (file) {
-      await addPhoto.trigger(file[0]);
-      await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(hobbies) });
-      await getUser.mutate();
+      try {
+        await addPhoto.trigger(file[0]);
+        await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(hobbies) });
+        const data = await getUser.mutate();
+        if (data) {
+          setUser(data?.data);
+          alert('Updated succesfully!', ColorTypeEnum.SUCCESS);
+          router.push(routes.search);
+        }
+      } catch {
+        alert('Something went wrong, try again.', ColorTypeEnum.DANGER);
+      }
     }
   };
-
-  useEffect(() => {
-    if (getUser.data && getUser.data.photoUrl) {
-      setUser(getUser.data);
-      router.push(routes.search);
-    }
-  }, [getUser.isLoading])
 
   return (
     <FormProvider {...methods}>
