@@ -1,4 +1,4 @@
-import { Gender, User } from '@/features/users/types';
+import { Gender, Photo, User } from '@/features/users/types';
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
@@ -10,6 +10,7 @@ type AppStore = {
 type AppStoreActions = {
   setUser: (loggedUser: User) => void;
   setFriends: (friends: User[]) => void;
+  updatePhotos: (photos: Photo[]) => void;
   reset: () => void;
 };
 
@@ -45,6 +46,8 @@ const useStore = create<AppStore & AppStoreActions>()(
         // Setters
         setUser: (loggedUser) => set(() => ({ user: loggedUser })),
         setFriends: (friends) => set(() => ({ friends })),
+        updatePhotos: (photos) =>
+          set((state) => ({ user: { ...state.user, photos: [...state.user.photos, ...photos] } })),
         reset: () => {
           set(initialState);
         },

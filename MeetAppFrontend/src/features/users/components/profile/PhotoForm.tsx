@@ -13,8 +13,11 @@ import { useAddPhoto } from '../../hooks';
 import { createUrlFromImg, getUsernameFromSession } from '@/utils/helpers';
 import Image from 'next/image';
 import { useSWRConfig } from 'swr';
+import { alert } from '@/components/Alert/Alert';
+import useStore from '@/store/store';
 
 function PhotoForm() {
+  const updatePhotos = useStore((state) => state.updatePhotos);
   const username = getUsernameFromSession();
   const { mutate } = useSWRConfig();
   const addPhoto = useAddPhoto();
@@ -29,12 +32,16 @@ function PhotoForm() {
   const handleSubmit = async ({ file }: { file?: File[] }) => {
     if (file) {
       try {
-        await addPhoto.trigger(file[0]);
+        const res = await addPhoto.trigger(file[0]);
+        if (res?.data) {
+          updatePhotos([res.data]);
+          alert('Photo added succesfully', ColorTypeEnum.SUCCESS);
+        }
       } catch (e) {
+        alert('Something went wrong, please try again.', ColorTypeEnum.DANGER);
       } finally {
         modal.toggle();
         methods.reset();
-        mutate(username);
       }
     }
   };

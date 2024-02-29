@@ -1,6 +1,6 @@
 import { api } from '@/utils/axios';
 import { addPhotoUrl, likesUrl, usersUrl } from '@/utils/url';
-import { User } from '@/features/users/types';
+import { Photo, User } from '@/features/users/types';
 import { PaginationParams } from '@/components/Pagination/types';
 import { LikedUsersDTO, SearchFriendsDTO, UpdateUserDTO } from './dtos';
 import { mapDTOToURLEntry } from '@/utils/parsers';
@@ -36,7 +36,7 @@ const updateUser = (user: UpdateUserDTO) => api.put(`${usersUrl}`, user);
 const addPhoto = (photo: File) => {
   const formData = new FormData();
   formData.append('file', photo);
-  return api.post(`${usersUrl}${addPhotoUrl}`, formData);
+  return api.post<Photo>(`${usersUrl}${addPhotoUrl}`, formData);
 };
 
 export {
