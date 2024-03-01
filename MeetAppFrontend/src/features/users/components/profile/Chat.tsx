@@ -11,6 +11,7 @@ import { Message } from '@/features/messages/types';
 import { getUsernameFromSession } from '@/utils/helpers';
 import { getDateAndTimeFromDate } from '@/utils/parsers';
 import Loader, { LoaderSizes } from '@/components/Loader';
+import { alert } from '@/components/Alert/Alert';
 
 type MsgProps = Message & { recipientName: string };
 
@@ -47,11 +48,11 @@ export default function Chat() {
     try {
       if (recipientName) {
         await chat.sendMessage(recipientName, newMessage);
+        await mt.mutate();
         methods.reset();
-        mt.mutate();
       }
     } catch (e) {
-      console.log(e);
+      alert('Something went wrong, please try again.', ColorTypeEnum.DANGER);
     }
   };
 

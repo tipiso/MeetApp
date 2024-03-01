@@ -44,7 +44,7 @@ function PhotoForm() {
   };
 
   const inputLabel = methods.getValues('file') ? 'Replace photo' : 'Add your photo';
-  console.log(fileValue, methods.getValues('file'));
+
   return (
     <>
       <Button onClick={() => modal.toggle()} type="button" btnType={ColorTypeEnum.PRIMARY}>
