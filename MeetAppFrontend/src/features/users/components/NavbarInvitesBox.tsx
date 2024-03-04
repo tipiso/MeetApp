@@ -8,23 +8,26 @@ import { usersUrl } from '@/utils/url';
 import Button from '@/components/Button';
 import { ColorTypeEnum } from '@/utils/constants';
 import { User } from '../types';
+import { likeUser } from '@/services/likes';
+import { alert } from '@/components/Alert/Alert';
 
 type BoxItemProps = {
   user: User;
-  onClick: () => void;
+  onUserClick: () => void;
+  onBtnClick: (user: User) => void;
 };
 
-function InviteBoxItem({ onClick, user }: BoxItemProps) {
+function InviteBoxItem({ onUserClick, onBtnClick, user }: BoxItemProps) {
   return (
-    <li onClick={onClick}>
+    <li>
       <div className="flex items-center px-4 pb-2">
         <Avatar imgUrl={user.photoUrl} name={user.knownAs} minWidth={60} width={60} height={60} />
         <div className="ml-2 flex min-w-0 flex-grow justify-between">
-          <div className="flex items-center justify-between">
+          <div onClick={onUserClick} className="flex items-center justify-between hover:underline">
             <span>{user.knownAs}</span>
           </div>
           <div className="min-w-0 max-w-full truncate text-sm">
-            <Button btnType={ColorTypeEnum.PRIMARY} type="button">
+            <Button onClick={() => onBtnClick(user)} btnType={ColorTypeEnum.PRIMARY} type="button">
               Accept
             </Button>
           </div>
@@ -37,6 +40,7 @@ function InviteBoxItem({ onClick, user }: BoxItemProps) {
 export default function NavbarInvitesBox() {
   const { data, isMutating, getUsers } = useLikedUsers();
   const friends = useStore((state) => state.friends);
+  const setFriends = useStore((state) => state.setFriends);
   const router = useRouter();
 
   useEffect(() => {
@@ -45,7 +49,17 @@ export default function NavbarInvitesBox() {
 
   const newInvites = data?.filter((u) => !friends.find((f) => f.id === u.id));
 
-  if ((!isMutating && !data) || !data?.length) {
+  const handleBtnClick = async (user: User) => {
+    try {
+      await likeUser(user.userName);
+      alert('User invite accepted!', ColorTypeEnum.SUCCESS);
+      setFriends([user]);
+    } catch {
+      alert('Something went wrong, please try again.', ColorTypeEnum.DANGER);
+    }
+  };
+
+  if ((!isMutating && !data) || !newInvites?.length) {
     return (
       <div className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 bg-base-100 pt-16 text-center shadow">
         You don't have any new invites.
@@ -60,7 +74,11 @@ export default function NavbarInvitesBox() {
         <>
           <h2 className="p-4 text-base font-bold">Pending friend requests:</h2>
           {newInvites.map((u) => (
-            <InviteBoxItem user={u} onClick={() => router.push(`${usersUrl}/${u.userName}/profile`)} />
+            <InviteBoxItem
+              user={u}
+              onUserClick={() => router.push(`${usersUrl}/${u.userName}/profile`)}
+              onBtnClick={handleBtnClick}
+            />
           ))}
         </>
       )}

@@ -15,7 +15,7 @@ const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className
   return (
     <div className={cn('relative rounded-lg', className)}>
       <div className="relative h-full rounded-lg">
-        {photoUrl && (
+        {photoUrl ? (
           <Image
             height={imgHeight}
             width={imgWidth}
@@ -24,6 +24,8 @@ const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className
             alt={`main img of user ${username}`}
             loading="lazy"
           />
+        ) : (
+          <div style={{ height: imgHeight, width: imgWidth }}></div>
         )}
         <div
           style={{

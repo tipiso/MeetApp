@@ -5,6 +5,6 @@ const likesQueryKeys = {
   likes: 'likes',
 };
 
-const likeUser = (likedUser: string) => api.post(`${likesUrl}/${likedUser}`);
+const likeUser = (likedUsername: string) => api.post(`${likesUrl}/${likedUsername}`);
 
 export { likesQueryKeys, likeUser };
