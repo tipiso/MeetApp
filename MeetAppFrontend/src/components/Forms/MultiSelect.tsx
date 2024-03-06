@@ -1,4 +1,4 @@
-import Select from 'react-select';
+import Select, { MultiValueGenericProps, components } from 'react-select';
 import * as Form from '@radix-ui/react-form';
 import { InputHTMLAttributes, ReactNode } from 'react';
 import Label from '@/components/Forms/Label';
@@ -14,6 +14,15 @@ type Props = {
   options: Option[];
   label?: ReactNode;
 } & InputHTMLAttributes<HTMLInputElement>;
+
+const MultiValueLabel = (props: MultiValueGenericProps) => {
+  if (Array.isArray(props.selectProps.value)) {
+    if (props.selectProps.value[0].value === props.data.value) {
+      return <Badge size={BadgeSizes.MD}>Options chosen: {props.selectProps.value.length}</Badge>;
+    }
+  }
+  return null;
+};
 
 const MultiSelect = (props: Props) => {
   const { control, setValue } = useFormContext();
@@ -31,7 +40,6 @@ const MultiSelect = (props: Props) => {
             className={props.className}
             unstyled
             isMulti
-            controlShouldRenderValue={false}
             closeMenuOnSelect={false}
             value={field.value}
             onChange={(newValue, _) => {
@@ -48,7 +56,8 @@ const MultiSelect = (props: Props) => {
             options={props.options}
             components={{
               DropdownIndicator: () => <></>,
-              IndicatorsContainer: () => <></>,
+              MultiValueRemove: () => <></>,
+              MultiValueLabel,
             }}
           />
 

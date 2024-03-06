@@ -18,7 +18,6 @@ export default function Photos({ photos }: Props) {
     <section className="pt-10 pb-4">
       <h2 className="mb-3 text-2xl font-bold">Photos</h2>
       <Carousel
-        adaptiveHeight
         className="profile-carousel"
         ref={carouselRef}
         slidesToShow={1}
@@ -32,9 +31,15 @@ export default function Photos({ photos }: Props) {
         responsiveSetup={[]}
       >
         {photos?.map((p) => (
-          <div>
-            <Image key={p.id} src={p.url} width={250} height={250} alt="user photo" className="mx-auto" />
-          </div>
+          <Image
+            key={p.id}
+            src={p.url}
+            width={0}
+            height={0}
+            sizes="100vw"
+            alt="user photo"
+            className="mx-auto block h-auto max-h-full w-full"
+          />
         ))}
       </Carousel>
       <ul className="slick-thumb relative mt-6 !grid grid-cols-4 gap-3 child:cursor-pointer">

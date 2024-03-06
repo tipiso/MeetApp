@@ -33,7 +33,6 @@ SelectItem.displayName = 'SelectItem';
 
 export function SelectInput(props: Props) {
   const { control } = useFormContext();
-  console.log(props.placeholder);
   return (
     <Controller
       {...props}
