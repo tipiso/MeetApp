@@ -1,7 +1,7 @@
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { useLikedUsersWithPagination } from '@/features/users/hooks';
-import { useEffect } from 'react';
-import { Hobby } from '../../types';
+import { useEffect, useState } from 'react';
+import { Hobby, User } from '../../types';
 import HobbiesList from '@/features/search/components/HobbiesList';
 import FriendCard from '@/features/search/components/FriendCard';
 import Button from '@/components/Button';
@@ -14,10 +14,30 @@ type Props = {
 };
 
 export default function CustomInformations({ hobbies, introduction, userId }: Props) {
-  const { data, isMutating, getPage } = useLikedUsersWithPagination(userId);
+  const [usersList, setUsersList] = useState<User[]>([]);
+  const { data, isMutating, getPage, pagination } = useLikedUsersWithPagination(userId);
+
+  const getUsers = async (update: boolean) => {
+    if (userId) {
+      const users = await getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
+      setUsersList(users ? users.data : []);
+    }
+  };
+
+  const updateUsers = async () => {
+    if (userId) {
+      const users = await getPage({
+        pageNumber: pagination.currentPage + 1,
+        pageSize: 6,
+        userId,
+        predicate: 'friends',
+      });
+      setUsersList(users ? [...usersList, ...users.data] : []);
+    }
+  };
 
   useEffect(() => {
-    if (userId) getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
+    getUsers(false);
   }, [userId]);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
@@ -34,22 +54,24 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
       </section>
       <section className="pt-10">
         <h2 className="mb-3 text-2xl font-bold">Friends ({data ? data.length : 0})</h2>
-        {!data || !data.length ? (
+        {!usersList || !usersList.length ? (
           <div className="flex justify-center p-10 text-2xl font-light">
             <p className="max-w-sm text-center">No friends added yet.</p>
           </div>
         ) : (
           <>
             <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 xl:grid-cols-6">
-              {data.map((u) => (
+              {usersList.map((u) => (
                 <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
               ))}
             </div>
-            <div className="pt-6 text-right">
-              <Button outline type="button" btnType={ColorTypeEnum.PRIMARY}>
-                Check more
-              </Button>
-            </div>
+            {pagination.totalItems > pagination.itemsPerPage && (
+              <div className="pt-6 text-right">
+                <Button outline type="button" btnType={ColorTypeEnum.PRIMARY} onClick={updateUsers}>
+                  Check more
+                </Button>
+              </div>
+            )}
           </>
         )}
       </section>

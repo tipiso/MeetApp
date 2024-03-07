@@ -56,7 +56,7 @@ function useLikedUsersWithPagination(userId?: number) {
     predicate,
     pageSize = initialPagination.pageSize,
   }: PaginationDTO & Partial<LikedUsersDTO>) => {
-    await rest.trigger({ pageNumber, pageSize, userId, predicate });
+    return await rest.trigger({ pageNumber, pageSize, userId, predicate });
   };
 
   return {
