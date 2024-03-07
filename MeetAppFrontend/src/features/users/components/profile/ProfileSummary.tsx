@@ -4,6 +4,7 @@ import { User } from '@/features/users/types';
 import Breadcrumbs from '@/components/BreadCrumbs';
 import Image from 'next/image';
 import UserInfoBlock from '../UserInfoBlock';
+import DefaultAvatar from '@/assets/images/DefaultAvatar.png';
 
 type Props = {
   user?: User;
@@ -23,7 +24,7 @@ export default function ProfileSummary({ user }: Props) {
     <aside className="col-span-3 bg-gray-100 px-4 pt-16">
       <Breadcrumbs breadcrumbs={breadcrumbs} />
       <h1 className="pt-6 pb-3 text-2xl font-bold">{user?.knownAs} Profile</h1>
-      <Image className="w-full rounded-lg" src={user?.photoUrl ?? ''} width={340} height={340} alt="user profile" />
+      <Image className="w-full rounded-lg" src={user?.photoUrl ?? DefaultAvatar} width={340} height={340} alt="user profile" />
       <div className="pt-4">
         <UserInfoBlock label="Full Name" content={user?.knownAs ?? ''} />
         <UserInfoBlock label="Location" content={`${user?.city} (${user?.country})`} />
