@@ -17,7 +17,7 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
   const [usersList, setUsersList] = useState<User[]>([]);
   const { data, isMutating, getPage, pagination } = useLikedUsersWithPagination(userId);
 
-  const getUsers = async (update: boolean) => {
+  const getUsers = async () => {
     if (userId) {
       const users = await getPage({ pageNumber: 1, pageSize: 6, userId, predicate: 'friends' });
       setUsersList(users ? users.data : []);
@@ -37,7 +37,7 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
   };
 
   useEffect(() => {
-    getUsers(false);
+    getUsers();
   }, [userId]);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;

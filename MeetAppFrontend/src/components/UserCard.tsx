@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import cn from 'classnames';
 import Image from 'next/image';
+import DefaultAvatar from '@/assets/images/DefaultAvatar.png';
 
 type Props = {
   className?: string;
@@ -15,18 +16,14 @@ const UserCard = ({ imgHeight, imgWidth, children, username, photoUrl, className
   return (
     <div className={cn('relative rounded-lg', className)}>
       <div className="relative h-full rounded-lg">
-        {photoUrl ? (
-          <Image
-            height={imgHeight}
-            width={imgWidth}
-            className="relative aspect-square w-full rounded-lg object-cover pb-12"
-            src={photoUrl}
-            alt={`main img of user ${username}`}
-            loading="lazy"
-          />
-        ) : (
-          <div style={{ height: imgHeight, width: imgWidth }}></div>
-        )}
+        <Image
+          height={imgHeight}
+          width={imgWidth}
+          className="relative aspect-square w-full rounded-lg object-cover pb-12"
+          src={photoUrl ? photoUrl : DefaultAvatar}
+          alt={`main img of user ${username}`}
+          loading="lazy"
+        />
         <div
           style={{
             backgroundPositionY: '-3rem',
