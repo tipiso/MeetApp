@@ -9,7 +9,7 @@ type Message = {
   recipientPhotoUrl: string;
   recipientKnownAs: string;
   content: string;
-  dateRead: null;
+  dateRead: null | Date;
   messageSent: Date;
 };
 

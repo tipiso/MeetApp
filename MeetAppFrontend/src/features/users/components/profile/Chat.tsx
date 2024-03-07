@@ -41,7 +41,7 @@ export default function Chat() {
   const query = useRouter().query;
   const recipientName = query.username && typeof query.username === 'string' ? query.username : '';
 
-  const chat = useSignalRChatRoom();
+  const chat = useSignalRChatRoom(recipientName);
   const mt = useMessageThread(recipientName);
 
   const handleSubmit = async ({ newMessage }: { newMessage: string }) => {

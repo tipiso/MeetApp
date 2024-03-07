@@ -30,7 +30,7 @@ const FriendsList = () => {
           <p className="max-w-sm text-center">You don't actually have any added friends</p>
         </div>
       ) : (
-        <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 xl:grid-cols-6">
+        <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 px-6 xl:grid-cols-6">
           {data.map((u) => (
             <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
           ))}

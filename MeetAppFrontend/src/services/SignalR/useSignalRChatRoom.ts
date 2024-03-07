@@ -3,14 +3,14 @@ import { HUB_URL } from '@/utils/constants';
 import { useEffect, useState } from 'react';
 import { stopHubConnection } from '@/services/SignalR/signalR';
 import { Message } from '@/features/messages/types';
-import { getTokenFromSession, getUsernameFromSession } from '@/utils/helpers';
+import { getTokenFromSession } from '@/utils/helpers';
 import { Group } from './types';
 
 /** SignalR chat hook, connects two users with a hub connection and cleans up after itself on useEffect return function */
-const useSignalRChatRoom = () => {
+const useSignalRChatRoom = (recipientUsername: string) => {
   const [messages, setMessages] = useState<Message[]>([]);
   const [hubConnection, setHubConnection] = useState<HubConnection>();
-  const username = getUsernameFromSession();
+  const username = recipientUsername;
   const token = getTokenFromSession();
 
   const createHubConnection = (userToken: string, otherUsername: string) => {

@@ -25,14 +25,16 @@ const AppProvider = ({ children }: Props) => {
     }
   }, [userQuery.data?.photoUrl]);
 
-  if (userQuery.error) logOut({ callbackUrl: routes.signin });
-
   const setUser = useStore((state) => state.setUser);
   const user = useStore((state) => state.user);
 
-  if (userQuery.data && user.id === -1) {
-    setUser(userQuery.data);
-  }
+  useEffect(() => {
+    if (userQuery.data && user.id === -1) {
+      setUser(userQuery.data);
+    }
+  }, [username, userQuery.isLoading]);
+
+  if (userQuery.error) logOut({ callbackUrl: routes.signin });
 
   return <>{children}</>;
 };

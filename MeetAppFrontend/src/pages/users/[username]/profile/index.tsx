@@ -14,8 +14,6 @@ const ProfilePage = () => {
   const user = useGetUser(router.query.username as string);
   const query = router.query;
 
-  const displayInviteBtn = !user.data?.isLikedByCurrentUser;
-
   const preparedTabs = useMemo(
     () =>
       user.data?.isLikedByCurrentUser ? profileTabs : profileTabs.filter((t) => t.key !== ProfilePageTabsKeys.CHAT),
@@ -38,7 +36,6 @@ const ProfilePage = () => {
       <div className="col-span-7 pl-12 pt-16">
         <div className="flex items-center justify-between">
           <Tabs active={tabsOpts.active} setActive={tabsOpts.updateActiveTab} tabs={preparedTabs} />
-          <TabAction active={tabsOpts.active} displayInviteBtn={displayInviteBtn} />
         </div>
         <ProfileTabs
           userId={user.data?.id}
