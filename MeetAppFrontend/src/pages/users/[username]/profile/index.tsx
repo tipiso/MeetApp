@@ -17,7 +17,7 @@ const ProfilePage = () => {
   const preparedTabs = useMemo(
     () =>
       user.data?.isLikedByCurrentUser ? profileTabs : profileTabs.filter((t) => t.key !== ProfilePageTabsKeys.CHAT),
-    [],
+    [user.data?.isLikedByCurrentUser],
   );
   const tabsOpts = useTabs({
     tabs: preparedTabs,

@@ -37,9 +37,9 @@ export default function Photos({ photos }: Props) {
                 src={p.url}
                 width={0}
                 height={0}
-                sizes="100vw"
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                 alt="user photo"
-                className="mx-auto block h-auto max-h-full w-full"
+                className="mx-auto block h-auto max-h-full"
               />
             ))}
           </Carousel>
