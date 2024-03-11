@@ -8,15 +8,14 @@ import useStore from '@/store/store';
 const FriendsList = () => {
   const { data, isMutating, pagination, getPage } = useLikedUsersWithPagination();
   const setFriends = useStore((state) => state.setFriends);
-  const friends = useStore((state) => state.friends);
 
   useEffect(() => {
     getPage({ pageNumber: 1, pageSize: 6, predicate: 'friends' });
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
-
-  if (data && data?.length != friends.length && !isMutating) {
+ 
+  if (data && data.length && !isMutating) {
     setFriends(data);
   }
 

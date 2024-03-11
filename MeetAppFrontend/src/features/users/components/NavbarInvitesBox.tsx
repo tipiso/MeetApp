@@ -40,7 +40,7 @@ function InviteBoxItem({ onUserClick, onBtnClick, user }: BoxItemProps) {
 export default function NavbarInvitesBox() {
   const { data, isMutating, getUsers } = useLikedUsers();
   const friends = useStore((state) => state.friends);
-  const setFriends = useStore((state) => state.setFriends);
+  const updateFriends = useStore((state) => state.updateFriends);
   const router = useRouter();
 
   useEffect(() => {
@@ -53,13 +53,13 @@ export default function NavbarInvitesBox() {
     try {
       await likeUser(user.userName);
       alert('User invite accepted!', ColorTypeEnum.SUCCESS);
-      setFriends([user]);
+      updateFriends(user);
     } catch {
       alert('Something went wrong, please try again.', ColorTypeEnum.DANGER);
     }
   };
 
-  if ((!isMutating && !data) || !newInvites?.length) {
+  if (!isMutating && !newInvites?.length) {
     return (
       <div className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 bg-base-100 pt-16 text-center shadow">
         You don't have any new invites.
