@@ -28,8 +28,17 @@
 .profile-carousel {
   height: 700px;
 
+  .slick-slide {
+    display: flex !important;
+    align-items: center;
+  }
+
   .slick-slide > * {
+    display: flex;
+    justify-items: center;
     max-height: 100%;
+    position: relative;
+    width: 100%;
   }
 
   .slick-list,
