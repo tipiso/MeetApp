@@ -12,6 +12,7 @@ import { getUsernameFromSession } from '@/utils/helpers';
 import { getDateAndTimeFromDate } from '@/utils/parsers';
 import Loader, { LoaderSizes } from '@/components/Loader';
 import { alert } from '@/components/Alert/Alert';
+import { useEffect, useRef } from 'react';
 
 type MsgProps = Message & { recipientName: string };
 
@@ -20,7 +21,7 @@ function ChatMessage(props: MsgProps) {
   const { dateString, timeString } = getDateAndTimeFromDate(props.messageSent);
 
   return (
-    <div className={classNames(isSender ? 'self-end' : 'self-start', 'max-w-[50%] pt-3')}>
+    <div className={classNames(isSender ? 'self-end' : 'self-start', 'w-full max-w-[50%] pt-3 pr-1')}>
       <span className="text-xs">
         {dateString} {timeString} {!props.dateRead && <span className="text-xs italic text-base-300">(unread)</span>}
       </span>
@@ -40,6 +41,7 @@ export default function Chat() {
   const methods = useForm({ defaultValues: { newMessage: '' } });
   const query = useRouter().query;
   const recipientName = query.username && typeof query.username === 'string' ? query.username : '';
+  const chatWindowRef = useRef<null | HTMLDivElement>(null);
 
   const chat = useSignalRChatRoom(recipientName);
   const mt = useMessageThread(recipientName);
@@ -49,6 +51,7 @@ export default function Chat() {
       if (recipientName) {
         await chat.sendMessage(recipientName, newMessage);
         await mt.mutate();
+        chatWindowRef.current?.scrollTo({ top: chatWindowRef.current.scrollHeight });
         methods.reset();
       }
     } catch (e) {
@@ -56,13 +59,21 @@ export default function Chat() {
     }
   };
 
+  useEffect(() => {
+    if (chatWindowRef.current && mt.data?.length !== chat.messages.length) {
+      chatWindowRef.current.scrollTo({ top: chatWindowRef.current.scrollHeight });
+    }
+  }, [chat.messages.length]);
+
   return (
     <div className="flex w-full flex-col pt-10">
-      {mt.isLoading ? (
-        <Loader size={LoaderSizes.lg} />
-      ) : (
-        mt.data?.map((m) => <ChatMessage key={m.id} {...m} recipientName={recipientName} />)
-      )}
+      <div ref={chatWindowRef} className="flex h-80 w-full flex-col overflow-y-auto">
+        {mt.isLoading ? (
+          <Loader size={LoaderSizes.lg} />
+        ) : (
+          mt.data?.map((m) => <ChatMessage key={m.id} {...m} recipientName={recipientName} />)
+        )}
+      </div>
       <FormProvider {...methods}>
         <Form onSubmit={methods.handleSubmit(handleSubmit)} className="w-full pt-8">
           <div className="relative w-full">

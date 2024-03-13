@@ -1,4 +1,4 @@
-import Select, { MultiValueGenericProps, components } from 'react-select';
+import Select, { MultiValueGenericProps } from 'react-select';
 import * as Form from '@radix-ui/react-form';
 import { InputHTMLAttributes, ReactNode } from 'react';
 import Label from '@/components/Forms/Label';
