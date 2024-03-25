@@ -124,9 +124,15 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
             />
           </div>
 
-          <div className="col-span-12 mt-auto text-right">
+          <div className="col-span-12 text-right">
             <FormSubmit asChild>
-              <Button isLoading={isLoading} disabled={isLoading} type="submit" btnType={ColorTypeEnum.PRIMARY}>
+              <Button
+                className="ml-auto"
+                isLoading={isLoading}
+                disabled={isLoading}
+                type="submit"
+                btnType={ColorTypeEnum.PRIMARY}
+              >
                 Go to your profile
               </Button>
             </FormSubmit>
