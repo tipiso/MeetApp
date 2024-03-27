@@ -13,6 +13,8 @@ type UpdateUserDTO = {
   introduction: string;
   knownAs: string;
   hobbies: string[];
+  city?: string;
+  country?: string;
 };
 
 type LikedUsersDTO = {

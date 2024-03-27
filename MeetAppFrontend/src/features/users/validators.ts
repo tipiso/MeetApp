@@ -23,4 +23,12 @@ const userFormSchema = z.object({
   hobbies: z.object({ value: z.string(), label: z.string() }).array().min(3),
 });
 
-export { userFormSchema, userPhotoValidator };
+const editUserFormSchema = z.object({
+  knownAs: z.string(),
+  introduction: z.string().min(1, { message: 'Introduction is required' }),
+  country: z.string().min(1, { message: 'Country is required' }),
+  city: z.string().min(1, { message: 'City is required' }),
+  hobbies: z.object({ value: z.string(), label: z.string() }).array(),
+});
+
+export { userFormSchema, userPhotoValidator, editUserFormSchema };

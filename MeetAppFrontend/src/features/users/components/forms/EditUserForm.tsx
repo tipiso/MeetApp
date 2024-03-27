@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { userFormSchema } from '../../validators';
+import { editUserFormSchema, userFormSchema } from '../../validators';
 import { Input } from '@/components/Forms/Input';
 import { TextAreaInput } from '@/components/Forms/TextAreaInput';
 import MultiSelect from '@/components/Forms/MultiSelect';
@@ -12,6 +12,7 @@ import useStore from '@/store/store';
 import { useUpdateUser } from '../../hooks';
 import { Option } from '@/components/Forms/MultiSelect';
 import { Hobby } from '../../types';
+import { getValuesFromSelectOptions } from '@/utils/helpers';
 
 type Props = {
   knownAs: string;
@@ -25,34 +26,45 @@ type Props = {
   country?: string;
 };
 
+type FormValues = {
+  knownAs: string;
+  age: number;
+  introduction: string;
+  hobbies: Option[];
+  country?: string;
+  city?: string;
+};
+
 const EditUserForm = ({ knownAs, age, city, hobbies, introduction, userHobbies, country }: Props) => {
   const methods = useForm({
     defaultValues: {
       knownAs: knownAs ?? '',
       introduction: introduction ?? '',
       age,
-      file: undefined,
-      hobbies: userHobbies?.map((h) => ({ label: h.name, value: h.id })),
+      hobbies: userHobbies ? userHobbies.map<Option>((h) => ({ label: h.name, value: `${h.id}` })) : [],
       city,
       country: country ?? '',
     },
-    resolver: zodResolver(userFormSchema),
+    resolver: zodResolver(editUserFormSchema),
   });
   const updateUser = useUpdateUser();
   const setUser = useStore((state) => state.setUser);
   const isLoading = updateUser.isMutating;
-  const handleSubmit = async ({ file, hobbies, ...rest }: any) => {};
-  console.log(methods.getValues());
+
+  const handleSubmit = async ({ ...rest }: FormValues) => {
+    await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(rest.hobbies) });
+  };
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(handleSubmit)} className="pt-6">
         <div className="grid grid-cols-12 gap-x-2.5">
           <div className="relative col-span-3 mb-6">
-            <Input required placeholder="Name" name="knownAs" type="text" label="Name" />
+            <Input placeholder="Name" name="knownAs" type="text" label="Name" />
           </div>
 
           <div className="relative col-span-3 mb-6">
-            <Input required placeholder="Age" name="age" type="text" label="Age" />
+            <Input disabled placeholder="Age" name="age" type="text" label="Age" />
           </div>
 
           <div className="relative col-span-3 mb-6">
@@ -92,7 +104,7 @@ const EditUserForm = ({ knownAs, age, city, hobbies, introduction, userHobbies, 
                 type="submit"
                 btnType={ColorTypeEnum.PRIMARY}
               >
-                Go to your profile
+                Save Changes
               </Button>
             </FormSubmit>
           </div>

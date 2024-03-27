@@ -48,16 +48,16 @@ export default function NavMenu({ user }: Props) {
             <PopoverContent>
               <ul tabIndex={0} className="w-50 dropdown-content menu rounded-box z-[1] mt-4 bg-base-100 p-2 shadow">
                 <li className="text-black">
-                  <Link href={routes.currentUserProfile} className="text-sm font-bold">
+                  <Link href={routes.currentUserProfile} className="text-sm">
                     My Profile
                   </Link>
                 </li>
                 <li className="text-black">
-                  <Link href={routes.editCurrentUserProfile.replace(':username', user.userName)} className="text-sm font-bold">
+                  <Link href={routes.editCurrentUserProfile.replace(':username', user.userName)} className="text-sm">
                     Edit Profile
                   </Link>
                 </li>
-                <li className="text-black" onClick={() => logOut({ callbackUrl: routes.home })}>
+                <li className="font-bold text-black" onClick={() => logOut({ callbackUrl: routes.home })}>
                   <a>Log out</a>
                 </li>
               </ul>

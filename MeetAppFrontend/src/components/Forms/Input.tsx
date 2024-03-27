@@ -35,6 +35,7 @@ export function Input(props: Props) {
               <input
                 {...field}
                 placeholder={props.placeholder}
+                disabled={props.disabled}
                 autoComplete={props.type === 'password' ? 'current-password' : ''}
                 type={props.type}
                 className={cx(props.className, 'input-bordered input w-full border-base-300', {
