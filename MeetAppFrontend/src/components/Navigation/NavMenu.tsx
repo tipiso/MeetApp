@@ -52,6 +52,11 @@ export default function NavMenu({ user }: Props) {
                     My Profile
                   </Link>
                 </li>
+                <li className="text-black">
+                  <Link href={routes.editCurrentUserProfile.replace(':username', user.userName)} className="text-sm font-bold">
+                    Edit Profile
+                  </Link>
+                </li>
                 <li className="text-black" onClick={() => logOut({ callbackUrl: routes.home })}>
                   <a>Log out</a>
                 </li>

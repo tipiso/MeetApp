@@ -1,7 +1,7 @@
 import { ReactElement, useMemo } from 'react';
 import { useUserPage } from '@/features/users/hooks';
 import UserPageLayout from '@/components/Layouts/UserPageLayout';
-import UserForm from '@/features/users/components/UserForm';
+import UserForm from '@/features/users/components/forms/FirstLoginUserForm';
 import { useGetHobbies } from '@/features/search/hooks';
 import { Option } from '@/components/Forms/MultiSelect';
 import MainLayout from '@/components/Layouts/MainLayout';

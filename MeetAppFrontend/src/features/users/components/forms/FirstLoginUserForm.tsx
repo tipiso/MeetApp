@@ -5,12 +5,12 @@ import { TextAreaInput } from '@/components/Forms/TextAreaInput';
 import Button from '@/components/Button';
 import { ColorTypeEnum, acceptedMimeFiles } from '@/utils/constants';
 import { zodResolver } from '@hookform/resolvers/zod';
-import Avatar from './Avatar';
+import Avatar from '../Avatar';
 import { FileInput } from '@/components/Forms/FileInput';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import { createUrlFromImg, getValuesFromSelectOptions } from '@/utils/helpers';
-import { userFormSchema } from '../validators';
-import { useAddPhoto, useGetUser, useUpdateUser } from '../hooks';
+import { userFormSchema } from '../../validators';
+import { useAddPhoto, useGetUser, useUpdateUser } from '../../hooks';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
 import useStore from '@/store/store';
@@ -36,7 +36,7 @@ type FormValues = {
   file?: File[];
 };
 
-const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
+const FirstLoginUserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
   const methods = useForm({
     defaultValues: {
       knownAs: knownAs ?? '',
@@ -143,4 +143,4 @@ const UserForm = ({ knownAs, age, username, hobbies, city }: Props) => {
   );
 };
 
-export default UserForm;
+export default FirstLoginUserForm;
