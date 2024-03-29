@@ -31,7 +31,7 @@ const getLikedUsers = ({ userId, predicate = "liked" }: Partial<LikedUsersDTO>) 
   return api.get<User[]>(`${likesUrl}?${newParams.toString()}`);
 }
 
-const updateUser = (user: UpdateUserDTO) => api.put(`${usersUrl}`, user);
+const updateUser = (user: UpdateUserDTO) => api.put<User>(`${usersUrl}`, user);
 
 const addPhoto = (photo: File) => {
   const formData = new FormData();

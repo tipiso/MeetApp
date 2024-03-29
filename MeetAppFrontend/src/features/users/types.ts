@@ -1,3 +1,5 @@
+import { UpdateUserDTO } from '@/services/Users/dtos';
+
 export type User = {
   id: number;
   token: string;

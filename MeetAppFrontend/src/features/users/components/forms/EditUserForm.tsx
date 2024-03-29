@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 import React from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
-import { editUserFormSchema, userFormSchema } from '../../validators';
+import { editUserFormSchema } from '../../validators';
 import { Input } from '@/components/Forms/Input';
 import { TextAreaInput } from '@/components/Forms/TextAreaInput';
 import MultiSelect from '@/components/Forms/MultiSelect';
@@ -13,6 +13,7 @@ import { useUpdateUser } from '../../hooks';
 import { Option } from '@/components/Forms/MultiSelect';
 import { Hobby } from '../../types';
 import { getValuesFromSelectOptions } from '@/utils/helpers';
+import { alert } from '@/components/Alert/Alert';
 
 type Props = {
   knownAs: string;
@@ -48,11 +49,30 @@ const EditUserForm = ({ knownAs, age, city, hobbies, introduction, userHobbies, 
     resolver: zodResolver(editUserFormSchema),
   });
   const updateUser = useUpdateUser();
+  const user = useStore((state) => state.user);
   const setUser = useStore((state) => state.setUser);
   const isLoading = updateUser.isMutating;
 
   const handleSubmit = async ({ ...rest }: FormValues) => {
-    await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(rest.hobbies) });
+    try {
+      const resp = await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(rest.hobbies) });
+      if (resp && resp.data) {
+        const { data } = resp;
+        let updatedUser = {
+          ...user,
+          introduction: data.introduction,
+          country: data.country,
+          city: data.city,
+          age: data.age,
+          knownAs: data.knownAs,
+          hobbies: data.hobbys,
+        };
+        setUser(updatedUser);
+        alert('User updated!', ColorTypeEnum.SUCCESS);
+      }
+    } catch {
+      alert('Something went wrong!', ColorTypeEnum.DANGER);
+    }
   };
 
   return (

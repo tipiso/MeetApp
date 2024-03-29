@@ -52,14 +52,16 @@ namespace API.Controllers
 		{
 			var user = await _uow.UserRepository.GetUserByUsernameAsync(User.GetUsername());
 
-			if (user == null) return NotFound(); 
+			if (user == null) return NotFound();
 
 			var hobbiesDto = new HobbiesUpdateDto { hobbies = memberUpdateDto.Hobbies };
 			_uow.HobbiesRepository.UpdateUserHobby(user, hobbiesDto);
 
 			_mapper.Map(memberUpdateDto, user);
 
-			if (await _uow.Complete()) return Ok(user);
+			var userResponse = await _uow.UserRepository.GetMemberAsync(User.GetUsername(), User.GetUsername());
+
+			if (await _uow.Complete()) return Ok(userResponse);
 
 			return BadRequest("Failed to update user");
 		}
@@ -81,7 +83,8 @@ namespace API.Controllers
 				PublicId = result.PublicId
 			};
 
-			if (!user.Photos.Any(p => p.IsMain)) {
+			if (!user.Photos.Any(p => p.IsMain))
+			{
 				photo.IsMain = true;
 			}
 
