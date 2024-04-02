@@ -65,7 +65,7 @@ export default function CustomInformations({ hobbies, introduction, userId }: Pr
                 <FriendCard key={u.id} user={u} imgWidth={250} imgHeight={250} />
               ))}
             </div>
-            {pagination.totalItems > pagination.itemsPerPage && (
+            {pagination.currentPage < pagination.totalPage && (
               <div className="pt-6 text-right">
                 <Button outline type="button" btnType={ColorTypeEnum.PRIMARY} onClick={updateUsers}>
                   Check more

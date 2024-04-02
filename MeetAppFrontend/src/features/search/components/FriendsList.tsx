@@ -3,26 +3,24 @@ import Loader, { LoaderSizes } from '@/components/Loader';
 import Pagination from '@/components/Pagination/Pagination';
 import { useEffect } from 'react';
 import FriendCard from './FriendCard';
-import useStore from '@/store/store';
 
 const FriendsList = () => {
   const { data, isMutating, pagination, getPage } = useLikedUsersWithPagination();
-  const setFriends = useStore((state) => state.setFriends);
+
+  const handlePageChange = (pageNumber: number) => {
+    getPage({ pageNumber, pageSize: 6, predicate: 'friends' });
+  };
 
   useEffect(() => {
-    getPage({ pageNumber: 1, pageSize: 6, predicate: 'friends' });
+    handlePageChange(1);
   }, []);
 
   if (isMutating) return <Loader size={LoaderSizes.lg} />;
- 
-  if (data && data.length && !isMutating) {
-    setFriends(data);
-  }
 
   return (
     <section className="px-10">
       <h1 className="mb-4 text-2xl font-bold">
-        Friend list <span>({data ? data.length : 0})</span>
+        Friend list <span>({pagination.totalItems ? pagination.totalItems : 0})</span>
       </h1>
       {!data || !data.length ? (
         <div className="flex justify-center p-10 text-2xl font-light">
@@ -35,7 +33,7 @@ const FriendsList = () => {
           ))}
         </div>
       )}
-      {pagination.totalPage > 1 && <Pagination handlePageChange={getPage} {...pagination} />}
+      {pagination.totalPage > 1 && <Pagination handlePageChange={handlePageChange} {...pagination} />}
     </section>
   );
 };

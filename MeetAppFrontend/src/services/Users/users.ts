@@ -23,6 +23,7 @@ const getUser = (username: string) => api.get<User>(`users/${username}`);
 
 const getLikedUsersWithPagination = ({ pageNumber = 1, pageSize = 8, userId, predicate = "liked" }: PaginationParams & Partial<LikedUsersDTO>) => {
   const newParams = mapDTOToURLEntry({ pageNumber, pageSize, userId: userId ?? '', predicate });
+  console.log("getLikedUsersWithPagination", pageNumber, pageSize, userId, predicate)
   return api.get<User[]>(`${likesUrl}?${newParams.toString()}`);
 }
 
