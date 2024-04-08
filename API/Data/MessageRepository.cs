@@ -43,9 +43,11 @@ namespace API.Data
         public async Task<IEnumerable<MessageDto>> GetConversationsForUser(string username)
         {
             var latestMessages = _context.Messages
+                    .Include(m => m.Recipient)
+                    .ThenInclude(m => m.Photos)
                     .Include(m => m.Sender)
                     .ThenInclude(u => u.Photos)
-                    .Where(m => m.SenderUsername == username|| m.RecipientUsername == username)
+                    .Where(m => m.SenderUsername == username || m.RecipientUsername == username)
                     .ToList()
                     .GroupBy(m => new { ConversationId = Math.Min(m.SenderId, m.RecipientId), OtherUserId = Math.Max(m.SenderId, m.RecipientId) })
                     .Select(g => g.OrderByDescending(m => m.MessageSent).FirstOrDefault())

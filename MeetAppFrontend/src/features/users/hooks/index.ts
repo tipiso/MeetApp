@@ -9,6 +9,7 @@ import {
   addPhoto,
   getLikedUsers,
   getLikedUsersWithPagination,
+  setMainPhoto,
 } from '@/services/Users/users';
 import { LikedUsersDTO, UpdateUserDTO } from '@/services/Users/dtos';
 import { initialPagination } from '@/utils/constants';
@@ -40,6 +41,13 @@ function useAddPhoto() {
   const mutateFetcher = (url: string, { arg }: { arg: File }) => addPhoto(arg);
 
   const { data, ...rest } = useSWRMutation(usersQueryKeys.updateUser(), mutateFetcher);
+
+  return { data: data?.data, ...rest };
+}
+function useUpdateMainPhoto() {
+  const mutateFetcher = (url: string, { arg }: { arg: number }) => setMainPhoto(arg);
+
+  const { data, ...rest } = useSWRMutation(usersQueryKeys.setMainPhoto(), mutateFetcher);
 
   return { data: data?.data, ...rest };
 }
@@ -114,4 +122,5 @@ export {
   useLikedUsersWithPagination,
   useLikedUsers,
   useUserPage,
+  useUpdateMainPhoto,
 };
