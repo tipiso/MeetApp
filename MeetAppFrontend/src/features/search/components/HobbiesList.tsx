@@ -73,7 +73,7 @@ const HobbiesList = ({ hobbies }: { hobbies: Hobby[] }) => {
             hobbiesLength={hobbies.length}
           />
         ))}
-        <Badge size={BadgeSizes.LG} color="badge-neutral">
+        <Badge size={BadgeSizes.MD} color="badge-neutral">
           +{hobbies.length - i}
         </Badge>
       </div>

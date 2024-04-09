@@ -1,4 +1,4 @@
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm, useWatch } from 'react-hook-form';
 import { Form, FormSubmit } from '@radix-ui/react-form';
 import { Input } from '@/components/Forms/Input';
 import { TextAreaInput } from '@/components/Forms/TextAreaInput';
@@ -10,11 +10,12 @@ import { FileInput } from '@/components/Forms/FileInput';
 import MultiSelect, { Option } from '@/components/Forms/MultiSelect';
 import { createUrlFromImg, getValuesFromSelectOptions } from '@/utils/helpers';
 import { userFormSchema } from '../../validators';
-import { useAddPhoto, useGetUser, useUpdateUser } from '../../hooks';
+import { useAddPhoto, useGetUser, useUpdateMainPhoto, useUpdateUser } from '../../hooks';
 import { useRouter } from 'next/router';
 import { routes } from '@/utils/routes';
 import useStore from '@/store/store';
 import { alert } from '@/components/Alert/Alert';
+import { useMemo } from 'react';
 
 type Props = {
   knownAs: string;
@@ -52,6 +53,7 @@ const FirstLoginUserForm = ({ knownAs, age, username, hobbies, city }: Props) =>
   const router = useRouter();
   const addPhoto = useAddPhoto();
   const updateUser = useUpdateUser();
+  const updateMainPhoto = useUpdateMainPhoto();
   const getUser = useGetUser(username);
   const setUser = useStore((state) => state.setUser);
   const isLoading = addPhoto.isMutating || updateUser.isMutating;
@@ -59,8 +61,9 @@ const FirstLoginUserForm = ({ knownAs, age, username, hobbies, city }: Props) =>
   const handleSubmit = async ({ file, hobbies, ...rest }: FormValues) => {
     if (file) {
       try {
-        await addPhoto.trigger(file[0]);
+        const photo = await addPhoto.trigger(file[0]);
         await updateUser.trigger({ ...rest, hobbies: getValuesFromSelectOptions(hobbies) });
+        photo && (await updateMainPhoto.trigger(photo.data.id));
         const data = await getUser.mutate();
         if (data) {
           setUser(data?.data);
@@ -73,17 +76,17 @@ const FirstLoginUserForm = ({ knownAs, age, username, hobbies, city }: Props) =>
     }
   };
 
+  const currentFile = useMemo(
+    () => (methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''),
+    [methods.getValues('file')],
+  );
+
   return (
     <FormProvider {...methods}>
       <Form onSubmit={methods.handleSubmit(handleSubmit)} className="pt-6">
         <div className="flex w-full items-center pt-16 pb-8">
           <div className="pr-4">
-            <Avatar
-              width={128}
-              height={128}
-              name={username}
-              imgUrl={methods.getValues('file') ? createUrlFromImg(methods.getValues('file')?.[0]) : ''}
-            />
+            <Avatar width={128} height={128} name={username} imgUrl={currentFile} />
           </div>
           <FileInput className="ml-6" name="file" label="Add your photo" acceptFiles={acceptedMimeFiles} />
         </div>

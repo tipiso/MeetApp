@@ -80,13 +80,10 @@ namespace API.Controllers
 			var photo = new Photo
 			{
 				Url = result.SecureUrl.AbsoluteUri,
-				PublicId = result.PublicId
+				PublicId = result.PublicId,
+				// Temporary solution until admin confirmation is done
+				IsApproved = true
 			};
-
-			if (!user.Photos.Any(p => p.IsMain))
-			{
-				photo.IsMain = true;
-			}
 
 			user.Photos.Add(photo);
 

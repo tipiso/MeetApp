@@ -1,4 +1,4 @@
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext, useWatch } from 'react-hook-form';
 import * as Form from '@radix-ui/react-form';
 import { InputHTMLAttributes, ReactNode, useRef } from 'react';
 import ErrorMessage from '@/components/Forms/ErrorMessage';
@@ -14,8 +14,11 @@ type Props = {
 } & InputHTMLAttributes<HTMLInputElement>;
 
 export function FileInput(props: Props) {
-  const { control } = useFormContext();
+  const { control, watch } = useFormContext();
   const ref = useRef<HTMLInputElement>(null);
+
+  // Needed to notify React after ref is used to update
+  watch();
 
   const handleUpload = () => {
     if (ref.current) {

@@ -27,6 +27,20 @@ namespace API.Data
             var users = _context.Users.OrderBy(u => u.UserName).AsQueryable();
             var likes = _context.Likes.AsQueryable();
 
+            if (likesParams.Predicate == "invites")
+            {
+                var likedUsersList = users
+                    .Include(u => u.LikedByUsers)
+                    .Include(u => u.LikedUsers)
+                    .FirstOrDefault(u => u.Id == likesParams.UserId)
+                    .LikedUsers
+                    .Select(lu => lu.TargetUserId);
+
+                likes = likes.Where(like => like.TargetUserId == likesParams.UserId);
+                users = likes.Select(like => like.SourceUser);
+                users = users.Where(u => !likedUsersList.Contains(u.Id));
+            }
+
             // Additional pair check, to see wether users should chat with each other
             if (likesParams.Predicate == "friends")
             {
