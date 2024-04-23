@@ -44,7 +44,7 @@ export default function NavbarInvitesBox() {
   const router = useRouter();
 
   useEffect(() => {
-    getUsers({ predicate: 'likedBy' });
+    getUsers({ predicate: 'invites' });
   }, []);
 
   const newInvites = data?.filter((u) => !friends.find((f) => f.id === u.id));
