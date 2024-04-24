@@ -51,7 +51,7 @@ export default function NavbarMessagesBox() {
     router.push(routes.userProfile.replace(':username', username) + `?openTab=${ProfilePageTabsKeys.CHAT}`);
   };
 
-  if ((!isLoading && !data) || !data?.length) {
+  if (!isLoading && !data) {
     return (
       <div className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 bg-base-100 pt-16 text-center shadow">
         You don't have any active chats.
@@ -62,7 +62,7 @@ export default function NavbarMessagesBox() {
   return (
     <ul className="dropdown-content menu rounded-box z-10 mt-4 h-96 w-80 flex-nowrap overflow-auto bg-base-100 px-0 py-0 shadow">
       <h2 className="p-4 text-base font-bold">Chat:</h2>
-      {isLoading && <Loader size={LoaderSizes.lg} />}
+      {(isLoading || !data?.length) && <Loader size={LoaderSizes.lg} />}
       {data && data.map((m) => <MessageInbox key={m.id} message={m} moveToChat={moveToChat} />)}
     </ul>
   );
