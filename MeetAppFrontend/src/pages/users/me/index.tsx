@@ -4,7 +4,6 @@ import Tabs, { useTabs } from '@/components/Tabs';
 import { ProfilePageTabsKeys, profileTabs } from '@/utils/constants';
 import ProfileTabs from '@/features/users/components/profile/ProfileTabs';
 import TabAction from '@/features/users/components/profile/TabAction';
-import useStore from '@/store/store';
 import ProfileSummary from '@/features/users/components/profile/ProfileSummary';
 import MainLayout from '@/components/Layouts/MainLayout';
 import { useGetUser } from '@/features/users/hooks';

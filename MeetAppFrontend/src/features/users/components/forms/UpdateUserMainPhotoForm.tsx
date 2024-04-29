@@ -1,23 +1,26 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import React from 'react';
+import React, { useState } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { userPhotoValidator } from '../../validators';
 import { Form } from '@radix-ui/react-form';
 import Avatar from '../Avatar';
-import { FileInput } from '@/components/Forms/FileInput';
-import { ColorTypeEnum, acceptedMimeFiles } from '@/utils/constants';
+import { ColorTypeEnum } from '@/utils/constants';
 import { Photo } from '../../types';
 import Button from '@/components/Button';
 import useModal from '@/components/Modal/useModal';
 import Modal from '@/components/Modal/Modal';
+import Image from 'next/image';
+import classNames from 'classnames';
+import { useUpdateMainPhoto } from '../../hooks';
+import { alert } from '@/components/Alert/Alert';
 
 type Props = {
-  photoUrl?: string | undefined;
   username: string;
   photos: Photo[];
 };
 
-const UpdateUserMainPhotoForm = ({ username, photoUrl, photos }: Props) => {
+const UpdateUserMainPhotoForm = ({ username, photos }: Props) => {
+  const [currentPhoto, setCurrentPhoto] = useState<Photo | undefined>(photos.find((p) => p.isMain));
   const modal = useModal();
   const methods = useForm({
     defaultValues: {
@@ -25,19 +28,28 @@ const UpdateUserMainPhotoForm = ({ username, photoUrl, photos }: Props) => {
     },
     resolver: zodResolver(userPhotoValidator),
   });
+  const updatePhoto = useUpdateMainPhoto();
 
-  const handleSubmit = async ({ file }: { file?: File[] }) => {};
+  const handleSubmit = async () => {
+    try {
+      if (currentPhoto) {
+        await updatePhoto.trigger(currentPhoto.id);
+        alert('Photo added succesfully.', ColorTypeEnum.SUCCESS);
+      }
+    } catch {
+      alert('Something went wrong, please try again.', ColorTypeEnum.DANGER);
+    }
+  };
   console.log(photos);
   return (
     <div className="pt-6">
       <div className="flex w-full items-center pb-8">
         <div className="pr-4">
-          <Avatar width={160} height={160} name={username} imgUrl={photoUrl} />
+          <Avatar width={160} height={160} name={username} imgUrl={currentPhoto?.url} />
         </div>
         <Button onClick={() => modal.toggle()} type="button" btnType={ColorTypeEnum.PRIMARY}>
           Change your photo
         </Button>
-        {/* <FileInput className="ml-6" name="file" label="Add your photo" acceptFiles={acceptedMimeFiles} /> */}
       </div>
 
       <FormProvider {...methods}>
@@ -50,13 +62,6 @@ const UpdateUserMainPhotoForm = ({ username, photoUrl, photos }: Props) => {
           onClosed={() => methods.reset()}
           action={
             <Form className="flex gap-2 text-end" onSubmit={methods.handleSubmit(handleSubmit)}>
-              {/* <FileInput
-                  btnType={ColorTypeEnum.SECONDARY}
-                  className="mx-0"
-                  name="file"
-                  label={}
-                  acceptFiles={acceptedMimeFiles}
-                /> */}
               <Button
                 type="submit"
                 btnType={ColorTypeEnum.PRIMARY}
@@ -68,15 +73,22 @@ const UpdateUserMainPhotoForm = ({ username, photoUrl, photos }: Props) => {
             </Form>
           }
         >
-          {/* <div className="flex min-h-[50vh] w-full items-center justify-center ">
-              {fileValue ? (
-                <Image width={500} height={500} src={createUrlFromImg(fileValue[0]) ?? ''} alt="" />
-              ) : (
-                <div className="flex min-h-[50vh] w-full items-center justify-center bg-slate-50">
-                  Here there will be your photo's preview
-                </div>
-              )}
-            </div> */}
+          <div className="flex justify-center pr-4">
+            <Avatar width={250} height={250} name={username} imgUrl={currentPhoto?.url} />
+          </div>
+          <div className="relative grid grid-cols-4 gap-x-6 gap-y-3 overflow-auto pt-6 xl:grid-cols-6">
+            {photos.map((p) => (
+              <Image
+                className={classNames(currentPhoto?.id === p.id && 'active', 'cursor-pointer')}
+                onClick={() => setCurrentPhoto(p)}
+                src={p.url}
+                key={p.id}
+                width={250}
+                height={250}
+                alt=""
+              />
+            ))}
+          </div>
         </Modal>
       </FormProvider>
     </div>
